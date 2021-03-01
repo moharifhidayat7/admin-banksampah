@@ -1,9 +1,10 @@
 import React from 'react'
+import Layout from '../components/Layout'
 
 export default function index() {
   return (
-    <div>
-      Halo
-    </div>
+   <Layout title='Dashboard'>
+Halo Dunia
+   </Layout>
   )
 }
