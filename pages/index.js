@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Dropdown from "../components/Settings";
+
 import Layout from "../components/Layout";
 
 export default function index() {
-  const [opti, setOpti] = useState(true);
-
   return (
     <Layout title="Dashboard">
+      <div className='bg-white shadow-lg'>
       Halo Dunia Lorem ipsum dolor sit amet consectetur adipisicing elit.
       Quibusdam ea, ullam perspiciatis aut consequatur eum unde modi explicabo
       totam, rem enim? Repudiandae sint consequuntur numquam architecto nisi
@@ -18,7 +17,7 @@ export default function index() {
       perspiciatis laudantium, incidunt porro asperiores, vero necessitatibus
       quasi animi quibusdam repellat explicabo hic sed cum accusantium deserunt
       debitis. Doloremque aliquid reprehenderit est sed nulla iusto distinctio
-      veniam labore repudiandae?
+      veniam labore repudiandae?</div>
     </Layout>
   );
 }

@@ -30,10 +30,9 @@ export default function Settings(props) {
           />
         </svg>
       </div>
-
       <div
         hidden={opti}
-        className=" absolute ri mt-3 w-40 right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+        className=" absolute ri mt-3 w-36 right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
       >
         <div
           className="py-1"
@@ -47,20 +46,6 @@ export default function Settings(props) {
             role="menuitem"
           >
             Account settings
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            role="menuitem"
-          >
-            Support
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            role="menuitem"
-          >
-            License
           </a>
           <form method="POST" action="#">
             <button
