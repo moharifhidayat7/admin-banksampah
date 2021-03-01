@@ -12,12 +12,15 @@ export default function Layout(props) {
       </Head>
       <Sidebar sidebr={sidebr} />
       <Header openSide={setSidebr} sidebr={sidebr} />
-
-      <div className={`${sidebr ? `container mx-auto` : `pl-56`} pt-16 `}>
+      <div
+        className={`${
+          sidebr ? `px-4` : `lg:pl-56`
+        } pt-16 static z-0 container mx-auto`}
+      >
         {props.children}
       </div>
       <div className=" flex justify-center">
-        <footer className="bottom-0 absolute">
+        <footer className="bottom-0">
           Copyrigth Stikom Kampus Merdeka 2021
         </footer>
       </div>
