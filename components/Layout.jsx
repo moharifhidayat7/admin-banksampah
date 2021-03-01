@@ -9,7 +9,8 @@ export default function Layout(props) {
         <title>{props.title}</title>
       </Head>
       <Header/>
-      <div>{props.children}</div>
+      <div className='pt-16 container'>{props.children}</div>
+     
     </div>
   );
 }
