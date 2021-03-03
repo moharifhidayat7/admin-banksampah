@@ -4,7 +4,7 @@ import Settings from "./Settings";
 export default function Header(props) {
   return (
     <div className="bg-gray-50 shadow-lg w-full  fixed italic">
-      <div className="transition-transform flex justify-between lg:px-12 ">
+      <div className="flex px-2 justify-between lg:px-12 ">
         <div className="flex items-center h-12">
           {!props.sidebr && (
             <div className="w-28 mr-10">
@@ -14,10 +14,10 @@ export default function Header(props) {
 
           <div
             onClick={() => props.openSide(!props.sidebr)}
-            className="w-8 text-blue-700 mr-10 cursor-pointer pointer-events"
+            className="w-8 text-blue-700 mr-4 lg:mr-10 cursor-pointer pointer-events"
           >
             <svg
-              className="transition-transform hover:skew-y-12 transform"
+              className="transform  hover:scale-110 hover:rotate-2 "
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -40,10 +40,10 @@ export default function Header(props) {
               )}
             </svg>
           </div>
-          <div className="bg-gray-200 hidden lg:flex rounded-2xl p-0.5  justify-between ">
+          <div className={`${props.sidebr?`flex`:` hidden`} bg-gray-200  items-center lg:flex rounded-2xl p-0.5  justify-between`}>
             <input
               type="text"
-              className="focus:outline-none bg-transparent w-60 p-1 pl-2 text-lg"
+              className="focus:outline-none bg-transparent lg:w-52  p-1 pl-2 text-sm lg:text-base"
               placeholder="Apa yang anda cari?"
             />
             <div className="w-8 text-blue-700 cursor-pointer">
@@ -62,7 +62,7 @@ export default function Header(props) {
             </div>
           </div>
         </div>
-        <div className="items-center flex " >
+        <div className="items-center flex ">
           <img
             className="rounded-full w-10 mr-3 hidden lg:block"
             src="http://placehold.jp/500x500.png"
@@ -76,7 +76,6 @@ export default function Header(props) {
           </div>
           <Settings />
         </div>
-       
       </div>
     </div>
   );

@@ -1,21 +1,36 @@
-import React from 'react'
+import React from "react";
+import MenuSidebar from "./MenuSidebar";
 
 export default function Sidebar(props) {
-    return (
-        <div hidden={props.sidebr} className='left-0 absolute  shadow-lg w-52 bg-white h-full '>
-        <div className="pt-16 ml-10 mr-4">
- <h3 className=' font-bold text-blue-700'>
- MENU
- </h3>
- <div className='p-1.5 px-2 rounded-md hover:bg-green-100 flex justify-between items-center cursor-pointer'>
-     <p className='font-light'>Dashboard</p>
-     <div className='w-4 text-gray-300'>
-     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
-</svg>
-     </div>
- </div>
-        </div>
-        </div>
-    )
+  return (
+    <div
+      hidden={props.sidebr}
+      className="left-0 absolute  shadow-lg w-52 bg-white h-full "
+    >
+      <div className="pt-16 ml-8 mr-4 ">
+        <h3 className=" font-bold text-blue-700 mb-2">MENU</h3>
+        <MenuSidebar
+          menu="Dashboard"
+          icon="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          submenu={["Card Pemasukan", "Card Pengeluaran", "Total"]}
+        />
+        <MenuSidebar
+          menu="Nasabah"
+          icon="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+          submenu={["Pendaftaran", "Konfirmasi", "Detail Nasabah"]}
+        />
+       
+        <MenuSidebar
+          menu="Pemasukan"
+          icon="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+          submenu={["Input Pemasukan","Detail Pemasukan", "Total Pemasukan",]}
+        />
+        <MenuSidebar
+          menu="Pengeluaran"
+          icon="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
+          submenu={["Input Pengeluaran","Detail Pengeluaran", "Total Pengeluaran",]}
+        />
+      </div>
+    </div>
+  );
 }
