@@ -5,10 +5,11 @@ export default function Sidebar(props) {
   return (
     <div
       hidden={props.sidebr}
-      className="left-0 bottom-0 fixed shadow-lg w-72 bg-white h-full  "
+      className="left-0 bottom-0 fixed shadow-lg w-72 bg-white h-full pt-16 overflow-y-auto"
     >
-      <div className="mt-16 ml-8 p-2 h-full mr-4 overflow-y-auto overflow-x-hidden">
+      <div className="ml-8 p-2 h-full mr-4  overflow-x-hidden">
         <h3 className=" font-bold text-blue-700 mb-2">MENU</h3>
+
         <MenuSidebar
           menu="Dashboard"
           icon="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
@@ -36,7 +37,7 @@ export default function Sidebar(props) {
           ]}
         />
 
-        <footer className=" mt-12  pb-2 pl-2  text-center   text-sm italic">
+        <footer className=" mt-8   pb-2   text-center   text-sm italic">
           Browser Suport
           <div className="flex space-x-2 items-center justify-center">
             <img className="w-4" src="chrome.png" alt="crome" />

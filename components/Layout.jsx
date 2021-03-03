@@ -14,7 +14,7 @@ export default function Layout(props) {
       <Header openSide={setSidebr} sidebr={sidebr} />
       <div
         className={`${
-          sidebr ? `px-4` : `lg:pl-56`
+          sidebr ? `px-4` : `lg:pl-64`
         } pt-16 static z-0 container mx-auto`}
       >
         {props.children}
