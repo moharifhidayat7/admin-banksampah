@@ -18,6 +18,7 @@ export default function Layout(props) {
         } pt-16 static z-0 container mx-auto`}
       >
         {props.children}
+       
       </div>
       <div className=" flex justify-center">
         <footer className="bottom-0">

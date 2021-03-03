@@ -5,9 +5,9 @@ export default function Sidebar(props) {
   return (
     <div
       hidden={props.sidebr}
-      className="left-0 absolute  shadow-lg w-52 bg-white h-full "
+      className="left-0 fixed  shadow-lg w-52 bg-white h-full overflow-y-auto"
     >
-      <div className="pt-16 ml-8 mr-4 ">
+      <div className="pt-16 ml-8 mr-4">
         <h3 className=" font-bold text-blue-700 mb-2">MENU</h3>
         <MenuSidebar
           menu="Dashboard"
@@ -19,18 +19,27 @@ export default function Sidebar(props) {
           icon="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
           submenu={["Pendaftaran", "Konfirmasi", "Detail Nasabah"]}
         />
-       
+
         <MenuSidebar
           menu="Pemasukan"
           icon="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-          submenu={["Input Pemasukan","Detail Pemasukan", "Total Pemasukan",]}
+          submenu={["Input Pemasukan", "Detail Pemasukan", "Total Pemasukan"]}
         />
         <MenuSidebar
           menu="Pengeluaran"
           icon="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-          submenu={["Input Pengeluaran","Detail Pengeluaran", "Total Pengeluaran",]}
+          submenu={[
+            "Input Pengeluaran",
+            "Detail Pengeluaran",
+            "Total Pengeluaran",
+          ]}
         />
       </div>
+    
+      <footer className='bg-red-300 absolute inset-x-0 bottom-0 w-full'>
+        Support
+        
+      </footer>
     </div>
   );
 }
