@@ -3,7 +3,7 @@ import Settings from "./Settings";
 
 export default function Header(props) {
   return (
-    <div className="bg-gray-50 shadow-lg w-full  fixed italic">
+    <div className="bg-gray-50 shadow-lg w-full z-10 fixed italic">
       <div className="flex px-2 justify-between lg:px-12 ">
         <div className="flex items-center h-12">
           {!props.sidebr && (

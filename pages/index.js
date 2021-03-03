@@ -10,7 +10,7 @@ export default function index() {
     <div>
       {login === false ? <Dashboard /> : <Login />}
       <button
-        className="flex justify-center items-center w-full focus:outline-none"
+        className=" justify-center absolute right-28 bg-yellow-200 p-1 focus:outline-none"
         onClick={() => setLogin(!login)}
       >
         Klik

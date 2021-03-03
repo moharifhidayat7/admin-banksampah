@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 export default function Layout(props) {
   const [sidebr, setSidebr] = useState(true);
   return (
-    <div className="bg-gray-50">
+    <div>
       <Head>
         <title>{props.title}</title>
       </Head>
@@ -20,11 +20,7 @@ export default function Layout(props) {
         {props.children}
        
       </div>
-      <div className=" flex justify-center">
-        <footer className="bottom-0">
-          Copyrigth Stikom Kampus Merdeka 2021
-        </footer>
-      </div>
+     
     </div>
   );
 }
