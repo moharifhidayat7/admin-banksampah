@@ -9,14 +9,13 @@ export default function index() {
 
   return (
     <div>
-      {login===false ? (
-        <Layout title="Dashboard">
-          <Dashboard />
-        </Layout>
-      ) : (
-        <Login />
-      )}
-      <button className='flex justify-center items-center w-full focus:outline-none' onClick={() => setLogin(!login)}>Klik</button>
+      {login === false ? <Dashboard /> : <Login />}
+      <button
+        className="flex justify-center items-center w-full focus:outline-none"
+        onClick={() => setLogin(!login)}
+      >
+        Klik
+      </button>
     </div>
   );
 }

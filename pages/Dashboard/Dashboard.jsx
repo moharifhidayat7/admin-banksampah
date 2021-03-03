@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Dashboard() {
     return (
-        <div>
+        <Layout title="Dashboard">
             Halo Koko
-        </div>
+            </Layout>
     )
 }
