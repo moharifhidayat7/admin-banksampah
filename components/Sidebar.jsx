@@ -36,11 +36,14 @@ export default function Sidebar(props) {
         />
       </div>
 
-      <footer className=" mt-12  pb-2 pl-2 text-center space-x-2 flex items-center text-sm italic">
-        <p>Suport Browser</p>
+      <footer className=" mt-12  pb-2 pl-2  text-center   text-sm italic">
+        Browser Suport
+        <div className='flex space-x-2 items-center justify-center'>
         <img className="w-4" src="chrome.png" alt="crome" />
         <img className="w-4" src="internet-explorer.png" alt="explorer" />
         <img className="w-4" src="mozilla.png" alt="mozilla" />
+        </div>
+       
       </footer>
     </div>
   );
