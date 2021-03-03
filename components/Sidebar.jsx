@@ -5,7 +5,7 @@ export default function Sidebar(props) {
   return (
     <div
       hidden={props.sidebr}
-      className="left-0 bottom-0 top-0 fixed shadow-lg w-72 bg-white h-full pt-16 overflow-y-auto"
+      className="left-0  fixed shadow-lg w-72 bg-white h-full pt-16 overflow-y-auto"
     >
       <div className="ml-8 p-2 h-full mr-4  overflow-x-hidden">
         <h3 className=" font-bold text-blue-700 mb-2">MENU</h3>
@@ -16,11 +16,6 @@ export default function Sidebar(props) {
           submenu={["Card Pemasukan", "Card Pengeluaran", "Total"]}
         />
 
-        <MenuSidebar
-          menu="Nasabah"
-          icon="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-          submenu={["Pendaftaran", "Konfirmasi", "Detail Nasabah"]}
-        />
         <MenuSidebar
           menu="Nasabah"
           icon="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
