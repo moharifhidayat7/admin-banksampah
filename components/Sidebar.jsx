@@ -5,7 +5,7 @@ export default function Sidebar(props) {
   return (
     <div
       hidden={props.sidebr}
-      className="left-0 fixed  shadow-lg w-52 bg-white h-full overflow-y-auto"
+      className="left-0 fixed shadow-lg w-52 bg-white h-full overflow-y-auto"
     >
       <div className="pt-16 ml-8 mr-4">
         <h3 className=" font-bold text-blue-700 mb-2">MENU</h3>
@@ -35,11 +35,8 @@ export default function Sidebar(props) {
           ]}
         />
       </div>
-    
-      <footer className='bg-red-300 absolute inset-x-0 bottom-0 w-full'>
-        Support
-        
-      </footer>
+
+      <footer className="sticky mb-2 ml-2 text-center h-auto bg-blue-300 bottom-0">Support</footer>
     </div>
   );
 }
