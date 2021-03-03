@@ -5,7 +5,7 @@ export default function Sidebar(props) {
   return (
     <div
       hidden={props.sidebr}
-      className="left-0 bottom-0 fixed shadow-lg w-72 bg-white h-full pt-16 overflow-y-auto"
+      className="left-0  fixed shadow-lg w-72 bg-white h-full pt-16 overflow-y-auto"
     >
       <div className="ml-8 p-2 h-full mr-4  overflow-x-hidden">
         <h3 className=" font-bold text-blue-700 mb-2">MENU</h3>
@@ -37,7 +37,7 @@ export default function Sidebar(props) {
           ]}
         />
 
-        <footer className=" mt-8   pb-2   text-center   text-sm italic">
+        <footer className=" mt-8 pb-2 text-center   text-sm italic">
           Browser Suport
           <div className="flex space-x-2 items-center justify-center">
             <img className="w-4" src="chrome.png" alt="crome" />
