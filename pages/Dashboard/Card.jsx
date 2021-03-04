@@ -6,28 +6,28 @@ export default function Card() {
       <div className="px-5 py-2 text-gray-500 text-lg font-bold">
         Dashboard Card
       </div>
-      <div className="md:flex py-4 w-full justify-center block text-center  md:justify-between px-16">
-        <div className="">
-          <h3 className="text-gray-500 mb-2">Uang Masuk</h3>
-          <div className="flex space-x-4 items-center">
+      <div className="md:flex py-4 w-full text-center  md:justify-between px-16">
+        <div className='space-y-4'>
+          <h3 className="text-gray-500 my-2">Uang Masuk</h3>
+          <div className="flex space-x-4 justify-center items-center">
             <div className="w-20 p-4 rounded-full bg-green-300">
               <img src="cash-deposit.svg" alt="deposit" />
             </div>
             <div className="font-bold text-3xl">1.7M</div>
           </div>
         </div>
-        <div className="">
-          <h3 className="text-gray-500 mb-2">Uang Keluar</h3>
-          <div className="flex space-x-4 items-center">
+        <div className="space-y-4">
+          <h3 className="text-gray-500 my-2">Uang Keluar</h3>
+          <div className="flex space-x-4 justify-center items-center">
             <div className="w-20 p-4 rounded-full bg-red-300">
               <img src="money-transaction.svg" alt="uang keluar" />
             </div>
             <div className="font-bold text-3xl">1.7M</div>
           </div>
         </div>
-        <div className="">
-          <h3 className="text-gray-500 mb-2">Uang Keluar</h3>
-          <div className="flex space-x-4 items-center">
+        <div className="space-y-4">
+          <h3 className="text-gray-500 my-2">Uang Keluar</h3>
+          <div className="flex space-x-4 justify-center items-center">
             <div className="w-20 p-4 rounded-full bg-red-300">
               <img src="money-transaction.svg" alt="uang keluar" />
             </div>
