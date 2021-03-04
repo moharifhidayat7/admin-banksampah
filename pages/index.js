@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout";
-import Dashboard from "./Dashboard/Dashboard";
+import Dashboard from "./Admin/Dashboard";
 export default function index() {
   const [login, setLogin] = useState(true);
 

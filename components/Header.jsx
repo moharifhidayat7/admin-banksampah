@@ -8,7 +8,7 @@ export default function Header(props) {
         <div className="flex items-center h-12">
           {!props.sidebr && (
             <div className="w-28 mr-10">
-              <img src="logo.svg" alt="logo" />
+              <img src="/logo.svg" alt="logo" />
             </div>
           )}
 

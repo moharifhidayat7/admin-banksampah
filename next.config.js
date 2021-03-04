@@ -2,12 +2,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/login",
+        source: "/Auth/login",
         destination: "/Auth/Login",
       },
       {
         source: "/Dashboard",
-        destination: "/Dashboard/Dashboard",
+        destination: "/Admin/Dashboard",
       },
     ];
   },
