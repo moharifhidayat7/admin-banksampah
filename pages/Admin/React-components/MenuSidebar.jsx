@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function MenuSidebar(props) {
-  const [stateOptions, setStateValues] = useState(props.submenu);
-
   return (
     <div className="mt-4">
       <div className="p-0.5 mx-1 px-1 shadow-md rounded-md transition border-l-4 hover:border-yellow-200 hover:shadow bg-blue-100 flex justify-between  cursor-pointer duration-300 duration-500 ease-in-out  transform hover:scale-110 ">
@@ -46,7 +44,7 @@ export default function MenuSidebar(props) {
       <div className="ml-1">
         {/* Sub child */}
         <div className="ml-4 font-light text-sm  cursor-default">
-          {stateOptions.map((value, i) => {
+          {props.submenu.map((value, i) => {
             return (
               <div
                 key={i}
