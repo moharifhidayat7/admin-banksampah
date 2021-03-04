@@ -17,12 +17,12 @@ export default function Card() {
           </div>
         </div>
         <div className="space-y-4">
-          <h3 className="text-gray-500 my-2">Anggaran</h3>
+          <h3 className="text-gray-500 my-2">Nasabah</h3>
           <div className="flex space-x-4 justify-center items-center">
             <div className="w-20 p-4 rounded-full bg-yellow-300">
-              <img src="money-transaction.svg" alt="uang keluar" />
+              <img src="team.svg" alt="Nasabah" />
             </div>
-            <div className="font-bold text-3xl">1.7M</div>
+            <div className="font-bold text-3xl">2K</div>
           </div>
         </div>
         <div className="space-y-4">
