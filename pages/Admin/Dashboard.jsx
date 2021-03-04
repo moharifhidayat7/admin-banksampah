@@ -1,6 +1,5 @@
-import React from "react";
-import Layout from "../../components/Layout";
 import Card from "./Card";
+import Layout from "./React-components/Layout";
 export default function Dashboard() {
   return (
     <Layout title="Dashboard">
