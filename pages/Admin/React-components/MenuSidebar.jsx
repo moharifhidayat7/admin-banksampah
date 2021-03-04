@@ -44,18 +44,7 @@ export default function MenuSidebar(props) {
       <div className="ml-1">
         {/* Sub child */}
         <div className="ml-4 font-light text-sm  cursor-default">
-          {props.submenu.map((value, i) => {
-            return (
-              <div
-                key={i}
-                className={`border-l-2 pl-4 ${
-                  i % 2 === 0 ? ` border-red-200` : ` border-green-200 `
-                } ${props.submenu.length - 1 === i ? `rounded-bl-md ` : `pb-2`}`}
-              >
-                {value}
-              </div>
-            );
-          })}
+          
         </div>
       </div>
     </div>
