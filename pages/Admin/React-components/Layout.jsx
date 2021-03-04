@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 export default function Layout(props) {
-  const [sidebr, setSidebr] = useState(true);
+  const [sidebr, setSidebr] = useState(false);
+
+  // Menyimpan data togler di memory
+  useEffect(() => {
+    let a = localStorage.getItem("togler");
+    if (a === "false" || a === null) {
+      setSidebr(!sidebr);
+    } else {
+      setSidebr(sidebr);
+    }
+  }, []);
+
   return (
     <div>
       <Head>
         <title>{props.title}</title>
       </Head>
-      <Sidebar  sidebr={sidebr} />
+      <Sidebar sidebr={sidebr} />
       <Header openSide={setSidebr} sidebr={sidebr} />
       <div
         className={`${
@@ -18,9 +29,7 @@ export default function Layout(props) {
         } pt-16 static z-0 container mx-auto`}
       >
         {props.children}
-       
       </div>
-     
     </div>
   );
 }

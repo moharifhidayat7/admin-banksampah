@@ -1,7 +1,10 @@
-
 import Settings from "./Settings";
 
 export default function Header(props) {
+  const toggler = () => {
+    props.openSide(!props.sidebr);
+    localStorage.setItem("togler", props.sidebr);
+  };
   return (
     <div className="bg-gray-50 shadow-lg w-full z-10 fixed italic">
       <div className="flex px-2 justify-between lg:px-12 ">
@@ -13,7 +16,7 @@ export default function Header(props) {
           )}
 
           <div
-            onClick={() => props.openSide(!props.sidebr)}
+            onClick={toggler}
             className="w-8 text-blue-700 mr-4 lg:mr-10 cursor-pointer pointer-events"
           >
             <svg
@@ -40,7 +43,11 @@ export default function Header(props) {
               )}
             </svg>
           </div>
-          <div className={`${props.sidebr?`flex`:` hidden`} bg-gray-200  items-center lg:flex rounded-2xl p-0.5  justify-between`}>
+          <div
+            className={`${
+              props.sidebr ? `flex` : ` hidden`
+            } bg-gray-200  items-center lg:flex rounded-2xl p-0.5  justify-between`}
+          >
             <input
               type="text"
               className="focus:outline-none bg-transparent lg:w-52  p-1 pl-2 text-sm lg:text-base"
@@ -69,7 +76,10 @@ export default function Header(props) {
             alt="profile"
           />
           <div className="items-center -space-y-1  hidden lg:block ">
-            <div className="font-bold text-base opacity-50"> My Name is Koko </div>
+            <div className="font-bold text-base opacity-50">
+              {" "}
+              My Name is Koko{" "}
+            </div>
             <div className="text-xs font-light font-mono">
               Manager bank sampah
             </div>

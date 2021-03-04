@@ -6,7 +6,6 @@ export default function Login() {
     return (
         <Layout title='Login'>
             Login Dulu
-        
         </Layout>
     )
 }

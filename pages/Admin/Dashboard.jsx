@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "./React-components/Card";
 import Layout from "./React-components/Layout";
 export default function Dashboard() {
   return (
