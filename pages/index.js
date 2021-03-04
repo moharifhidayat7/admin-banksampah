@@ -8,7 +8,7 @@ export default function index() {
 
   return (
     <div>
-      {login === false ? <Dashboard /> : <Login />}
+      {login === true ? <Dashboard /> : <Login />}
       <button
         className=" justify-center absolute right-28 bg-yellow-200 p-1 focus:outline-none"
         onClick={() => setLogin(!login)}

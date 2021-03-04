@@ -10,7 +10,7 @@ export default function Layout(props) {
       <Head>
         <title>{props.title}</title>
       </Head>
-      <Sidebar sidebr={sidebr} />
+      <Sidebar  sidebr={sidebr} />
       <Header openSide={setSidebr} sidebr={sidebr} />
       <div
         className={`${

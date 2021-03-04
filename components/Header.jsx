@@ -69,7 +69,7 @@ export default function Header(props) {
             alt="profile"
           />
           <div className="items-center -space-y-1  hidden lg:block ">
-            <div className="font-bold text-base"> My Name is Koko </div>
+            <div className="font-bold text-base opacity-50"> My Name is Koko </div>
             <div className="text-xs font-light font-mono">
               Manager bank sampah
             </div>

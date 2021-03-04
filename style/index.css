@@ -1,3 +1,14 @@
-body{
-    background-color: #ecf3fc;
+body {
+  background-color: #f5f8fc;
+}
+.cardbg {
+  background-color: #ffffff;
+  opacity: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #fdfdfd,
+    #fdfdfd 13.5px,
+    #ffffff 13.5px,
+    #ffffff 67.5px
+  );
 }
