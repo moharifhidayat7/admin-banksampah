@@ -50,7 +50,7 @@ export default function MenuSidebar(props) {
                 key={i}
                 className={`border-l-2 pl-4 ${
                   i % 2 === 0 ? ` border-red-200` : ` border-green-200 `
-                } ${stateOptions.length - 1 === i ? `rounded-bl-md ` : `pb-2`}`}
+                } ${props.submenu.length - 1 === i ? `rounded-bl-md ` : `pb-2`}`}
               >
                 {value}
               </div>
