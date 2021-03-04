@@ -7,7 +7,7 @@ export default function MenuSidebar(props) {
   return (
     <div className="mt-4">
       <div className="p-0.5 mx-1 px-1 shadow-md rounded-md transition border-l-4 hover:border-yellow-200 hover:shadow bg-blue-100 flex justify-between items-center cursor-pointer duration-300 duration-500 ease-in-out  transform hover:scale-110 ">
-        <Link href='/Dashboard'>
+        <Link href={props.href}>
           <a className='className="focus:outline-none flex w-full justify-between  items-center"'>
             <div className="w-4 text-gray-300 mr-3">
               <svg
