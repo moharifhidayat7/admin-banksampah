@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function MenuSidebar(props) {
-  useEffect(() => {
-    console.log(props.submenu);
-  }, []);
+  
   return (
     <div className="mt-4 font-mono">
       <div className="p-0.5 mx-1 px-1 shadow-md rounded-md transition border-l-4 hover:border-yellow-200 hover:shadow bg-blue-100 flex justify-between  cursor-pointer duration-300 duration-500 ease-in-out  transform hover:scale-110 ">
@@ -28,6 +26,7 @@ export default function MenuSidebar(props) {
             {props.menu}
             <div className="w-4 text-gray-300">
               <svg
+              
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -57,8 +56,15 @@ export default function MenuSidebar(props) {
                   props.submenu.length - 1 === i ? `rounded-bl-md pt-1` : `py-1`
                 }`}
               >
-                <Link href={value.ref}><a className='hover:text-gray-600 text-gray-300'> {value.subtex} </a></Link>
-                
+                {!value.ref ? (
+                  <p className="text-gray-300">{value.subtex}</p>
+                ) : (
+                  <Link href={value.ref}>
+                    <a className="hover:text-gray-600 text-gray-300">
+                      {value.subtex}
+                    </a>
+                  </Link>
+                )}
               </div>
             );
           })}
