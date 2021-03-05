@@ -1,6 +1,7 @@
 import React from "react";
+import Pesan from "./Pesan";
 import Layout from "./React-components/Layout";
-import Tabel from "./React-components/Tabel";
+import DetailNasabah from "./DetailNasabah";
 
 export default function Nasabah() {
   return (
@@ -20,17 +21,41 @@ export default function Nasabah() {
           />
         </svg>
       </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        <div className="bg-white shadow-lg rounded-md p-2">
-          <div className="py-2 text-gray-500 md:text-lg text-base font-bold">
-            Kelompok
-          </div>
-          <Tabel/>
+      {/* Pesan Dan Konfirmasi */}
+      <Pesan />
+      {/* Detail Nasabah */}
+      <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <div id="#DetailNasabah" className="bg-white shadow-lg rounded-md p-2">
+          <div className="py-2 text-gray-700 font-bold">Kelompok</div>
+          <DetailNasabah>
+            <tr>
+              <td className="border-r text-center">1</td>
+              <td className="border-r">Indiana</td>
+              <td className="border-r">082227344311</td>
+              <td className="border-r">Banyuwangi</td>
+              <td className=" p-1">
+                <div className="flex justify-center">
+                  <img className="w-8 " src="/employee.svg" alt="detail" />
+                </div>
+              </td>
+            </tr>
+          </DetailNasabah>
         </div>
         <div className="bg-white shadow-xl rounded-md p-2">
-          <div className="py-2 text-gray-500 md:text-lg text-base font-bold">
-            Perorangan
-          </div>
+          <div className="py-2 text-gray-700 font-bold">Perorangan</div>
+          <DetailNasabah>
+            <tr>
+              <td className="border-r text-center">1</td>
+              <td className="border-r">Indiana</td>
+              <td className="border-r">082227344311</td>
+              <td className="border-r">Banyuwangi</td>
+              <td className=" p-1">
+                <div className="flex justify-center">
+                  <img className="w-8 " src="/employee.svg" alt="detail" />
+                </div>
+              </td>
+            </tr>
+          </DetailNasabah>
         </div>
       </div>
     </Layout>

@@ -10,8 +10,11 @@ export default function Header(props) {
       <div className="flex px-2 justify-between lg:px-12 ">
         <div className="flex items-center h-12">
           {!props.sidebr && (
-            <div className="w-28 mr-10">
-              <img src="/logo.svg" alt="logo" />
+            <div className="mr-10 flex items-center space-x-2">
+              <img className='rounded-full w-8' src="/Logo/banksampah.jfif" alt="logo" />
+              <div className='font-bold italic text-sm'><p>Bank Sampah</p>
+            <p>Banyuwangi</p></div>
+              
             </div>
           )}
 
