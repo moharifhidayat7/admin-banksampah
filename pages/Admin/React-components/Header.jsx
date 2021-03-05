@@ -19,29 +19,37 @@ export default function Header(props) {
             onClick={toggler}
             className="w-8 text-blue-700 mr-4 lg:mr-10 cursor-pointer pointer-events"
           >
-            <svg
-              className="transform  hover:scale-110 hover:rotate-2 "
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {props.sidebr ? (
+            {props.sidebr ? (
+              <svg
+                className="transform hover:-rotate-180  duration-700"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
                   d="M4 6h16M4 12h16M4 18h16"
                 />
-              ) : (
+              </svg>
+            ) : (
+              <svg
+                className="transform hover:scale-110 hover:rotate-90 duration-700"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
                   d="M6 18L18 6M6 6l12 12"
                 />
-              )}
-            </svg>
+              </svg>
+            )}
           </div>
           <div
             className={`${

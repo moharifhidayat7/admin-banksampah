@@ -26,7 +26,7 @@ export default function Layout(props) {
       <div
         className={`${
           sidebr ? `px-4` : `lg:pl-72`
-        } pt-16 static z-0 container mx-auto`}
+        } pt-28 static z-0 container mx-auto `}
       >
         {props.children}
       </div>

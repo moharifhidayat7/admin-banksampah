@@ -2,7 +2,7 @@ import Layout from "./React-components/Layout";
 export default function Dashboard() {
   return (
     <Layout title="Dashboard">
-      <div className="p-2 mt-8 mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
+      <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -23,7 +23,7 @@ export default function Dashboard() {
         </div>
         <div className="md:flex py-4 w-full text-center  md:justify-between px-16">
           <div className="space-y-4">
-            <h3 className="text-gray-500 my-2">Uang Masuk</h3>
+            <h3 className="text-gray-500 my-2">Tabungan</h3>
             <div className="flex space-x-4 justify-center items-center">
               <div className="w-20 p-4 rounded-full bg-green-300">
                 <img src="/cash-deposit.svg" alt="deposit" />
@@ -41,7 +41,7 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-gray-500 my-2">Uang Keluar</h3>
+            <h3 className="text-gray-500 my-2">Kontan</h3>
             <div className="flex space-x-4 justify-center items-center">
               <div className="w-20 p-4 rounded-full bg-red-300">
                 <img src="/money-transaction.svg" alt="uang keluar" />
