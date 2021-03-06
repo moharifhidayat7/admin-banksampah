@@ -62,7 +62,7 @@ export default function Header(props) {
           <div
             className={`${
               props.sidebr ? `flex` : ` hidden`
-            } bg-green-100 overflow-hidden items-center lg:flex rounded-2xl p-0.5 pl-2 justify-between`}
+            } bg-white overflow-hidden items-center lg:flex rounded-2xl shadow  pl-2 justify-between`}
           >
             <input
               type="text"

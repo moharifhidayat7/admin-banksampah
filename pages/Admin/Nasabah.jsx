@@ -45,16 +45,17 @@ export default function Nasabah() {
           <div className="py-2 text-gray-700 font-bold">Perorangan</div>
           <DetailNasabah>
             <tr>
-              <td className="border-r text-center">1</td>
+              <td className="border-r text-center">1.</td>
               <td className="border-r">Indiana</td>
               <td className="border-r">082227344311</td>
-              <td className="border-r">Banyuwangi</td>
+              <td className="border-r">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, nesciunt.</td>
               <td className=" p-1">
-                <div className="flex justify-center">
-                  <img className="w-8 " src="/employee.svg" alt="detail" />
+                <div className="flex justify-center ">
+                  <img className="w-8" src="/employee.svg" alt="detail" />
                 </div>
               </td>
             </tr>
+            
           </DetailNasabah>
         </div>
       </div>
