@@ -5,10 +5,10 @@ export default function MenuSidebar(props) {
   
   return (
     <div className="mt-4 font-mono">
-      <div className="p-0.5 mx-1 px-1 shadow-md rounded-md transition border-l-4 hover:border-yellow-200 hover:shadow bg-blue-100 flex justify-between  cursor-pointer duration-300 duration-500 ease-in-out  transform hover:scale-110 ">
+      <div className="p-0.5 mx-1 px-1 shadow-md rounded-md transition border-l-4 hover:border-yellow-200 hover:shadow bg-green-100 flex justify-between  cursor-pointer duration-300 duration-500 ease-in-out  transform hover:scale-110 ">
         <Link href={props.href}>
-          <div className="focus:outline-none text-gray-600 font-bold  flex w-full justify-between items-center">
-            <div className="w-4 text-gray-300 mr-3">
+          <div className="focus:outline-none text-gray-700 font-bold  flex w-full justify-between items-center">
+            <div className="w-4 text-gray-500 mr-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -57,10 +57,10 @@ export default function MenuSidebar(props) {
                 }`}
               >
                 {!value.ref ? (
-                  <p className="text-gray-300">{value.subtex}</p>
+                  <p className="text-gray-500">{value.subtex}</p>
                 ) : (
                   <Link href={value.ref}>
-                    <a className="hover:text-gray-600 text-gray-300">
+                    <a className="hover:text-gray-600 text-gray-500">
                       {value.subtex}
                     </a>
                   </Link>

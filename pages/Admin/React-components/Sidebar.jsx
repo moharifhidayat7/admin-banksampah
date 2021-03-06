@@ -40,7 +40,6 @@ export default function Sidebar(props) {
             { subtex: "Input Sampah", ref: "/Admin/Sampah" },
             { subtex: "Pembelian Sampah", ref: "/Admin/Sampah" },
             { subtex: "Detail Transaksi", ref: "/Admin/Sampah" },
-            ,
           ]}
         />
 

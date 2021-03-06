@@ -11,16 +11,21 @@ export default function Header(props) {
         <div className="flex items-center h-12">
           {!props.sidebr && (
             <div className="mr-10 flex items-center space-x-2">
-              <img className='rounded-full w-8' src="/Logo/banksampah.jfif" alt="logo" />
-              <div className='font-bold italic text-sm'><p>Bank Sampah</p>
-            <p>Banyuwangi</p></div>
-              
+              <img
+                className="rounded-full w-8"
+                src="/Logo/banksampah.jfif"
+                alt="logo"
+              />
+              <div className="font-bold italic text-sm">
+                <p>Bank Sampah</p>
+                <p>Banyuwangi</p>
+              </div>
             </div>
           )}
 
           <div
             onClick={toggler}
-            className="w-8 text-blue-700 mr-4 lg:mr-10 cursor-pointer pointer-events"
+            className="w-8 text-green-700 mr-4 lg:mr-10 cursor-pointer pointer-events"
           >
             {props.sidebr ? (
               <svg
@@ -57,14 +62,14 @@ export default function Header(props) {
           <div
             className={`${
               props.sidebr ? `flex` : ` hidden`
-            } bg-gray-200  items-center lg:flex rounded-2xl p-0.5  justify-between`}
+            } bg-green-100 overflow-hidden items-center lg:flex rounded-2xl p-0.5 pl-2 justify-between`}
           >
             <input
               type="text"
-              className="focus:outline-none bg-transparent lg:w-52  p-1 pl-2 text-sm lg:text-base"
+              className="focus:outline-none  bg-transparent lg:w-60 w-52   text-sm lg:text-base"
               placeholder="Apa yang anda cari?"
             />
-            <div className="w-8 text-blue-700 cursor-pointer">
+            <div className="w-8 text-green-700 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -88,8 +93,7 @@ export default function Header(props) {
           />
           <div className="items-center -space-y-1  hidden lg:block ">
             <div className="font-bold text-base opacity-50">
-              {" "}
-              My Name is Koko{" "}
+              My Name is Koko
             </div>
             <div className="text-xs font-light font-mono">
               Manager bank sampah
