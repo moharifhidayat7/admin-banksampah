@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import Header from "./Header";
+import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
 export default function Layout(props) {
@@ -20,9 +20,10 @@ export default function Layout(props) {
     <div>
       <Head>
         <title>{props.title}</title>
+        <link rel="icon" href="/favicon.jfif" />
       </Head>
       <Sidebar sidebr={sidebr} />
-      <Header openSide={setSidebr} sidebr={sidebr} />
+      <Navbar openSide={setSidebr} sidebr={sidebr} />
       <div
         className={`${
           sidebr ? `px-4` : ` lg:pl-72`

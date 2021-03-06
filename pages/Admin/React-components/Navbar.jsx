@@ -6,7 +6,7 @@ export default function Header(props) {
     localStorage.setItem("togler", props.sidebr);
   };
   return (
-    <div className="bg-gray-50 shadow-lg w-full z-10 fixed italic">
+    <div className="bg-gradient-to-l from-green-300 to-white shadow-lg w-full z-10 fixed italic">
       <div className="flex px-2 justify-between lg:px-12 ">
         <div className="flex items-center h-12">
           {!props.sidebr && (
