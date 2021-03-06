@@ -7,49 +7,37 @@ export default function Nasabah() {
   return (
     <Layout title="Nasabah">
       <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1}
-            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-          />
-        </svg>
+        <img src="/logo/team.svg" alt="nasabah"/>
       </div>
       {/* Pesan Dan Konfirmasi */}
       <Pesan />
       {/* Detail Nasabah */}
       <div className="grid md:grid-cols-2 gap-4 mb-4">
-        <div id="#DetailNasabah" className="bg-white shadow-lg rounded-md p-2">
-          <div className="py-2 text-gray-700 font-bold">Kelompok</div>
+        <div>
+          <p className="py-2 text-gray-700 font-bold">Kelompok</p>
           <DetailNasabah>
             <tr>
-              <td className="border-r text-center">1</td>
-              <td className="border-r">Indiana</td>
-              <td className="border-r">082227344311</td>
-              <td className="border-r">Banyuwangi</td>
-              <td className=" p-1">
+              <td className="border-r border-gray-700 text-center">1</td>
+              <td className="border-r border-gray-700">Indiana</td>
+              <td className="border-r border-gray-700">082227344311</td>
+              <td className="border-r border-gray-700">Banyuwangi</td>
+              <td className="">
                 <div className="flex justify-center">
-                  <img className="w-8 " src="/employee.svg" alt="detail" />
+                  <img className="w-8" src="/employee.svg" alt="detail" />
                 </div>
               </td>
             </tr>
           </DetailNasabah>
         </div>
-        <div className="bg-white shadow-xl rounded-md p-2">
-          <div className="py-2 text-gray-700 font-bold">Perorangan</div>
+        <div>
+          <p className="py-2 text-gray-700 font-bold">Perorangan</p>
           <DetailNasabah>
             <tr>
-              <td className="border-r text-center">1.</td>
-              <td className="border-r">Indiana</td>
-              <td className="border-r">082227344311</td>
-              <td className="border-r">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, nesciunt.</td>
-              <td className=" p-1">
+              <td className="border-r border-gray-700 text-center">1.</td>
+              <td className="border-r border-gray-700">Indiana</td>
+              <td className="border-r border-gray-700">082227344311</td>
+              <td className="border-r border-gray-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, nesciunt.</td>
+              <td >
                 <div className="flex justify-center ">
                   <img className="w-8" src="/employee.svg" alt="detail" />
                 </div>

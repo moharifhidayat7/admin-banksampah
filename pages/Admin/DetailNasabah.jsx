@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Tabel({ children }) {
   return (
-    <div className='border rounded-lg overflow-hidden'>
+    <div className='border border-gray-700 rounded-lg overflow-hidden shadow-lg'>
     <table className="table-fixed ">
       <thead className='bg-gray-700 text-white'> 
         <tr>
@@ -13,7 +13,7 @@ export default function Tabel({ children }) {
           <th className="w-1/12 ">Ktp</th>
         </tr>
       </thead>
-      <tbody>{children}</tbody>
+      <tbody className='bg-white'>{children}</tbody>
     </table>
     </div>
   );
