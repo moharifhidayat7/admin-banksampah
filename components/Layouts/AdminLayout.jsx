@@ -7,10 +7,18 @@ export default function AdminLayout({ children }) {
     return (
         <>
             <Navbar />
-            <div class='h-screen flex'>
+            <div className='h-screen flex'>
                 <Sidebar>
                     <Menu>
-                        <MenuGroup>
+                        <MenuGroup name="General">
+                            <MenuItem
+                                showSub={false}
+                                icon={
+                                    <Icons.Archive className='inline-block mr-2 align-middle' />
+                                }
+                            >
+                                <SubMenu title='COBA' route='/home' />
+                            </MenuItem>
                             <MenuItem
                                 showSub={false}
                                 icon={
