@@ -10,7 +10,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      translate: ["motion-reduce"],
+      
     },
   },
   plugins: [],

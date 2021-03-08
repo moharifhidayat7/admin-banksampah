@@ -6,7 +6,7 @@ export default function Settings(props) {
   return (
     <div className="relative inline-block text-left">
       <div
-        className="w-7 text-gray-700 ml-6 cursor-pointer"
+        className="w-7 text-green-700 ml-6 bg-white rounded-full cursor-pointer"
         onClick={() => setOpti(!opti)}
       >
         <svg
