@@ -8,11 +8,6 @@ const Dashboard = () => {
             <Head>
                 <title>Dashboard</title>
             </Head>
-            <div className='shadow-md cardbg rounded-md  divide-y divide-fuchsia-300 '>
-                <div className='px-5 py-2 text-gray-500 text-lg font-bold'>
-                    Dashboard Card
-                </div>
-                <div className="md:flex justify-center md:space-x-4 lg:space-x-16 space-y-16 md:space-y-0">
         <Card
           gambar="/logo/cash-deposit.svg"
           warna="bg-green-200"
@@ -34,8 +29,6 @@ const Dashboard = () => {
           judul="Kontan"
           total="Rp. 7189"
         />
-      </div>
-            </div>
         </AdminLayout>
     );
 };
