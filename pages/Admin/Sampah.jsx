@@ -39,7 +39,7 @@ export default function Sampah() {
                 className="block appearance-none bg-white focus:outline-none px-2 py-1 focus:bg-white mb-2 rounded-md w-full focus:ring-blue-300 focus:ring-2 shadow-md"
                 placeholder="Input Harga"
               />
-              <label className="font-mono">Type:</label>
+              <label className="font-mono">Type :</label>
               <select className="mb-2 bg-white shadow-md px-2 focus:outline-none  w-32">
                 <option>Lain-Lain</option>
                 <option>Kertas</option>

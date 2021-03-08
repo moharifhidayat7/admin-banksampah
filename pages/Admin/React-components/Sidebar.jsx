@@ -31,15 +31,23 @@ export default function Sidebar(props) {
             { subtex: "Konfirmasi", ref: "/Admin/Nasabah" },
           ]}
         />
+        <MenuSidebar
+          href="/Admin/Pembelian"
+          menu="Pembelian"
+          icon="/logo/shopping-bag.png"
+          submenu={[
+            { subtex: "Pembelian Sampah", ref: "/Admin/Pembelian" },
+            { subtex: "Detail Transaksi", ref: "/Admin/Pembelian" },
+          ]}
+        />
 
         <MenuSidebar
           href="/Admin/Sampah"
           menu="Sampah"
-          icon="/logo/recycling.png" 
+          icon="/logo/recycling.png"
           submenu={[
             { subtex: "Input Sampah", ref: "/Admin/Sampah" },
-            { subtex: "Pembelian Sampah", ref: "/Admin/Sampah" },
-            { subtex: "Detail Transaksi", ref: "/Admin/Sampah" },
+            { subtex: "Detail Sampah", ref: "/Admin/Sampah" },
           ]}
         />
 
@@ -47,7 +55,11 @@ export default function Sidebar(props) {
           Browser Suport
           <div className="flex space-x-2 items-center justify-center">
             <img className="w-4" src="/logo/chrome.png" alt="crome" />
-            <img className="w-4" src="/logo/internet-explorer.png" alt="explorer" />
+            <img
+              className="w-4"
+              src="/logo/internet-explorer.png"
+              alt="explorer"
+            />
             <img className="w-4" src="/logo/mozilla.png" alt="mozilla" />
           </div>
         </footer>
