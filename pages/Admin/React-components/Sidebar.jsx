@@ -26,9 +26,9 @@ export default function Sidebar(props) {
           menu="Nasabah"
           icon="/logo/team.svg"
           submenu={[
-            { subtex: "Detail Nasabah", ref: "/Admin/Nasabah" },
-            { subtex: "Pengambilan Sampah", ref: "/Admin/Nasabah" },
-            { subtex: "Konfirmasi", ref: "/Admin/Nasabah" },
+            { subtex: "Detail Nasabah", ref: "" },
+            { subtex: "Kelompok", ref: "" },
+            { subtex: "Perorangan", ref: "" },
           ]}
         />
         <MenuSidebar
@@ -36,8 +36,8 @@ export default function Sidebar(props) {
           menu="Pembelian"
           icon="/logo/shopping-bag.png"
           submenu={[
-            { subtex: "Pembelian Sampah", ref: "/Admin/Pembelian" },
-            { subtex: "Detail Transaksi", ref: "/Admin/Pembelian" },
+            { subtex: "Pembelian Sampah", ref: "" },
+            { subtex: "Detail Transaksi", ref: "" },
           ]}
         />
 
@@ -46,8 +46,8 @@ export default function Sidebar(props) {
           menu="Sampah"
           icon="/logo/recycling.png"
           submenu={[
-            { subtex: "Input Sampah", ref: "/Admin/Sampah" },
-            { subtex: "Detail Sampah", ref: "/Admin/Sampah" },
+            { subtex: "Input Sampah", ref: "" },
+            { subtex: "Detail Sampah", ref: "" },
           ]}
         />
 
