@@ -7,7 +7,7 @@ export default function Header(props) {
   };
   return (
     <div className="bg-gradient-to-l from-green-300 to-white shadow-lg w-full z-10 fixed italic">
-      <div className="flex px-2 justify-between lg:px-12 ">
+      <div className="flex px-8 justify-evenly sm:justify-between lg:px-12 ">
         <div className="flex items-center h-12">
           {!props.sidebr && (
             <div className="mr-10 flex items-center space-x-2">
