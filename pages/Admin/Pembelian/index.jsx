@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Belisampah from "./Belisampah";
-import Layout from "../React-components/Layout";
+import AdminLayout from "../../../components/Layouts/AdminLayout";
 import Detailtransaksi from "./Detailtransaksi";
 function Index() {
   const [modal, setModal] = useState(true);
   return (
-    <Layout title="Pembelian">
+    <AdminLayout>
       <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
         <img src="/logo/shopping-bag.png" alt="nasabah" />
       </div>
@@ -13,7 +13,7 @@ function Index() {
       <Belisampah modal={modal} setModal={setModal} />
       {/* Tabel Detail */}
       <Detailtransaksi setModal={setModal} />
-    </Layout>
+    </AdminLayout>
   );
 }
 

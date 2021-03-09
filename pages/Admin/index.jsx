@@ -9,7 +9,7 @@ const Dashboard = () => {
         
         <title>Dashboard</title>
       </Head>
-      <div className="flex space-x-8 justify-center">
+      <div className="md:flex md:space-x-8  space-y-20 md:space-y-0  pb-4 justify-center">
    
         <Card
           gambar="/logo/cash-deposit.svg"
