@@ -2,10 +2,12 @@ import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import * as Icons from "heroicons-react";
 import { Menu, MenuGroup, MenuItem, SubMenu } from "../Menu";
+import Head from 'next/head'
 
 export default function AdminLayout({ children }) {
     return (
         <>
+      
             <Navbar />
             <div className='h-screen flex'>
                 <Sidebar>

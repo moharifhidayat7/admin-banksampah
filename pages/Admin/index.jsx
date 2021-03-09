@@ -6,9 +6,10 @@ const Dashboard = () => {
   return (
     <AdminLayout>
       <Head>
+        
         <title>Dashboard</title>
       </Head>
-      <div className="flex justify-center">
+      <div className="flex space-x-8 justify-center">
    
         <Card
           gambar="/logo/cash-deposit.svg"
