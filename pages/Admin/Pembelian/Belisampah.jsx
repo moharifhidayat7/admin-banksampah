@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import Tabel from "../React-components/Tabel";
 
 function Belisampah({ modal, setModal }) {
+  const [todo, setTodo] = useState([]);
+  const addColumn = () => {
+    // TambahColumn
+    setTodo([
+      ...todo,
+      <>
+        <td className="text-center border-r"></td>
+        <td className="text-center border-r"></td>
+        <td className="text-center border-r">
+          <input
+            value="Rp.2000"
+            readOnly
+            className="w-20 focus:outline-none bg-transparent "
+          />
+        </td>
+        <td className="flex items-center justify-center">
+          <input
+            type="text"
+            maxLength={5}
+            className="bg-transparent w-full focus:outline-none "
+            placeholder="kg"
+          />
+        </td>
+      </>,
+    ]);
+  };
+  const delColumn = () => {
+    const temp = [...todo];
+    for (let i = 0; i <= todo.length; i++) {
+      temp.splice(i, 1);
+    }
+
+    setTodo(temp);
+    console.log(todo);
+  };
+  const cancelM = () => {
+    setModal(true);
+    setTodo([]);
+  };
   return (
     <div
       className="absolute w-full h-full bg-opacity-50 bg-black z-10 inset-0 overflow-y-auto "
@@ -79,7 +118,7 @@ function Belisampah({ modal, setModal }) {
                         className="w-20 focus:outline-none bg-transparent "
                       />
                     </td>
-                    <td className='flex items-center justify-center'>
+                    <td className="flex items-center justify-center">
                       <input
                         type="text"
                         maxLength={5}
@@ -88,17 +127,26 @@ function Belisampah({ modal, setModal }) {
                       />
                     </td>
                   </tr>
+                  {todo.map((v, k) => {
+                    if (todo.length === 0) {
+                      return <p></p>;
+                    } else {
+                      return <tr key={k}>{v}</tr>;
+                    }
+                  })}
                 </Tabel>
                 <div className="flex justify-center">
                   <button
-                    className="block h-5 w-5 rounded-full bg-red-500"
-                    disabled
+                    className="block h-5 w-5 focus:outline-none rounded-full bg-red-500"
+                    type="button"
+                    onClick={delColumn}
                   >
                     -
                   </button>
                   <button
-                    className="h-5 w-5 rounded-full bg-green-500"
-                    disabled
+                    type="button"
+                    className="h-5 w-5 focus:outline-none rounded-full text-center bg-green-500"
+                    onClick={addColumn}
                   >
                     +
                   </button>
@@ -115,7 +163,7 @@ function Belisampah({ modal, setModal }) {
             <button
               type="button"
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={() => setModal(true)}
+              onClick={cancelM}
             >
               Cancel
             </button>
