@@ -3,11 +3,13 @@ import Head from "next/head";
 import Card from "./Card";
 
 const Dashboard = () => {
-    return (
-        <AdminLayout>
-            <Head>
-                <title>Dashboard</title>
-            </Head>
+  return (
+    <AdminLayout>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
+      <div className="flex justify-center">
+   
         <Card
           gambar="/logo/cash-deposit.svg"
           warna="bg-green-200"
@@ -29,8 +31,9 @@ const Dashboard = () => {
           judul="Kontan"
           total="Rp. 7189"
         />
-        </AdminLayout>
-    );
+      </div>
+    </AdminLayout>
+  );
 };
 
 export default Dashboard;
