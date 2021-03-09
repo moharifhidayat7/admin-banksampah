@@ -1,9 +1,11 @@
 import React from "react";
 
-function Card({ judul, gambar, total, alt, warna }) {
+function Card({ judul, gambar, total, alt, warna, lebar }) {
   return (
     <div className="flex justify-center md:block">
-      <div className="bg-white  w-80 rounded-md shadow-lg overflow-hidden">
+      <div
+        className={`bg-white   rounded-md shadow-lg overflow-hidden ${lebar}`}
+      >
         <div className={`${warna} text-center text-lg font-bold text-gray-600`}>
           {judul}
         </div>
