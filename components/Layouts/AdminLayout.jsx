@@ -12,7 +12,7 @@ export default function AdminLayout({ children }) {
                     <Menu>
                         <MenuGroup>
                             <MenuItem
-                                route='/tes'
+                                showSub={false}
                                 icon={
                                     <Icons.Menu className='inline-block mr-2 align-middle' />
                                 }
@@ -23,7 +23,7 @@ export default function AdminLayout({ children }) {
                     </Menu>
                 </Sidebar>
 
-                <div class='pt-16 ml-56 w-full'>
+                <div className='pt-16 ml-56 w-full'>
                     <div className='m-10'>{children}</div>
                 </div>
             </div>

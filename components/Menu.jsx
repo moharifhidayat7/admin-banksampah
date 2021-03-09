@@ -1,5 +1,6 @@
 import Link from "next/link";
 import * as Icons from "heroicons-react";
+import { useState } from "react";
 
 const SubMenu = ({ title, route }) => {
     return (
@@ -22,10 +23,16 @@ const SubMenu = ({ title, route }) => {
 };
 
 const MenuItem = ({ children, title, icon, route }) => {
+    const toggleSub = () => {
+        setShowSub(!showSub);
+    };
+
+    const [showSub, setShowSub] = useState(false);
+
     return (
         <li>
-            <Link href={route}>
-                <a className='hover:text-white block'>
+            <Link href={route ? route : "#"}>
+                <a className='hover:text-white block' onClick={toggleSub}>
                     <div className='pl-7 py-3 pr-5 align-middle	inline-block menu-text'>
                         {icon}
                         <span className='inline-block align-middle'>
@@ -35,7 +42,12 @@ const MenuItem = ({ children, title, icon, route }) => {
                 </a>
             </Link>
             {children ? (
-                <ul className='bg-gray-900 shadow-inner shadow-lg'>
+                <ul
+                    className={
+                        "bg-gray-900 shadow-inner shadow-lg" +
+                        (showSub ? "" : "h-0 overflow-hidden hidden")
+                    }
+                >
                     {children}
                 </ul>
             ) : (
