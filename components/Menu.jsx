@@ -1,13 +1,16 @@
-import * as Icons from "heroicons-react";
 import Link from "next/link";
+import * as Icons from "heroicons-react";
 
 const SubMenu = ({ title, route }) => {
     return (
         <li>
             <Link href={route}>
                 <a className='hover:text-white block'>
-                    <div className='pl-12 py-2 pr-5 align-middle	inline-block'>
-                        <Icons.ChevronRight className='inline-block mr-2 align-middle' />
+                    <div className='pl-12 py-2 pr-5 align-middle inline-block'>
+                        <Icons.ChevronRight
+                            className='inline-block mr-2 align-middle'
+                            size='1rem'
+                        />
                         <span className='inline-block align-middle'>
                             {title}
                         </span>
@@ -18,16 +21,13 @@ const SubMenu = ({ title, route }) => {
     );
 };
 
-const MenuItem = ({ children, title, Icon, route }) => {
+const MenuItem = ({ children, title, icon, route }) => {
     return (
         <li>
             <Link href={route}>
                 <a className='hover:text-white block'>
-                    <div className='pl-7 py-3 pr-5 align-middle	inline-block'>
-                        <Icon
-                            className='inline-block mr-2 align-middle'
-                            size='2rem'
-                        />
+                    <div className='pl-7 py-3 pr-5 align-middle	inline-block menu-text'>
+                        {icon}
                         <span className='inline-block align-middle'>
                             {title ? title : "Menu Title"}
                         </span>
