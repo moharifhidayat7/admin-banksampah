@@ -1,12 +1,16 @@
 import Link from "next/link";
 import * as Icons from "heroicons-react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const SubMenu = ({ title, route }) => {
+    const router = useRouter();
+    const active = router.pathname === route ? "text-white" : "";
+
     return (
         <li>
             <Link href={route}>
-                <a className='hover:text-white block'>
+                <a className={active + " hover:text-white block"}>
                     <div className='pl-12 py-2 pr-5 align-middle inline-block'>
                         <Icons.ChevronRight
                             className='inline-block mr-2 align-middle'
@@ -23,6 +27,9 @@ const SubMenu = ({ title, route }) => {
 };
 
 const MenuItem = ({ children, title, icon, route }) => {
+    const router = useRouter();
+    const active = router.pathname === route ? "text-white" : "";
+
     const toggleSub = () => {
         setShowSub(!showSub);
     };
@@ -32,7 +39,10 @@ const MenuItem = ({ children, title, icon, route }) => {
     return (
         <li>
             <Link href={route ? route : "#"}>
-                <a className='hover:text-white block' onClick={toggleSub}>
+                <a
+                    className={active + " hover:text-white block"}
+                    onClick={toggleSub}
+                >
                     <div className='pl-7 py-3 pr-5 align-middle	inline-block menu-text'>
                         {icon}
                         <span className='inline-block align-middle'>
