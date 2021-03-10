@@ -1,31 +1,54 @@
 import * as Icons from "heroicons-react";
+import Link from "next/link";
+import { useGlobalContext } from "../components/Contexts/GlobalContext";
 
 export default function Navbar() {
+    const [state, dispatch] = useGlobalContext();
+
     return (
-        <div className='flex bg-gray-800 w-full fixed top-0 inset-x-0 px-8 shadow-lg z-50'>
-            <div className='flex-1 self-center'>
-                <img
-                    src='/logo.png'
-                    alt='logo'
-                    width='150'
-                    className='inline-block mr-10'
-                />
-                {/* <Icons.Menu
-                    className='text-white inline-block cursor-pointer bg-gray-900 hover:bg-gray-700'
-                    size='2rem'
-                /> */}
+        <div className='flex sm:justify-between bg-gray-800 w-full h-20 md:h-auto fixed top-0 inset-x-0 md:px-8 shadow-lg z-40'>
+            <div className='md:flex-1 flex-initial'>
+                <Link href='/'>
+                    <a>
+                        <div className='h-full md:inline-block md:w-150 md:bg-logo-text bg-logo-icon bg-center bg-w-60px md:bg-w-150px bg-no-repeat'>
+                            <div className='block h-full w-icon-60 mx-6'></div>
+                        </div>
+                    </a>
+                </Link>
+                <button
+                    className='hidden md:inline-block align-top h-full ml-4 px-2'
+                    onClick={() => {
+                        dispatch("toggleSidebar");
+                    }}
+                >
+                    <Icons.Menu
+                        className='text-white inline-block h-full'
+                        size='2rem'
+                    />
+                </button>
             </div>
-            <div className='flex-1'>
+            <div className='flex-1 flex-grow'>
                 <input
                     type='text'
                     className='bg-gray-900 h-full w-full text-white p-4'
                     placeholder='Cari Nasabah, Rekening, Transaksi, dll.'
                 />
             </div>
-            <div className='flex-1 text-right'>
-                <div className='bg-red-500 text-white w-min p-4 float-right'>
+            <div className='md:flex-1 flex-initial md:text-right'>
+                <div className='hidden md:block h-full bg-red-500 text-white w-min p-4 float-right'>
                     Username
                 </div>
+                <button
+                    className='md:hidden inline-block h-full px-8 cursor-pointer hover:bg-gray-700'
+                    onClick={() => {
+                        dispatch("toggleSidebar");
+                    }}
+                >
+                    <Icons.Menu
+                        className='text-white inline-block h-full'
+                        size='2rem'
+                    />
+                </button>
             </div>
         </div>
     );

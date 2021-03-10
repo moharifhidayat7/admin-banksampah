@@ -3,57 +3,72 @@ import Sidebar from "../Sidebar";
 import * as Icons from "heroicons-react";
 import { Menu, MenuGroup, MenuItem, SubMenu } from "../Menu";
 import Head from "next/head";
+import { useGlobalContext } from "../Contexts/GlobalContext";
 
 export default function AdminLayout({ children }) {
-  return (
-    <>
-      <Head>
-        <title>Bank Sampah</title>
-        <link rel="shortcut icon" href="/favicon.jfif" type="image/x-icon" />
-      </Head>
-      <Navbar />
-      <div className="h-screen flex">
-        <Sidebar>
-          <Menu>
-            <MenuGroup name="General">
-              <MenuItem
-                title="Dashboard"
-                route="/Admin"
-                showSub={false}
-                icon={<Icons.Home className="inline-block mr-2 align-middle" />}
-              ></MenuItem>
-              <MenuItem
-                route="/Admin/Pembelian"
-                title="Pembelian"
-                showSub={false}
-                icon={
-                  <Icons.CurrencyDollar className="inline-block mr-2 align-middle" />
-                }
-              ></MenuItem>
-              <MenuItem
-                route="/Admin/Nasabah"
-                title="Nasabah"
-                showSub={false}
-                icon={
-                  <Icons.UserGroup className="inline-block mr-2 align-middle" />
-                }
-              ></MenuItem>
-              <MenuItem
-                route="/Admin/Sampah"
-                title="Sampah"
-                showSub={false}
-                icon={
-                  <Icons.Collection className="inline-block mr-2 align-middle" />
-                }
-              ></MenuItem>
-            </MenuGroup>
-          </Menu>
-        </Sidebar>
+    const [state, dispatch] = useGlobalContext();
 
-        <div className="pt-16 md:ml-64 w-full">
-          <div className="mt-10 mx-2">{children}</div>
-        </div>
-      </div>
-    </>
-  );
+    return (
+        <>
+            <Head>
+                <title>Bank Sampah</title>
+                <link
+                    rel='icon'
+                    href='/logo-icon.png'
+                    sizes='16x16'
+                    type='image/png'
+                />
+            </Head>
+            <Navbar />
+            <div className='flex'>
+                <Sidebar>
+                    <Menu>
+                        <MenuGroup name='General'>
+                            <MenuItem
+                                title='Dashboard'
+                                route='/Admin'
+                                showSub={false}
+                                icon={
+                                    <Icons.Home className='inline-block mr-2 align-middle' />
+                                }
+                            ></MenuItem>
+                            <MenuItem
+                                route='/Admin/Pembelian'
+                                title='Pembelian'
+                                showSub={false}
+                                icon={
+                                    <Icons.CurrencyDollar className='inline-block mr-2 align-middle' />
+                                }
+                            ></MenuItem>
+                            <MenuItem
+                                route='/Admin/Nasabah'
+                                title='Nasabah'
+                                showSub={false}
+                                icon={
+                                    <Icons.UserGroup className='inline-block mr-2 align-middle' />
+                                }
+                            ></MenuItem>
+                            <MenuItem
+                                route='/Admin/Sampah'
+                                title='Sampah'
+                                showSub={false}
+                                icon={
+                                    <Icons.Trash className='inline-block mr-2 align-middle' />
+                                }
+                            ></MenuItem>
+                        </MenuGroup>
+                    </Menu>
+                </Sidebar>
+
+                <div
+                    className={
+                        (state.showSidebar ? "" : "md:ml-64") +
+                        " mt-24 mx-6 md:mr-6 w-full"
+                    }
+                >
+                    {children}
+                </div>
+            </div>
+        </>
+    );
 }
