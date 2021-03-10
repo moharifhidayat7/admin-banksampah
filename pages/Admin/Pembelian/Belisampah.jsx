@@ -30,9 +30,9 @@ function Belisampah({ modal, setModal }) {
   };
   const delColumn = () => {
     const temp = [...todo];
-    for (let i = 0; i <= todo.length; i++) {
-      temp.splice(i, 1);
-    }
+   
+      temp.splice(0, 1);
+    
 
     setTodo(temp);
     console.log(todo);
