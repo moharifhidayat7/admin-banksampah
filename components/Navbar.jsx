@@ -16,7 +16,7 @@ export default function Navbar() {
                     </a>
                 </Link>
                 <button
-                    className='hidden md:inline-block align-top h-full ml-4 px-2'
+                    className='hidden md:inline-block focus:outline-none align-top h-full ml-4 px-2'
                     onClick={() => {
                         dispatch("toggleSidebar");
                     }}
