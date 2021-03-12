@@ -6,25 +6,15 @@ import { useState } from "react";
 const Dashboard = () => {
    const [state, setState] = useState([
       {
-         _id: 12,
-         createdAt: new Date(),
+         cek: false,
          text: "All good",
-         user: {
-            _id: 1,
-            name: "Sian Pol",
-         },
       },
       {
-         _id: 21,
-         createdAt: "2019-11-10 22:21",
-         text: "Hello user",
-         user: {
-            _id: 2,
-            name: "User New",
-         },
+         cek: true,
+         text: "All good ASSSS",
       },
    ]);
-
+  
    return (
       <AdminLayout>
          <Head>
@@ -72,7 +62,17 @@ const Dashboard = () => {
                                  : `border-yellow-600`
                            }`}
                         >
-                           {v.text}{v.user.name}
+                           {v.text}
+
+                           {v.cek === false ? (
+                              <button className="bg-red-500 focus:outline-none border-2 text-white px-2 hover:bg-green-500 rounded">
+                               ✔
+                              </button>
+                           ) : (
+                              <button disabled className="bg-green-500 border-2 text-white px-2  rounded">
+                            ❌
+                              </button>
+                           )}
                         </div>
                      );
                   })}
