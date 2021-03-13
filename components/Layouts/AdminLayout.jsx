@@ -1,74 +1,28 @@
-import Navbar from "../Navbar";
+import { useState } from "react";
+
 import Sidebar from "../Sidebar";
-import * as Icons from "heroicons-react";
-import { Menu, MenuGroup, MenuItem, SubMenu } from "../Menu";
-import Head from "next/head";
-import { useGlobalContext } from "../Contexts/GlobalContext";
+import MobileNav from "../Navbar/MobileNav";
+import Navbar from "../Navbar/Navbar";
 
 export default function AdminLayout({ children }) {
-    const [state, dispatch] = useGlobalContext();
+    const [sidebar, setSidebar] = useState(false);
+
+    const toggleSidebar = () => {
+        setSidebar(!sidebar);
+    };
 
     return (
-        <>
-            <Head>
-                <title>Bank Sampah</title>
-                <link
-                    rel='icon'
-                    href='/logo-icon.png'
-                    sizes='16x16'
-                    type='image/png'
-                />
-            </Head>
-            <Navbar />
-            <div className='flex'>
-                <Sidebar>
-                    <Menu>
-                        <MenuGroup name='General'>
-                            <MenuItem
-                                title='Dashboard'
-                                route='/Admin'
-                                showSub={false}
-                                icon={
-                                    <Icons.Home className='inline-block mr-2 align-middle' />
-                                }
-                            ></MenuItem>
-                            <MenuItem
-                                route='/Admin/Pembelian'
-                                title='Pembelian'
-                                showSub={false}
-                                icon={
-                                    <Icons.CurrencyDollar className='inline-block mr-2 align-middle' />
-                                }
-                            ></MenuItem>
-                            <MenuItem
-                                route='/Admin/Nasabah'
-                                title='Nasabah'
-                                showSub={false}
-                                icon={
-                                    <Icons.UserGroup className='inline-block mr-2 align-middle' />
-                                }
-                            ></MenuItem>
-                            <MenuItem
-                                route='/Admin/Sampah'
-                                title='Sampah'
-                                showSub={false}
-                                icon={
-                                    <Icons.Trash className='inline-block mr-2 align-middle' />
-                                }
-                            ></MenuItem>
-                        </MenuGroup>
-                    </Menu>
-                </Sidebar>
-
-                <div
-                    className={
-                        (state.showSidebar ? "" : "md:ml-64") +
-                        " mt-24 mx-6 md:mr-6 w-full"
-                    }
-                >
-                    {children}
+        <div className='w-full h-full'>
+            <div className='flex flex-no-wrap'>
+                <Sidebar></Sidebar>
+                <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
+                <div className='w-full'>
+                    <Navbar toggleSidebar={toggleSidebar}></Navbar>
+                    <div className='container mx-auto py-10 h-64 md:w-11/12 lg:w-5/6 sm:w-11/12 w-11/12 px-6'>
+                        <div className='w-full h-full rounded'>{children}</div>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
