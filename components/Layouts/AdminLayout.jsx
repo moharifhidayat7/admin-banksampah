@@ -18,7 +18,7 @@ export default function AdminLayout({ children }) {
                 <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
                 <div className='w-full'>
                     <Navbar toggleSidebar={toggleSidebar}></Navbar>
-                    <div className='container mx-auto py-10 h-64 md:w-11/12 lg:w-5/6 sm:w-11/12 w-11/12 px-6'>
+                    <div className='ml-5 sm:ml-5 md:ml-5 lg:ml-72 mr-5 py-24 h-64'>
                         <div className='w-full h-full rounded'>{children}</div>
                     </div>
                 </div>

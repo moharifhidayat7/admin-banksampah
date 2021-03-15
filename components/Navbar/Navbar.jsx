@@ -4,8 +4,8 @@ import Notification from "./Notification";
 
 export default function Navbar({ toggleSidebar }) {
     return (
-        <nav className='h-16 flex items-center lg:items-stretch justify-end lg:justify-between bg-white shadow relative z-10'>
-            <div className='hidden lg:flex w-full pr-6'>
+        <nav className='h-16 flex items-center lg:items-stretch justify-end lg:justify-between bg-white shadow z-10 pl-64 w-full fixed'>
+            <div className='hidden lg:flex pr-6 w-full'>
                 <div className='w-1/2 h-full hidden lg:flex items-center pl-6 pr-24'>
                     <SearchBox />
                 </div>
