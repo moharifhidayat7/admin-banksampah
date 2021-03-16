@@ -1,5 +1,5 @@
 import React from 'react'
-import Tabel from "../React-components/Tabel";
+import Tabel from "../../../components/Tabel";
 function Perorangan() {
     return (
         <div>

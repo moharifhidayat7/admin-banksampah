@@ -14,7 +14,7 @@ const Dashboard = () => {
          text: "All good ASSSS",
       },
    ]);
-  
+
    return (
       <AdminLayout>
          <Head>
@@ -66,11 +66,14 @@ const Dashboard = () => {
 
                            {v.cek === false ? (
                               <button className="bg-red-500 focus:outline-none border-2 text-white px-2 hover:bg-green-500 rounded">
-                               ✔
+                                 ✔
                               </button>
                            ) : (
-                              <button disabled className="bg-green-500 border-2 text-white px-2  rounded">
-                            ❌
+                              <button
+                                 disabled
+                                 className="bg-green-500 border-2 text-white px-2  rounded"
+                              >
+                                 ❌
                               </button>
                            )}
                         </div>
