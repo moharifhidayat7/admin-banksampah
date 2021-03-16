@@ -1,3 +1,4 @@
+import Index from './Bendahara/index'
 export default function index() {
-  return <div>Halo SAYA HAAHAHAHAHAHHAHAH</div>;
+   return <Index />;
 }

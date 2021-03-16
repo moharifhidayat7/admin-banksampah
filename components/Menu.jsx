@@ -26,7 +26,7 @@ const SubMenu = ({ title, route }) => {
     );
 };
 
-const MenuItem = ({ children, title, icon, route }) => {
+const MenuItem = ({ children, title, icon, route,icon2 }) => {
     const router = useRouter();
     const active = router.pathname === route ? "text-white" : "";
 
@@ -48,6 +48,7 @@ const MenuItem = ({ children, title, icon, route }) => {
                         <span className='inline-block align-middle'>
                             {title ? title : "Menu Title"}
                         </span>
+                       <div className={`duration-300 transform inline-block  ml-4 transition align-middle ${showSub?`rotate-0 text-green-300`:` -rotate-180`}`}> {icon2}</div> 
                     </div>
                 </a>
             </Link>

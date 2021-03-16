@@ -1,7 +1,7 @@
 import BhrLayout from '../../components/Layouts/BhrLayout'
 
 
-function index() {
+function Index() {
   return (
  <BhrLayout>
    <p>Halo</p>
@@ -9,4 +9,4 @@ function index() {
   )
 }
 
-export default index
+export default Index
