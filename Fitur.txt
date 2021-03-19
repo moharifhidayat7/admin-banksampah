@@ -1,5 +1,4 @@
 Nasabah
-NIK
 ALAMAT
 NAMA
 FOTO KTP

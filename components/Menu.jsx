@@ -1,11 +1,12 @@
 import Link from "next/link";
 import * as Icons from "heroicons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const SubMenu = ({ title, route }) => {
    const router = useRouter();
    const active = router.pathname === route ? "text-white" : "";
+
 
    return (
       <li>
@@ -26,12 +27,12 @@ const SubMenu = ({ title, route }) => {
 
 const MenuItem = ({ children, title, icon, route, icon2 }) => {
    const router = useRouter();
-   const active = router.pathname === route ? "text-white" : "";
+   const active =
+      router.pathname === route ? "text-white"   : "";
 
    const toggleSub = () => {
       setShowSub(!showSub);
    };
-
    const [showSub, setShowSub] = useState(false);
 
    return (

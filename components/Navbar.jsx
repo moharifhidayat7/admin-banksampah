@@ -6,7 +6,7 @@ export default function Navbar() {
     const [state, dispatch] = useGlobalContext();
 
     return (
-        <div className='flex sm:justify-between bg-gray-800 w-full h-20 md:h-auto fixed top-0 inset-x-0 md:px-8 shadow-lg z-40'>
+        <div className='flex sm:justify-between bg-gray-800 w-full h-20 md:h-auto fixed top-0 inset-x-0 md:px-8 shadow-lg z-10'>
             <div className='md:flex-1 flex-initial'>
                 <Link href='/'>
                     <a>
@@ -29,7 +29,7 @@ export default function Navbar() {
             </div>
             <div className='flex-1 flex-grow'>
                 <input
-                    type='text'
+                    type='search'
                     className='bg-gray-900 h-full w-full text-white p-4'
                     placeholder='Cari Nasabah, Rekening, Transaksi, dll.'
                 />
