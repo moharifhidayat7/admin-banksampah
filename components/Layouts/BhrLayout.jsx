@@ -38,9 +38,7 @@ export default function BhrLayout({ children }) {
                         icon={
                            <Icons.CurrencyDollar className="inline-block mr-2 align-middle" />
                         }
-                        icon2={
-                           <Icons.ArrowDown className='w-4'/>
-                        }
+                        icon2={<Icons.ArrowDown className="w-4" />}
                      >
                         <SubMenu
                            title="Pemasukan"
@@ -57,12 +55,16 @@ export default function BhrLayout({ children }) {
                         icon={
                            <Icons.UserGroup className="inline-block mr-2 align-middle" />
                         }
-                        icon2={
-                           <Icons.ArrowDown className='w-4'/>
-                        }
+                        icon2={<Icons.ArrowDown className="w-4" />}
                      >
-                     <SubMenu title='Daftar Nasabah' route='/Bendahara/DaftarNasabah'/>
-                     <SubMenu title='Detail Nasabah' route='/Bendahara/DetailNasabah'/>
+                        <SubMenu
+                           title="Daftar Nasabah"
+                           route="/Bendahara/DaftarNasabah"
+                        />
+                        <SubMenu
+                           title="Detail Nasabah"
+                           route="/Bendahara/DetailNasabah"
+                        />
                      </MenuItem>
                   </MenuGroup>
                </Menu>

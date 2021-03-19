@@ -1,6 +1,6 @@
 import AdminLayout from "../../components/Layouts/AdminLayout";
 import Head from "next/head";
-import Card from "./Card";
+import Card from "../../components/Card";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -11,7 +11,7 @@ const Dashboard = () => {
       },
       {
          cek: true,
-         text: "All good ASSSS",
+         text: "All good",
       },
    ]);
 
