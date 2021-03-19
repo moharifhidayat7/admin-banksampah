@@ -6,9 +6,9 @@ const InputComp = ({ nama, id, tipe, labels,acc }) => {
                {labels}
             </label>
             <input
-               className="p-2  shadow-md rounded-md w-full"
+               className="p-2 bg-white  shadow-md rounded-md w-full"
                type={tipe}
-               name={nama}
+               name={id}
                id={id}
                placeholder={nama}
                accept={acc}

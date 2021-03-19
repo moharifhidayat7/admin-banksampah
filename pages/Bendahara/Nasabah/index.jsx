@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BhrLayout from "../../../components/Layouts/BhrLayout";
+import PopUpComp from "../../../components/PopUpComp";
 import { InputComp, InputRadio } from "./InputComp";
 import Kelompok from "./Kelompok";
 import Perorangan from "./Perorangan";
@@ -21,66 +22,55 @@ function index() {
             Daftar Nasabah +
          </button>
          {/* Pop Up */}
-         <div
-            hidden={popUp}
-            className="absolute bg-opacity-50 z-20 bg-black inset-0"
-         >
-            <div className="md:w-6/12 bg-gray-50 w-11/12 mt-32 mx-auto rounded-md p-2">
-               <p className="text-center text-xl mb-2">
-                  Formulir Pendaftaran Nasabah
-               </p>
-               <form action="" className="">
-                  <InputComp tipe="text" nama="Nama Lengkap" id="namalengkap" />
-                  <InputComp tipe="text" nama="Alamat" id="alamat" />
-                  <InputComp
-                     tipe="text"
-                     nama="Nomor Seluler"
-                     id="nomerseluler"
-                  />
-                  <InputComp tipe="text" nama="Rekening" id="rekening" />
-                  <InputComp
-                     tipe="date"
-                     nama="Tanggal Lahir"
-                     id="tanggalLahir"
-                     labels="Tanggal Lahir"
-                  />
-                  <InputRadio
-                     nama="jk"
-                     labels="Jenis Kelamin"
-                     value={["Pria", "Wanita"]}
-                  />
-                  <InputRadio
-                     nama="golongan"
-                     labels="Golongan"
-                     value={["Perorangan", "Kelompok"]}
-                  />
-                  <InputComp
-                     tipe="file"
-                     nama="tambahGambar"
-                     id="tambahGambar"
-                     labels="Upload KTP (Opsional)"
-                     acc="image/*"
-                  />
-                  <div className="flex justify-center ">
-                     <div className="w-52 flex justify-between">
-                        <button
-                           type="reset"
-                           className="bg-red-500 m-auto px-1"
-                           onClick={() => setpopUp(true)}
-                        >
-                           Cancel
-                        </button>
-                        <button
-                           className="bg-green-500 m-auto px-1"
-                           onClick={() => console.log("tambahGambar")}
-                        >
-                           Submit
-                        </button>
-                     </div>
+         <PopUpComp pop={popUp}>
+            <p className="text-center text-xl mb-2">
+               Formulir Pendaftaran Nasabah
+            </p>
+            <form action="" className="">
+               <InputComp tipe="text" nama="Nama Lengkap" id="namalengkap" />
+               <InputComp tipe="text" nama="Alamat" id="alamat" />
+               <InputComp tipe="text" nama="Nomor Seluler" id="nomerseluler" />
+               <InputComp tipe="text" nama="Rekening" id="rekening" />
+               <InputComp
+                  tipe="date"
+                  nama="Tanggal Lahir"
+                  id="tanggalLahir"
+                  labels="Tanggal Lahir"
+               />
+               <InputRadio
+                  nama="jk"
+                  labels="Jenis Kelamin"
+                  value={["Pria", "Wanita"]}
+               />
+               <InputRadio
+                  nama="golongan"
+                  labels="Golongan"
+                  value={["Perorangan", "Kelompok"]}
+               />
+               <InputComp
+                  tipe="file"
+                  nama="tambahGambar"
+                  id="tambahGambar"
+                  labels="Upload KTP (Opsional)"
+                  acc="image/*"
+               />
+               <div className="flex justify-center ">
+                  <div className="w-52 flex justify-between">
+                     <button
+                        type="reset"
+                        className="bg-red-500 m-auto px-1"
+                        onClick={() => setpopUp(true)}
+                     >
+                        Cancel
+                     </button>
+                     <button type="submit" className="bg-green-500 m-auto px-1">
+                        Submit
+                     </button>
                   </div>
-               </form>
-            </div>
-         </div>
+               </div>
+            </form>
+         </PopUpComp>
+
          {/* end */}
          <div className="grid lg:grid-cols-2 gap-4 mb-4">
             <Perorangan />
