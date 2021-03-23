@@ -1,14 +1,32 @@
 import { useState } from "react";
+import * as Icons from "heroicons-react";
 import BhrLayout from "../../../components/Layouts/BhrLayout";
 import PopUpComp from "../../../components/PopUpComp";
 import { InputComp, InputRadio } from "./InputComp";
-import Kelompok from "./Kelompok";
-import Perorangan from "./Perorangan";
+import Tabel from "../../../components/Tabel";
 function index() {
    const [popUp, setpopUp] = useState(true);
    const handleClick = () => {
       setpopUp(!popUp);
    };
+   const [dftrNasabah, setNasabah] = useState([
+      {
+         rekening: "11118101",
+         nama: "ANDI",
+         nohp: "08217317",
+         jk: "Pria",
+         alamat: "Kemiren Banyuwangi",
+         golongan: "Kelompok",
+      },
+      {
+         rekening: "37187113",
+         nama: "Yuyun Suminten",
+         nohp: "085234104446",
+         jk: "Wanita",
+         alamat: "Glagah Banyuwangi",
+         golongan: "Perorangan",
+      },
+   ]);
    return (
       <BhrLayout>
          <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
@@ -70,11 +88,85 @@ function index() {
                </div>
             </form>
          </PopUpComp>
-
          {/* end */}
-         <div className="grid lg:grid-cols-2 gap-4 mb-4">
-            <Perorangan />
-            <Kelompok />
+         <div className="mt-4">
+            <div className="flex mb-2 justify-between">
+               <div className="inline-flex bg-white overflow-hidden shadow-md focus-within:text-gray-800 text-gray-300 focus-within:ring-black rounded-md ring-2 ring-transparent">
+                  <input
+                     className="w-72 p-1 px-2 focus:outline-none"
+                     placeholder="Cari ?"
+                     type="search"
+                     name="carinasabah"
+                     id="carinasabah"
+                  />
+                  <button
+                     id="carinasabah"
+                     className="items-center focus:outline-none flex p-1 "
+                  >
+                     <Icons.Search className="w-6" />
+                  </button>
+               </div>
+               <div className="bg-white inline-flex overflow-hidden shadow-md focus-within:text-gray-800 text-gray-500 focus-within:ring-black rounded-md ring-2 ring-transparent">
+                  <button className="focus:outline-none flex items-center p-2">
+                     <Icons.Filter className="w-6" />
+                  </button>
+                  <select
+                     className="focus:outline-none  w-52"
+                     name="filter"
+                     id="filter"
+                  >
+                     <option value="Default">Default</option>
+                     <option value="Kelompok">Kelompok</option>
+                     <option value="Perorangan">Perorangan</option>
+                  </select>
+               </div>
+            </div>
+
+            <Tabel
+               tabhead={[
+                  { judul: "No", sz: "w-1/12" },
+                  { judul: "No Rekening", sz: "w-1/6" },
+                  { judul: "Nama", sz: "w-1/6" },
+                  { judul: "Gender", sz: "" },
+                  { judul: "No Hp", sz: "" },
+                  { judul: "Alamat", sz: "w-1/2" },
+                  { judul: "Golongan", sz: "" },
+                  { judul: "Aksi", sz: "" },
+               ]}
+            >
+               {dftrNasabah.map((value, i) => {
+                  return (
+                     <tr key={i}>
+                        <td className="border-r border-gray-700 text-center">
+                           {i + 1}
+                        </td>
+                        <td className="border-r border-gray-700">
+                           {value.rekening}
+                        </td>
+                        <td className="border-r border-gray-700">
+                           {value.nama}
+                        </td>
+                        <td className="border-r border-gray-700">{value.jk}</td>
+                        <td className="border-r border-gray-700">
+                           {value.nohp}
+                        </td>
+                        <td className="border-r border-gray-700">
+                           {value.alamat}
+                        </td>
+                        <td className="border-r border-gray-700">
+                           {value.golongan}
+                        </td>
+                        <td className="">
+                           <div className="inline-flex space-x-2 align-middle">
+                              <Icons.CreditCard className="text-green-500 cursor-pointer" />
+                              <Icons.Pencil className='text-yellow-500 cursor-pointer'/>
+                              <Icons.Trash className="text-red-500 cursor-pointer" />
+                           </div>
+                        </td>
+                     </tr>
+                  );
+               })}
+            </Tabel>
          </div>
       </BhrLayout>
    );

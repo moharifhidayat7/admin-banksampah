@@ -25,7 +25,8 @@ module.exports = {
     },
     variants: {
         extend: {
-            ringColor: ['hover', 'active'],
+            ringColor: ['hover', 'active','focus-within'],
+            textColor:['focus-within']
         },
     },
     plugins: [],
