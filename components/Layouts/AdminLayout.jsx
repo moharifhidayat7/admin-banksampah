@@ -26,14 +26,14 @@ export default function AdminLayout({ children }) {
                         <MenuGroup name='General'>
                             <MenuItem
                                 title='Dashboard'
-                                route='/Admin'
+                                route='/Admin/Gudang'
                                 showSub={false}
                                 icon={
                                     <Icons.Home className='inline-block mr-2 align-middle' />
                                 }
                             ></MenuItem>
                             <MenuItem
-                                route='/Admin/Pembelian'
+                                route='/Admin/Gudang/Pembelian'
                                 title='Pembelian'
                                 showSub={false}
                                 icon={
@@ -41,7 +41,7 @@ export default function AdminLayout({ children }) {
                                 }
                             ></MenuItem>
                             <MenuItem
-                                route='/Admin/Nasabah'
+                                route='/Admin/Gudang/Nasabah'
                                 title='Nasabah'
                                 showSub={false}
                                 icon={
@@ -49,7 +49,7 @@ export default function AdminLayout({ children }) {
                                 }
                             ></MenuItem>
                             <MenuItem
-                                route='/Admin/Sampah'
+                                route='/Admin/Gudang/Sampah'
                                 title='Sampah'
                                 showSub={false}
                                 icon={

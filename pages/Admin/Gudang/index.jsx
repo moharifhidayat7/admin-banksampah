@@ -1,17 +1,21 @@
-import AdminLayout from "../../components/Layouts/AdminLayout";
+import AdminLayout from "../../../components/Layouts/AdminLayout";
 import Head from "next/head";
-import Card from "../../components/Card";
+import Card from "../../../components/Card";
 import { useState } from "react";
 
 const Dashboard = () => {
    const [state, setState] = useState([
       {
-         cek: false,
-         text: "All good",
+         cek: true,
+         text: "Supriadi Jln.Kemiren Kec.Glagah Banyuwangi",
       },
       {
          cek: true,
-         text: "All good",
+         text: "SMKN 1 BWI Jln.Sudirman Kec.Banyuwangi Banyuwangi",
+      },
+      {
+         cek: false,
+         text: "Pengadilan Negeri Jln.Sudirman Kec.Banyuwangi Banyuwangi",
       },
    ]);
 
@@ -34,7 +38,7 @@ const Dashboard = () => {
                warna="bg-blue-200"
                alt="Nasabah"
                judul="Nasabah"
-               total="Rp. 37189"
+               total="2000 Nasabah"
                lebar="w-80"
             />
             <Card
@@ -47,10 +51,15 @@ const Dashboard = () => {
             />
          </div>
          <div className="flex justify-center">
-            <div className="md:w-6/12 w-80 bg-white shadow-lg ">
+            <div className="fixed  p-2 bg-red-500 z-20 font-bold items-center text-center">
+               Fitur ini segera tersedia!
+            </div>
+
+            <div className="md:w-6/12 opacity-25 w-80 bg-white shadow-lg bg-opacity-50">
                <div className="py-2 px-4 text-gray-700 text-xl border-b">
                   Laporan Penjemputan Sampah
                </div>
+
                <div className="ml-2 overflow-y-scroll h-52">
                   {state.map((v, k) => {
                      return (
