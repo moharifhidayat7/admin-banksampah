@@ -1,0 +1,20 @@
+Nasabah
+ALAMAT
+NAMA
+FOTO KTP
+(DAFRAR APK)
+REKENING
+
+
+Pemasukan/pengeluaran
+Rekening
+jumlah
+tgl
+deskripsi
+
+Penjualan
+Barang
+Harga
+Jenis Or/On
+
+///////////////////////////////

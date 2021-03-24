@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tabel from "../React-components/Tabel";
+import Tabel from "../../../components/Tabel";
 
 function Belisampah({ modal, setModal }) {
   const [todo, setTodo] = useState([]);
