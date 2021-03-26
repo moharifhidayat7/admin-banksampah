@@ -25,4 +25,13 @@ const Button = ({
       </button>
    );
 };
-export { Button };
+const ButtonIcons = ({ icon, children ,onChange,onClick}) => {
+   return (
+      <button onClick={onClick} onChange={onChange} className="inline-flex shadow-md rounded-md overflow-hidden">
+         <div className="bg-yellow-300 h-full w-full  flex items-center">{icon} </div>
+         <p className="bg-white font-bold w-full h-full pr-2 flex items-center">{children}</p>
+      </button>
+   );
+};
+
+export { Button, ButtonIcons };

@@ -51,7 +51,7 @@ const Dashboard = () => {
             />
          </div>
          <div className="flex justify-center">
-            <div className="fixed  p-2 bg-red-500 z-20 font-bold items-center text-center">
+            <div className="absolute  p-2 bg-red-500 z-10 font-bold items-center text-center">
                Fitur ini segera tersedia!
             </div>
 

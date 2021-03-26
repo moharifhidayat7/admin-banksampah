@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AdminLayout from "../../../components/Layouts/AdminLayout";
 import PopUpComp from "../../../components/PopUpComp";
 import * as Icons from "heroicons-react";
-import { Button } from "../../../components/Buttons";
+import { Button, ButtonIcons } from "../../../components/Buttons";
 import {
    InputComp,
    InputDrop,
@@ -12,13 +12,17 @@ import {
 import Tabel from "../../../components/Tabel";
 function Pembelian() {
    const [popUp, setpopUp] = useState(true);
+   const [exnota, setExnota] = useState(true);
    return (
       <AdminLayout>
          <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
             <img src="/logo/shopping-bag.png" alt="nasabah" />
          </div>
          {/* Tabel Detail */}
-         <Detailtransaksi setModal={setpopUp} />
+         <Detailtransaksi setModal={setpopUp} setExnota={setExnota} />
+         {/* ExportNota */}
+
+         <ExportNota exnota={exnota} setExnota={setExnota} exnota={exnota} />
          {/* PopUp Tambah Data */}
          <PopUpComp pop={popUp}>
             <p className="text-center text-xl mb-2">Formulir Pembelian</p>
@@ -115,7 +119,7 @@ function Pembelian() {
 
 export default Pembelian;
 
-const Detailtransaksi = ({ setModal }) => {
+const Detailtransaksi = ({ setModal, setExnota, exnota }) => {
    return (
       <>
          <div className="flex justify-between mb-2">
@@ -126,6 +130,7 @@ const Detailtransaksi = ({ setModal }) => {
             >
                Tambah Data
             </Button>
+            <ButtonIcons icon={<Icons.DocumentReport />}>Export.doc</ButtonIcons>
          </div>
 
          <Tabel
@@ -136,7 +141,7 @@ const Detailtransaksi = ({ setModal }) => {
                { judul: "Pembayaran", sz: "1/9" },
                { judul: "Date", sz: "w-1/6" },
                { judul: "Total", sz: "w-1/6" },
-               { judul: "Export", sz: "" },
+               { judul: "Print", sz: "" },
                { judul: "Aksi", sz: "" },
             ]}
          >
@@ -148,9 +153,12 @@ const Detailtransaksi = ({ setModal }) => {
                <td className="border-r-2">12-12-2012</td>
                <td className="border-r-2">Rp.160029</td>
                <td className="border-r-2">
-                  <button className="inline-flex align-middle focus:outline-none focus:text-gray-500">
-                     <Icons.DocumentDownload className="w-5 cursor-pointer" />
-                     .xlsx
+                  <button
+                     onClick={() => setExnota(false)}
+                     className="inline-flex align-middle focus:outline-none focus:text-gray-500"
+                  >
+                     <Icons.Printer className="w-5 cursor-pointer" />
+                     .doc
                   </button>
                </td>
                <td>
@@ -162,5 +170,65 @@ const Detailtransaksi = ({ setModal }) => {
             </tr>
          </Tabel>
       </>
+   );
+};
+const ExportNota = ({ exnota, setExnota }) => {
+   return (
+      <PopUpComp pop={exnota}>
+         <p className="text-center text-xl">Export Nota</p>
+         <div className="flex justify-center">
+            <table className="">
+               <tbody>
+                  <tr>
+                     <td className="font-bold align-text-top">Nama</td>
+                     <td className="align-text-top">:</td>
+                     <td width={20} className="break-all align-text-top">
+                        Ach Rizal
+                     </td>
+                     <td></td>
+                     <td className="font-bold align-text-top">Rekening</td>
+                     <td className="align-text-top">:</td>
+                     <td className="align-text-top">1319819312</td>
+                  </tr>
+                  <tr>
+                     <td className="font-bold align-text-top">Alamat</td>
+                     <td className="align-text-top">:</td>
+                     <td width={20} className="align-text-top">
+                        Banyuwangi Kemiren 2999 jdqijii
+                     </td>
+                     <td width={12}></td>
+                     <td className="font-bold align-text-top">Date</td>
+                     <td className="align-text-top">:</td>
+                     <td className="align-text-top">13 Feb 2021</td>
+                  </tr>
+                  <tr>
+                     <td className="font-bold">Pembayaran</td>
+                     <td>:</td>
+                     <td>Cast</td>
+                  </tr>
+                  <tr className="font-bold">
+                     <td colSpan={4}>Barang</td>
+                     <td> Harga</td>
+                  </tr>
+                  <tr>
+                     <td colSpan={4}>Minuman</td>
+                     <td>Rp.20000</td>
+                  </tr>
+                  <tr>
+                     <td colSpan={4} className="font-bold text-right">
+                        Total
+                     </td>
+                     <td>Rp.2000</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div className="flex space-x-6">
+            <Button color="red" handleClick={() => setExnota(true)}>
+               Cancel
+            </Button>
+            <Button color="yellow">Print</Button>
+         </div>
+      </PopUpComp>
    );
 };

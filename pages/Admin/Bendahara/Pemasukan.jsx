@@ -1,13 +1,20 @@
 import * as Icons from "heroicons-react";
 import BhrLayout from "../../../components/Layouts/BhrLayout";
 import Tabel from "../../../components/Tabel";
+import PopUpComp from "../../../components/PopUpComp";
+import { useState } from "react";
 
 function Pemasukan() {
+   const [tambahData, setData] = useState(true);
    return (
       <BhrLayout>
          <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
             <img src="/logo/cash-deposit.svg" alt="nasabah" />
          </div>
+         {/* Tambah Data */}
+         <button onClick={() => setData(false)}>Hai</button>
+         <TambahData tambah={tambahData} />
+         {/*  */}
          <Tabel
             tabhead={[
                { judul: "No", sz: "w-1/12" },
@@ -36,5 +43,14 @@ function Pemasukan() {
       </BhrLayout>
    );
 }
+
+export const TambahData = ({tambah}) => {
+   return (
+      <PopUpComp pop={tambah}>
+         Halo
+         <div>Hai</div>
+      </PopUpComp>
+   );
+};
 
 export default Pemasukan;
