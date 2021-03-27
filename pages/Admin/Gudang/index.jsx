@@ -6,8 +6,8 @@ import {
     CashOutline,
 } from "heroicons-react";
 
-import AdminLayout from "../../components/Layouts/AdminLayout";
-import DashboardCard from "../../components/DashboardCard";
+import AdminLayout from "../../../components/Layouts/AdminLayout";
+import DashboardCard from "../../../components/DashboardCard";
 import {
     Table,
     TableHead,
@@ -15,7 +15,7 @@ import {
     TableRow,
     TableCell,
     TableCol,
-} from "../../components/Table";
+} from "../../../components/Table";
 
 export default function Index() {
     return (
