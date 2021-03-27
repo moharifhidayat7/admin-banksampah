@@ -1,5 +1,4 @@
-import React from "react";
-import AdminLayout from "../../../components/Layouts/AdminLayout";
+import AdminLayout from "../../../../components/Layouts/AdminLayout";
 import DetailSampah from "./DetailSampah";
 import TambahDataSampah from "./TambahDataSampah";
 

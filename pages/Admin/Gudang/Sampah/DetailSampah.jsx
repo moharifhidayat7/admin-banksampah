@@ -1,5 +1,5 @@
 import React from "react";
-import Tabel from "../../../components/Tabel";
+import Tabel from "../../../../components/Tabel";
 function DetailSampah() {
   return (
     <div className="md:col-span-2">

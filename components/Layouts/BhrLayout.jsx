@@ -26,7 +26,7 @@ export default function BhrLayout({ children }) {
                   <MenuGroup name="General">
                      <MenuItem
                         title="Dashboard"
-                        route="/Bendahara"
+                        route="/Admin/Bendahara"
                         icon={
                            <Icons.Home className="inline-block mr-2 align-middle" />
                         }
@@ -40,16 +40,16 @@ export default function BhrLayout({ children }) {
                      >
                         <SubMenu
                            title="Pemasukan"
-                           route="/Bendahara/Pemasukan"
+                           route="/Admin/Bendahara/Pemasukan"
                         />
                         <SubMenu
                            title="Pengeluaran"
-                           route="/Bendahara/Pengeluaran"
+                           route="/Admin/Bendahara/Pengeluaran"
                         />
                      </MenuItem>
                      <MenuItem
                         title="Nasabah"
-                        route="/Bendahara/Nasabah"
+                        route="/Admin/Bendahara/Nasabah"
                         icon={
                            <Icons.UserGroup className="inline-block mr-2 align-middle" />
                         }

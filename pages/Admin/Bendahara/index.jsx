@@ -1,6 +1,6 @@
-import BhrLayout from "../../components/Layouts/BhrLayout";
+import BhrLayout from "../../../components/Layouts/BhrLayout";
 import Head from "next/head";
-import Card from "../../components/Card";
+import Card from "../../../components/Card";
 function index() {
    return (
       <BhrLayout>
