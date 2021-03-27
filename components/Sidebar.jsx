@@ -1,15 +1,13 @@
-import { useGlobalContext } from "./Contexts/GlobalContext";
+import Menu from "./Menu";
+import Brand from "./Brand";
 
 export default function Sidebar({ children }) {
-    const [state, dispatch] = useGlobalContext();
     return (
-        <div
-            className={
-                (state.showSidebar ? "md:w-0 md:hidden" : "md:w-56 h-0") +
-                " w-full sm:w-full md:h-full overflow-hidden bg-gray-800 fixed md:inset-y-0 shadow-lg pt-20"
-            }
-        >
-            {children}
+        <div className='w-64 z-20 h-screen fixed shadow bg-gray-800 hidden lg:block'>
+            <div className='h-16 w-full flex items-center px-5 relative'>
+                <Brand />
+            </div>
+            <Menu />
         </div>
     );
 }
