@@ -1,72 +1,56 @@
-import Navbar from "../Navbar";
+import { useState } from "react";
+
 import Sidebar from "../Sidebar";
+import MobileNav from "../Navbar/MobileNav";
+import Navbar from "../Navbar/Navbar";
+import { List, Item, SubItem } from "../List";
 import * as Icons from "heroicons-react";
-import { Menu, MenuGroup, MenuItem, SubMenu } from "../Menu";
-import Head from "next/head";
-import { useGlobalContext } from "../Contexts/GlobalContext";
 
-export default function BhrLayout({ children }) {
-   const [state, dispatch] = useGlobalContext();
+export default function AdminLayout({ children }) {
+    const [sidebar, setSidebar] = useState(false);
 
-   return (
-      <>
-         <Head>
-            <title>Bank Sampah</title>
-            <link
-               rel="icon"
-               href="/logo-icon.png"
-               sizes="16x16"
-               type="image/png"
-            />
-         </Head>
-         <Navbar />
-         <div className="flex">
-            <Sidebar>
-               <Menu>
-                  <MenuGroup name="General">
-                     <MenuItem
-                        title="Dashboard"
-                        route="/Admin/Bendahara"
-                        icon={
-                           <Icons.Home className="inline-block mr-2 align-middle" />
-                        }
-                     ></MenuItem>
-                     <MenuItem
-                        title="Keuangan"
-                        icon={
-                           <Icons.CurrencyDollar className="inline-block mr-2 align-middle" />
-                        }
-                        icon2={<Icons.ArrowDown className="w-4" />}
-                     >
-                        <SubMenu
-                           title="Pemasukan"
-                           route="/Admin/Bendahara/Pemasukan"
+    const toggleSidebar = () => {
+        setSidebar(!sidebar);
+    };
+
+    return (
+        <div className='w-full h-full'>
+            <div className='flex flex-no-wrap'>
+                <Sidebar>
+                    <List>
+                        <Item
+                            route='/Admin/Bendahara'
+                            icon={<Icons.HomeOutline size='1rem' />}
+                            title='Dashboard'
                         />
-                        <SubMenu
-                           title="Pengeluaran"
-                           route="/Admin/Bendahara/Pengeluaran"
+                        <Item
+                            route='/Admin/Bendahara/Nasabah'
+                            icon={<Icons.UserGroup size='1rem' />}
+                            title='Nasabah'
                         />
-                     </MenuItem>
-                     <MenuItem
-                        title="Nasabah"
-                        route="/Admin/Bendahara/Nasabah"
-                        icon={
-                           <Icons.UserGroup className="inline-block mr-2 align-middle" />
-                        }
-                     ></MenuItem>
-                  </MenuGroup>
-               </Menu>
-            </Sidebar>
-
-            <div
-               className={
-                  (state.showSidebar ? "" : "md:ml-64") +
-                  " mt-24 mx-6 md:mr-6 w-full"
-               }
-            >
-               {children}
+                        <Item
+                            icon={<Icons.Cash size='1rem' />}
+                            title='Keuangan'
+                        >
+                            <SubItem
+                                route='/Admin/Bendahara/Pengeluaran'
+                                title='Pengeluaran'
+                            ></SubItem>
+                            <SubItem
+                                route='/Admin/Bendahara/Pemasukan'
+                                title='Pemasukan'
+                            ></SubItem>
+                        </Item>
+                    </List>
+                </Sidebar>
+                <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
+                <div className='w-full'>
+                    <Navbar toggleSidebar={toggleSidebar}></Navbar>
+                    <div className='ml-5 sm:ml-5 md:ml-5 lg:ml-72 mr-5 py-24 h-64'>
+                        <div className='w-full h-full rounded'>{children}</div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </>
-   );
+        </div>
+    );
 }
