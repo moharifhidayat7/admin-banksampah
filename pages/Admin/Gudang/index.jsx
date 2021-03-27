@@ -65,25 +65,29 @@ export default function Index() {
                             </h1>
                         </div>
                         <div>
-                            <Table>
-                                <TableHead>
-                                    <TableCol>No</TableCol>
-                                    <TableCol>Tipe Transaksi</TableCol>
-                                    <TableCol>Nasabah</TableCol>
-                                    <TableCol>Uang</TableCol>
-                                    <TableCol>Waktu Transaksi</TableCol>
-                                </TableHead>
+                            <div class='mx-auto bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded'>
+                                <div class='w-full overflow-x-scroll xl:overflow-x-hidden'>
+                                    <Table>
+                                        <TableHead>
+                                            <TableCol>No</TableCol>
+                                            <TableCol>Tipe Transaksi</TableCol>
+                                            <TableCol>Nasabah</TableCol>
+                                            <TableCol>Uang</TableCol>
+                                            <TableCol>Waktu Transaksi</TableCol>
+                                        </TableHead>
 
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>NASABAH</TableCell>
-                                        <TableCell>NASABAH</TableCell>
-                                        <TableCell>NASABAH</TableCell>
-                                        <TableCell>NASABAH</TableCell>
-                                        <TableCell>NASABAH</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell>NASABAH</TableCell>
+                                                <TableCell>NASABAH</TableCell>
+                                                <TableCell>NASABAH</TableCell>
+                                                <TableCell>NASABAH</TableCell>
+                                                <TableCell>NASABAH</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

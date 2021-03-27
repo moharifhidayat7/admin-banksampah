@@ -1,27 +1,27 @@
 import * as Icons from "heroicons-react";
 
-import List from "./List";
+import { List, Item, SubItem } from "./List";
 
 export default function Menu() {
     return (
         <List>
-            <List.Item
-                route='/Admin'
+            <Item
+                route='/Admin/Gudang'
                 icon={<Icons.HomeOutline size='1rem' />}
                 title='Dashboard'
             />
-            <List.Item
-                route='/Admin/Nasabah'
+            <Item
+                route='/Admin/Gudang/Nasabah'
                 icon={<Icons.UserGroup size='1rem' />}
                 title='Nasabah'
             />
-            <List.Item
-                route='/Admin/Pembelian'
+            <Item
+                route='/Admin/Gudang/Pembelian'
                 icon={<Icons.Cash size='1rem' />}
                 title='Pembelian'
             />
-            <List.Item
-                route='/Admin/Sampah'
+            <Item
+                route='/Admin/Gudang/Sampah'
                 icon={<Icons.Trash size='1rem' />}
                 title='Sampah'
             />

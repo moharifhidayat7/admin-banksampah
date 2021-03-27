@@ -3,6 +3,7 @@ import { useState } from "react";
 import Sidebar from "../Sidebar";
 import MobileNav from "../Navbar/MobileNav";
 import Navbar from "../Navbar/Navbar";
+import Menu from "../Menu";
 
 export default function AdminLayout({ children }) {
     const [sidebar, setSidebar] = useState(false);
@@ -14,7 +15,9 @@ export default function AdminLayout({ children }) {
     return (
         <div className='w-full h-full'>
             <div className='flex flex-no-wrap'>
-                <Sidebar></Sidebar>
+                <Sidebar>
+                    <Menu></Menu>
+                </Sidebar>
                 <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
                 <div className='w-full'>
                     <Navbar toggleSidebar={toggleSidebar}></Navbar>

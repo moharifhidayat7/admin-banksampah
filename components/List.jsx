@@ -72,7 +72,4 @@ SubItem.defaultProps = {
     route: "#sub",
 };
 
-List.Item = Item;
-List.SubItem = SubItem;
-
-export default List;
+export { List, Item, SubItem };

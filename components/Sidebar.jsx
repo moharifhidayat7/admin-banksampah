@@ -1,4 +1,3 @@
-import Menu from "./Menu";
 import Brand from "./Brand";
 
 export default function Sidebar({ children }) {
@@ -7,7 +6,7 @@ export default function Sidebar({ children }) {
             <div className='h-16 w-full flex items-center px-5 relative'>
                 <Brand />
             </div>
-            <Menu />
+            {children}
         </div>
     );
 }
