@@ -5,7 +5,7 @@ import {
     TableCol,
     TableHead,
     TableRow,
-} from "./Table";
+} from "../components/Table";
 import * as Icons from "heroicons-react";
 
 export default function tes() {
