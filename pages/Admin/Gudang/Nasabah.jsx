@@ -1,6 +1,6 @@
 import React from "react";
 import AdminLayout from "../../../components/Layouts/AdminLayout";
-import Tabel from "../../../components/Tabel";
+
 import {
     Table,
     TableHead,
