@@ -23,7 +23,7 @@ const Item = ({ children, title, route, icon }) => {
     const listClass =
         router.pathname === route
             ? "text-white pb-2 pt-3 bg-gray-900"
-            : "text-gray-600 py-2 hover:text-white";
+            : "text-gray-400 py-2 hover:text-white";
 
     return (
         <li
@@ -59,7 +59,7 @@ const SubItem = ({ title, route }) => {
     const listClass = "";
 
     return (
-        <li className='text-gray-600 hover:text-white text-xs leading-3 tracking-normal mb-1 flex items-center ml-2'>
+        <li className='text-gray-400 hover:text-white text-xs leading-3 tracking-normal mb-1 flex items-center ml-2'>
             <Link href={route}>
                 <a className='pl-8 py-2 w-full'>{title}</a>
             </Link>
