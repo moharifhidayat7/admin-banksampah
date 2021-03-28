@@ -15,8 +15,8 @@ function index() {
     return (
         <AdminLayout>
             <h1 className='text-4xl mb-5'>Nasabah</h1>
-            <div class='mx-auto bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded'>
-                <div class='flex flex-col lg:flex-row p-4 lg:p-8 justify-between items-start lg:items-stretch w-full'>
+            <div className='mx-auto bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded'>
+                <div className='flex flex-col lg:flex-row p-4 lg:p-8 justify-between items-start lg:items-stretch w-full'>
                     <div className='inline-flex bg-white overflow-hidden focus-within:text-gray-800 text-gray-300 focus-within:ring-black rounded-md ring-2'>
                         <input
                             className='w-72 py-2 px-4 focus:outline-none bg-gray'
@@ -33,7 +33,7 @@ function index() {
                         </button>
                     </div>
                 </div>
-                <div class='w-full overflow-x-scroll xl:overflow-x-hidden'>
+                <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                     <Table>
                         <TableHead>
                             <TableCol>NIK</TableCol>

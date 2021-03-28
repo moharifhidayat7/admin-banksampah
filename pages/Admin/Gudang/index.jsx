@@ -65,8 +65,8 @@ export default function Index() {
                             </h1>
                         </div>
                         <div>
-                            <div class='mx-auto bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded'>
-                                <div class='w-full overflow-x-scroll xl:overflow-x-hidden'>
+                            <div className='mx-auto bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded'>
+                                <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                                     <Table>
                                         <TableHead>
                                             <TableCol>No</TableCol>
