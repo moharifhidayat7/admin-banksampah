@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AdminLayout from "../../../components/Layouts/AdminLayout";
 import PopUpComp from "../../../components/PopUpComp";
 import * as Icons from "heroicons-react";
-import { Button, ButtonIcons } from "../../../components/Buttons";
+
 import {
    InputComp,
    InputDrop,
@@ -103,16 +103,16 @@ function Pembelian() {
 
                <div className="flex justify-center mt-2">
                   <div className="w-52 flex justify-between">
-                     <Button
-                        color="red"
+                     <button
+                        className="bg-red-500"
                         type="reset"
-                        handleClick={() => setpopUp(true)}
+                        onClick={() => setpopUp(true)}
                      >
                         Cancel
-                     </Button>
-                     <Button color="green" type="submit">
+                     </button>
+                     <button className="bg-green-500" type="submit">
                         Submit
-                     </Button>
+                     </button>
                   </div>
                </div>
             </form>
@@ -240,10 +240,10 @@ const ExportNota = ({ exnota, setExnota }) => {
             </table>
          </div>
          <div className="flex space-x-6">
-            <Button color="red" handleClick={() => setExnota(true)}>
+            <button onClick={() => setExnota(true)}>
                Cancel
-            </Button>
-            <Button color="yellow">Print</Button>
+            </button>
+            <button className='bg-yellow-500'>Print</button>
          </div>
       </PopUpComp>
    );

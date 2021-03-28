@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Head from "next/head";
 import Sidebar from "../Sidebar";
 import MobileNav from "../Navbar/MobileNav";
 import Navbar from "../Navbar/Navbar";
@@ -14,6 +14,9 @@ export default function AdminLayout({ children }) {
 
     return (
         <div className='w-full h-full'>
+            <Head>
+            <title>Bank Sampah</title>
+         </Head>
             <div className='flex flex-no-wrap'>
                 <Sidebar>
                     <Menu></Menu>

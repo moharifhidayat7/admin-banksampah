@@ -29,9 +29,7 @@ function Nasabah() {
    ]);
    return (
       <BhrLayout>
-         <div className="p-2  mb-4 shadow-lg rounded-lg text-pink-200 font-light items-center w-12 bg-white">
-            <img src="/logo/create.png" alt="create" />
-         </div>
+       <h1 className='text-4xl mb-5'>Nasabah</h1>
          <button
             type="button"
             className="px-2 focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-1 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 "
@@ -44,7 +42,7 @@ function Nasabah() {
             <p className="text-center text-xl mb-2">
                Formulir Pendaftaran Nasabah
             </p>
-            <form action="" className="">
+            <form action=""  className="">
                <InputComp tipe="text" nama="Nama Lengkap" id="namalengkap" />
                <InputComp tipe="text" nama="Alamat" id="alamat" />
                <InputNumb nama="Nomor Seluler" id="nomerseluler" />
