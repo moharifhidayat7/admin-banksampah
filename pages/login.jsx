@@ -1,6 +1,11 @@
+import Head from "next/head";
+
 export default function login() {
     return (
         <section className='h-screen'>
+            <Head>
+                <title>Login - Bank Sampah Banyuwangi</title>
+            </Head>
             <div className='mx-auto flex flex-col justify-center lg:items-center h-full'>
                 <form
                     id='login'
@@ -64,7 +69,7 @@ export default function login() {
                         </button>
                         <p className='mt-16 text-xs text-center hidden'>
                             Don’t Have An Account?{" "}
-                            <a className='underline' href='javascript: void(0)'>
+                            <a className='underline' href='#'>
                                 Sign Up
                             </a>
                         </p>
