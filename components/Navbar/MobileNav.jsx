@@ -23,7 +23,7 @@ export default function MobileNav({ sidebar, toggleSidebar }) {
                     <div>
                         <div className='flex items-center justify-between px-8'>
                             <div className='h-16 w-full flex items-center'>
-                                <Brand />
+                                <Brand type='text' />
                             </div>
                             <div
                                 id='closeSideBar'
