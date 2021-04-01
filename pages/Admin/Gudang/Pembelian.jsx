@@ -278,12 +278,12 @@ const Detailtransaksi = ({ setModal, setExnota, exnota }) => {
 
                   <TableBody>
                      <TableRow>
-                        <TableCell>NASABAH</TableCell>
-                        <TableCell>NASABAH</TableCell>
-                        <TableCell>NASABAH</TableCell>
-                        <TableCell>NASABAH</TableCell>
-                        <TableCell>NASABAH</TableCell>
-                        <TableCell>NASABAH</TableCell>
+                        <TableCell>1.</TableCell>
+                        <TableCell>12-12-1223</TableCell>
+                        <TableCell>Cash</TableCell>
+                        <TableCell>Muhaimin</TableCell>
+                        <TableCell>123791</TableCell>
+                        <TableCell>Rp.388833</TableCell>
                      </TableRow>
                   </TableBody>
                </Table>

@@ -36,6 +36,7 @@ function index() {
                 <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                     <Table>
                         <TableHead>
+                            <TableCol>No</TableCol>
                             <TableCol>NIK</TableCol>
                             <TableCol>Nama</TableCol>
                             <TableCol>Alamat</TableCol>
@@ -46,12 +47,13 @@ function index() {
 
                         <TableBody>
                             <TableRow>
-                                <TableCell>NASABAH</TableCell>
-                                <TableCell>NASABAH</TableCell>
-                                <TableCell>NASABAH</TableCell>
-                                <TableCell>NASABAH</TableCell>
-                                <TableCell>NASABAH</TableCell>
-                                <TableCell>NASABAH</TableCell>
+                                <TableCell>1.</TableCell>
+                                <TableCell>23918938123</TableCell>
+                                <TableCell>Mundahi</TableCell>
+                                <TableCell>Rogojampi</TableCell>
+                                <TableCell>Pria</TableCell>
+                                <TableCell>0832739379</TableCell>
+                                <TableCell>Kelompok</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
