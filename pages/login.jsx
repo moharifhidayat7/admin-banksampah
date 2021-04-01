@@ -68,7 +68,7 @@ export default function login() {
                             Login
                         </button>
                         <p className='mt-16 text-xs text-center hidden'>
-                            Don’t Have An Account?{" "}
+                            Don’t Have An Account?
                             <a className='underline' href='#'>
                                 Sign Up
                             </a>

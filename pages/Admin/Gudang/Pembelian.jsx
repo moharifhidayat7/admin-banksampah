@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import AdminLayout from "../../../components/Layouts/AdminLayout";
 import PopUpComp from "../../../components/PopUpComp";
 import * as Icons from "heroicons-react";
-
-import {
-   InputComp,
-   InputDrop,
-   InputNumb2,
-   InputRadio,
-} from "../../../components/InputComp";
 import {
    Table,
    TableHead,
@@ -17,10 +10,13 @@ import {
    TableCell,
    TableCol,
 } from "../../../components/Table";
+import { useForm } from "react-hook-form";
 import Tabel from "../../../components/Tabel";
 function Pembelian() {
    const [popUp, setpopUp] = useState(true);
    const [exnota, setExnota] = useState(true);
+   const { register, errors, handleSubmit } = useForm();
+   const onSubmit = (data) => console.log(data);
    return (
       <AdminLayout>
          {/* Tabel Detail */}
@@ -30,36 +26,131 @@ function Pembelian() {
          <ExportNota exnota={exnota} setExnota={setExnota} exnota={exnota} />
          {/* PopUp Tambah Data */}
          <PopUpComp pop={popUp}>
-            <p className="text-center text-xl mb-2">Formulir Pembelian</p>
-            <form action="" className="">
-               <div className="xl:flex  justify-between">
-                  <InputComp tipe="text" nama="Nama Lengkap" id="namalengkap" />
-                  <InputComp tipe="text" nama="Rekening" id="rekening" />
+            <p className="text-center text-lg mb-2 font-bold">
+               Formulir Pembelian
+            </p>
+            <form onSubmit={handleSubmit(onSubmit)}>
+               <div className="mb-2 pr-1 lg:pr-0">
+                  <div className="md:flex md:space-x-2">
+                     <div className="mb-2 flex flex-col md:w-1/2">
+                        <label htmlFor="rekening" className="uppercase">
+                           Rekening
+                        </label>
+                        <input
+                           name="rekening"
+                           id="rekening"
+                           placeholder="Input Rekening"
+                           type="number"
+                           className={`form-input rounded-lg ${
+                              errors.rekening && `border-red-500`
+                           }`}
+                           min="0"
+                           ref={register({ required: true, minLength: 5 })}
+                        />
+                        {errors.rekening && (
+                           <p className="text-red-500 font-light text-sm">
+                              Your input is required !
+                           </p>
+                        )}
+                     </div>
+                     <div className="mb-2 flex flex-col md:w-1/2">
+                        <label htmlFor="nama" className="uppercase">
+                           Nama
+                        </label>
+                        <input
+                           name="nama"
+                           id="nama"
+                           placeholder="Input Nama"
+                           type="text"
+                           className={`form-input rounded-lg ${
+                              errors.nama && `border-red-500`
+                           }`}
+                           ref={register({ required: true })}
+                        />
+                        {errors.nama && (
+                           <p className="text-red-500 font-light text-sm">
+                              Your input is required !
+                           </p>
+                        )}
+                     </div>
+                  </div>
+                  <div className="md:flex md:space-x-2">
+                     <div className="mb-2 flex flex-col md:w-1/2">
+                        <label htmlFor="tanggal" className="uppercase">
+                           Tanggal
+                        </label>
+                        <input
+                           name="tanggal"
+                           id="tanggal"
+                           type="date"
+                           className={`form-input rounded-lg ${
+                              errors.tanggal && `border-red-500`
+                           }`}
+                           min="0"
+                           ref={register({ required: true })}
+                        />
+                        {errors.tanggal && (
+                           <p className="text-red-500 font-light text-sm">
+                              Your input is required !
+                           </p>
+                        )}
+                     </div>
+                     <div className="mb-2 flex flex-col md:w-1/2">
+                        <label htmlFor="alamat" className="uppercase">
+                           Alamat
+                        </label>
+                        <input
+                           name="alamat"
+                           id="alamat"
+                           placeholder="Input Alamat"
+                           type="text"
+                           className={`form-input rounded-lg ${
+                              errors.alamat && `border-red-500`
+                           }`}
+                           ref={register({ required: true })}
+                        />
+                        {errors.alamat && (
+                           <p className="text-red-500 font-light text-sm">
+                              Your input is required !
+                           </p>
+                        )}
+                     </div>
+                  </div>
+                  <div className="flex flex-col">
+                     <p
+                        className={`uppercase ${
+                           errors.tipetransaksi && `text-red-500`
+                        }`}
+                     >
+                        Type Transaksi
+                        {errors.tipetransaksi && "*"}
+                     </p>
+
+                     <div className="flex items-center space-x-2">
+                        <input
+                           name="tipetransaksi"
+                           value="Cash"
+                           id="cash"
+                           type="radio"
+                           className="form-radio"
+                           ref={register({ required: true })}
+                        />
+                        <label htmlFor="cash">Cash</label>
+                     </div>
+                     <div className="flex items-center space-x-2">
+                        <input
+                           name="tipetransaksi"
+                           value="Tabungkan"
+                           id="tabungkan"
+                           type="radio"
+                           className="form-radio"
+                           ref={register({ required: true })}
+                        />
+                        <label htmlFor="tabungkan">Tabungkan</label>
+                     </div>
+                  </div>
                </div>
-               <div className="xl:flex justify-between">
-                  <InputComp
-                     tipe="date"
-                     nama="date"
-                     id="date"
-                     labels="Tanggal Pembelian"
-                  />
-                  <InputComp
-                     tipe="text"
-                     nama="alamat"
-                     id="alamat"
-                     labels="Alamat"
-                  />
-               </div>
-               <div
-                  className="xl:flex
-"
-               >
-                  <InputRadio
-                     nama="pembayaran"
-                     labels="Pembayaran"
-                     value={["Tabung", "Cast"]}
-                  />
-               </div>
+
                <Tabel
                   tabhead={[
                      { judul: "No", sz: "w-1/12" },
@@ -72,26 +163,36 @@ function Pembelian() {
                   <tr>
                      <td className="text-center border-r">1</td>
                      <td className="text-center border-r">
-                        <InputDrop
-                           value={["Lain-Lain", "Kertasan"]}
-                           id="tipesampah"
-                        />
+                        <select
+                           name="type"
+                           id="type"
+                           className="form-select w-full border-0 focus:ring-0"
+                           ref={register({ required: true })}
+                        >
+                           <option value="Kertasan">Kertasan</option>
+                        </select>
                      </td>
                      <td className="text-center border-r">
-                        <InputDrop
-                           value={["Lain-Lain", "Kardus"]}
-                           id="namasampah"
-                        />
+                        <select
+                           name="barang"
+                           id="barang"
+                           className="form-select w-full border-0 focus:ring-0"
+                           ref={register({ required: true })}
+                        >
+                           <option value="Kertasan">Kertasan</option>
+                        </select>
                      </td>
-                     <td className="text-center border-r">
+                     <td className="text-center border-r">Rp.200000</td>
+                     <td className="text-center border-r flex items-center">
                         <input
-                           className="focus:outline-none"
-                           value="Rp.2000"
-                           readOnly
+                           name="qty"
+                           id="qty"
+                           type="number"
+                           placeholder="0"
+                           className="form-input w-16 border-0 focus:ring-0"
+                           ref={register({ required: true })}
                         />
-                     </td>
-                     <td className="text-center border-r">
-                        <InputNumb2 id="qty" nama="0" />
+                        Kg
                      </td>
                   </tr>
                </Tabel>
@@ -104,13 +205,16 @@ function Pembelian() {
                <div className="flex justify-center mt-2">
                   <div className="w-52 flex justify-between">
                      <button
-                        className="bg-red-500"
+                        className="bg-red-500 px-2 rounded-lg"
                         type="reset"
                         onClick={() => setpopUp(true)}
                      >
                         Cancel
                      </button>
-                     <button className="bg-green-500" type="submit">
+                     <button
+                        className="bg-green-500 px-2 rounded-lg"
+                        type="submit"
+                     >
                         Submit
                      </button>
                   </div>
@@ -240,10 +344,8 @@ const ExportNota = ({ exnota, setExnota }) => {
             </table>
          </div>
          <div className="flex space-x-6">
-            <button onClick={() => setExnota(true)}>
-               Cancel
-            </button>
-            <button className='bg-yellow-500'>Print</button>
+            <button onClick={() => setExnota(true)}>Cancel</button>
+            <button className="bg-yellow-500">Print</button>
          </div>
       </PopUpComp>
    );

@@ -4,7 +4,6 @@ import Card from "../../../components/Card";
 function index() {
    return (
       <BhrLayout>
-       
          <div className="md:flex md:space-x-8 md:pl-20 lg:pl-0 space-y-20 md:space-y-0  pb-4 justify-center">
             <Card
                gambar="/logo/cash-deposit.svg"

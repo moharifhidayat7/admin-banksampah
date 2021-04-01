@@ -29,18 +29,23 @@ function Pemasukan() {
          {/* Table Detail */}
          <Table>
             <TableHead>
-               <TableCol>No</TableCol> <TableCol>Rekening</TableCol>
-               <TableCol>Date</TableCol> <TableCol>Pemasukan</TableCol>
-               <TableCol>Rincian</TableCol> <TableCol>Aksi</TableCol>
+               <TableCol>No.</TableCol>
+               <TableCol>Rekening</TableCol>
+               <TableCol>Tanggal</TableCol>
+               <TableCol>Pemasukan</TableCol>
+               <TableCol>Rincian</TableCol>
+               <TableCol>Aksi</TableCol>
             </TableHead>
+
             <TableBody>
                <TableRow>
-                  <TableCell>1</TableCell>
-                  <TableCell>91392389</TableCell>
-                  <TableCell>15-20-2000</TableCell>
-                  <TableCell>Rp.204020</TableCell>
-                  <TableCell>Penjemputan Sampah</TableCell>
+                  <TableCell>1.</TableCell>
+                  <TableCell>123913892</TableCell>
+                  <TableCell>12-12-1203</TableCell>
+                  <TableCell>Rp.1293819</TableCell>
+                  <TableCell>Pengambilan</TableCell>
                   <TableCell>
+                
                      <div className="inline-flex space-x-2 align-middle">
                         <Icons.CreditCard className="text-green-500 cursor-pointer" />
                         <Icons.Pencil className="text-yellow-500 cursor-pointer" />
@@ -56,28 +61,121 @@ function Pemasukan() {
 }
 
 const TambahData = ({ tambah, setTambahData }) => {
-   const { register, handleSubmit } = useForm();
+   const { register, errors, handleSubmit } = useForm();
+
    const onSubmit = (data) => console.log(data);
+
    return (
       <PopUpComp pop={tambah}>
+         <p className="text-center text-lg mb-2 font-bold">Pemasukan</p>
          <form onSubmit={handleSubmit(onSubmit)}>
-            <input name="firstName" ref={register} />
-            <select name="gender" ref={register}>
-               <option value="female">female</option>
-               <option value="male">male</option>
-               <option value="other">other</option>
-            </select>
-            <input type="submit" />
+            <div className="mb-2 pr-1 lg:pr-0">
+               <div className="md:flex md:space-x-2">
+                  <div className="mb-2 flex flex-col md:w-1/2">
+                     <label htmlFor="rekening" className="uppercase">
+                        Rekening
+                     </label>
+                     <input
+                        name="rekening"
+                        id="rekening"
+                        placeholder="Input Rekening"
+                        type="number"
+                        className={`form-input rounded-lg ${
+                           errors.rekening && `border-red-500`
+                        }`}
+                        min="0"
+                        ref={register({ required: true, minLength: 5 })}
+                     />
+                     {errors.rekening && (
+                        <p className="text-red-500 font-light text-sm">
+                           Your input is required !
+                        </p>
+                     )}
+                  </div>
+                  <div className="mb-2 flex flex-col md:w-1/2">
+                     <label htmlFor="tanggal" className="uppercase">
+                        Tanggal
+                     </label>
+                     <input
+                        name="tanggal"
+                        id="tanggal"
+                        type="date"
+                        className={`form-input rounded-lg ${
+                           errors.tanggal && `border-red-500`
+                        }`}
+                        ref={register({ required: true })}
+                     />
+                     {errors.tanggal && (
+                        <p className="text-red-500 font-light text-sm">
+                           Your input is required !
+                        </p>
+                     )}
+                  </div>
+               </div>
+               <div className="md:flex md:space-x-2">
+                  <div className="mb-2 flex flex-col md:w-1/2">
+                     <label htmlFor="rincian" className="uppercase">
+                        Rincian
+                     </label>
+                     <input
+                        name="rincian"
+                        id="rincian"
+                        placeholder="Input Rincian"
+                        type="text"
+                        className={`form-input rounded-lg ${
+                           errors.rincian && `border-red-500`
+                        }`}
+                        ref={register({ required: true, minLength: 5 })}
+                     />
+                     {errors.rincian && (
+                        <p className="text-red-500 font-light text-sm">
+                           Your input is required !
+                        </p>
+                     )}
+                  </div>
+                  <div className="mb-2 flex flex-col md:w-1/2">
+                     <label htmlFor="pemasukan" className="uppercase">
+                        Pemasukan
+                     </label>
+                     <input
+                        name="pemasukan"
+                        id="pemasukan"
+                        type="number"
+                        className={`form-input rounded-lg ${
+                           errors.pemasukan && `border-red-500`
+                        }`}
+                        placeholder="Rp.999"
+                        min="0"
+                        ref={register({ required: true })}
+                     />
+                     {errors.pemasukan && (
+                        <p className="text-red-500 font-light text-sm">
+                           Your input is required !
+                        </p>
+                     )}
+                  </div>
+               </div>
+            </div>
+            <div className="flex justify-center mt-2">
+               <div className="w-52 flex justify-between">
+                  <button
+                     className="bg-red-500 px-2 rounded-lg"
+                     type="reset"
+                     onClick={() => setTambahData(true)}
+                  >
+                     Cancel
+                  </button>
+                  <button
+                     className="bg-green-500 px-2 rounded-lg"
+                     type="submit"
+                  >
+                     Submit
+                  </button>
+               </div>
+            </div>
          </form>
-         <button
-            type="reset"
-            className="bg-red-500"
-            onClick={() => setTambahData(true)}
-         >
-            Cancel
-         </button>
       </PopUpComp>
    );
 };
-
+// pemasukan rincian
 export default Pemasukan;

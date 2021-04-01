@@ -172,4 +172,3 @@ function Sampah() {
 }
 
 export default Sampah;
-
