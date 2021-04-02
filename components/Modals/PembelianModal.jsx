@@ -218,7 +218,7 @@ export default function PembelianModal({ modal, toggleModal, setDa }) {
                                 </label>
                                 <input
                                     name='createdAt'
-                                    type='text'
+                                    type='date'
                                     className={`block border w-full px-4 py-1 ${
                                         errors.createdAt &&
                                         "border-red-500 border-2"
