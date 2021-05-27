@@ -1,37 +1,55 @@
 import BhrLayout from "../../../components/Layouts/BhrLayout";
 
-import Card from "../../../components/Card";
+import DashboardCard from "../../../components/DashboardCard";
+import {
+    UserGroupOutline,
+    UserAddOutline,
+    SwitchVerticalOutline,
+    PlusOutline,
+    CashOutline,
+} from "heroicons-react";
+
 function index() {
-   return (
-      <BhrLayout>
-         <div className="md:flex md:space-x-8 md:pl-20 lg:pl-0 space-y-20 md:space-y-0  pb-4 justify-center">
-            <Card
-               gambar="/logo/cash-deposit.svg"
-               warna="bg-green-200"
-               alt="Pemasukan"
-               judul="Pemasukan"
-               total="Rp. 200000"
-               lebar="w-80"
-            />
-            <Card
-               gambar="/logo/team.svg"
-               warna="bg-blue-200"
-               alt="Nasabah"
-               judul="Nasabah"
-               total="100 Nasabah"
-               lebar="w-80"
-            />
-            <Card
-               gambar="/logo/money-transaction.svg"
-               warna="bg-red-200"
-               alt="Pengeluaran"
-               judul="Pengeluaran"
-               total="Rp. 7189"
-               lebar="w-80"
-            />
-         </div>
-      </BhrLayout>
-   );
+    return (
+        <BhrLayout>
+            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
+                <DashboardCard
+                    borderColor='border-red-400'
+                    textColor='text-red-500'
+                    icon={
+                        <SwitchVerticalOutline
+                            className='text-red-500'
+                            size='100%'
+                        />
+                    }
+                    title='Total Pengeluaran Tunai'
+                    value='Rp. 353365959'
+                />
+                <DashboardCard
+                    borderColor='border-green-400'
+                    icon={
+                        <CashOutline
+                            className='text-green-500 text-5xl'
+                            size='100%'
+                        />
+                    }
+                    title='Total Pemasukan Bank'
+                    value='Rp. 353365959'
+                />
+                <DashboardCard
+                    borderColor='border-blue-400'
+                    icon={
+                        <CashOutline
+                            className='text-blue-500 text-5xl'
+                            size='100%'
+                        />
+                    }
+                    title='Total Sampah Masuk'
+                    value='562623 Kg'
+                />
+            </div>
+        </BhrLayout>
+    );
 }
 
 export default index;

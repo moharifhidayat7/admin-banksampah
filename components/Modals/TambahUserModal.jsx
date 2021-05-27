@@ -18,7 +18,6 @@ export default function TambahUserModal({
 
     const onSubmit = async (data) => {
         console.log(data);
-
         if (edit._id) {
             editUser(data, edit._id);
         } else {
@@ -57,7 +56,9 @@ export default function TambahUserModal({
 
     useEffect(() => {
         if (edit._id) {
-            const newBirth = new Date(edit.birthdate);
+            setValue("name", edit.name);
+            setValue("username", edit.username);
+            setValue("role", edit.role);
         }
     }, [edit]);
 
@@ -143,16 +144,32 @@ export default function TambahUserModal({
                         </div>
                         <div className='mt-2'>
                             <label>
-                                Password <span className='text-red-500'>*</span>
+                                Password{" "}
+                                {edit._id ? (
+                                    ""
+                                ) : (
+                                    <span className='text-red-500'>*</span>
+                                )}
                             </label>
-                            <input
-                                name='password'
-                                type='password'
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.password && "border-red-500 border-2"
-                                }`}
-                                ref={register({ required: true })}
-                            />
+                            {edit._id ? (
+                                <input
+                                    name='password'
+                                    type='password'
+                                    className={`block border w-full px-4 py-1`}
+                                    ref={register()}
+                                />
+                            ) : (
+                                <input
+                                    name='password'
+                                    type='password'
+                                    className={`block border w-full px-4 py-1 ${
+                                        errors.password &&
+                                        "border-red-500 border-2"
+                                    }`}
+                                    ref={register({ required: true })}
+                                />
+                            )}
+
                             {errors.password && (
                                 <span className='text-xs text-red-500'>
                                     * Password harus di isi!
@@ -162,21 +179,34 @@ export default function TambahUserModal({
                         <div className='mt-2'>
                             <label>
                                 Konfirmasi Password{" "}
-                                <span className='text-red-500'>*</span>
+                                {edit._id ? (
+                                    ""
+                                ) : (
+                                    <span className='text-red-500'>*</span>
+                                )}
                             </label>
-                            <input
-                                name='password2'
-                                type='password'
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.password2 &&
-                                    "border-red-500 border-2"
-                                }`}
-                                ref={register({
-                                    validate: (value) =>
-                                        value === password.current ||
-                                        "Password tidak sesuai!",
-                                })}
-                            />
+                            {edit._id ? (
+                                <input
+                                    name='password2'
+                                    type='password2'
+                                    className={`block border w-full px-4 py-1`}
+                                    ref={register()}
+                                />
+                            ) : (
+                                <input
+                                    name='password2'
+                                    type='password2'
+                                    className={`block border w-full px-4 py-1 ${
+                                        errors.password2 &&
+                                        "border-red-500 border-2"
+                                    }`}
+                                    ref={register({
+                                        validate: (value) =>
+                                            value === password.current ||
+                                            "Password tidak sesuai",
+                                    })}
+                                />
+                            )}
                             {errors.password2 && (
                                 <span className='text-xs text-red-500'>
                                     * {errors.password2.message}

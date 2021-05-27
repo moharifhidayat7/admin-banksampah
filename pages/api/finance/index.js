@@ -1,22 +1,19 @@
 import { useDatabase } from "../../../database/init";
-import { User } from "../../../database/models/User";
-import bcrypt from "bcrypt";
+import { Finance } from "../../../database/models/Finance";
 
 useDatabase();
 
 async function getHandler(req, res) {
     const limit = parseInt(req.query.limit) || 0;
-    const user_list = await User.find().limit(limit);
+    const transaction_list = await Finance.find().limit(limit);
 
-    res.status(200).json(user_list);
+    res.status(200).json(transaction_list);
 }
 async function postHandler(req, res) {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(req.body.password, salt);
+    const data = req.body;
+    const transaction_list = await Finance.create(data);
 
-    const user_list = await User.create({ ...req.body, password: hash });
-
-    res.status(200).json(user_list);
+    res.status(200).json(transaction_list);
 }
 
 export default async (req, res) => {

@@ -76,11 +76,21 @@ function User() {
                                 </div>
                                 <div className='inline-block float-right'>
                                     <button
-                                        className={`bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}
+                                        className={`bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white ${
+                                            edit._id == item._id ? "hidden" : ""
+                                        }`}
+                                        onClick={() => {
+                                            handleEdit(item);
+                                        }}
                                     >
                                         <Icons.Pencil />
                                     </button>
-                                    <button className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'>
+                                    <button
+                                        className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                                        onClick={() => {
+                                            delItems(item._id);
+                                        }}
+                                    >
                                         <Icons.Trash />
                                     </button>
                                 </div>

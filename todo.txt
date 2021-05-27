@@ -3,3 +3,4 @@
 -   Login
 -   Export
 -   Print
+-   Delete Confirmation

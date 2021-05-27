@@ -1,11 +1,11 @@
 import { useDatabase } from "../../../database/init";
-import { User } from "../../../database/models/User";
+import { Finance } from "../../../database/models/Finance";
 
 useDatabase();
 
 async function getHandler(req, res) {
-    const sampah_type = await User.findById(req.query.id);
-    res.status(200).json(sampah_type);
+    const transaction = await Finance.findById(req.query.id);
+    res.status(200).json(transaction);
 }
 async function patchHandler(req, res) {
     const data = req.body;
@@ -14,15 +14,15 @@ async function patchHandler(req, res) {
         runValidators: true,
     };
 
-    const sampah_type = await User.findByIdAndUpdate(
+    const transaction = await Finance.findByIdAndUpdate(
         req.query.id,
         data,
         options
     );
-    res.status(200).json(sampah_type);
+    res.status(200).json(transaction);
 }
 async function deleteHandler(req, res) {
-    await User.findByIdAndDelete(
+    await Finance.findByIdAndDelete(
         req.query.id,
         { rawResult: true },
         (error, result) => {
