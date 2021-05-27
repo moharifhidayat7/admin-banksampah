@@ -18,7 +18,7 @@ export default function Menu() {
             <Item
                 route='/Admin/Gudang/Transaksi'
                 icon={<Icons.Cash size='1rem' />}
-                title='Transaksi'
+                title='Transaksi Sampah'
             />
             <Item
                 route='/Admin/Gudang/Sampah'

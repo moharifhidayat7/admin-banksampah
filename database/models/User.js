@@ -1,8 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+    },
     username: {
         type: String,
         required: true,
@@ -15,14 +19,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    _role: {
-        type: Schema.Types.ObjectId,
+    role: {
+        type: String,
+        enum: ["admin", "bendahara"],
         required: true,
-        ref: 'Role',
-    },
-    _profile: {
-        type: Schema.Types.ObjectId,
-        ref: 'Profile',
     },
 });
 
@@ -56,8 +56,10 @@ const ProfileSchema = new Schema({
     },
 });
 
-const User = mongoose.model('User', UserSchema);
-const Role = mongoose.model('Role', RoleSchema);
-const Profile = mongoose.model('Profile', ProfileSchema);
+mongoose.models = {};
+
+const User = mongoose.model("User", UserSchema);
+const Role = mongoose.model("Role", RoleSchema);
+const Profile = mongoose.model("Profile", ProfileSchema);
 
 export { User, Role, Profile };

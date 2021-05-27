@@ -1,11 +1,18 @@
-import { useDatabase } from '../../../database/init';
-import { NasabahProfile } from '../../../database/models/Nasabah';
+import { useDatabase } from "../../../database/init";
+import { NasabahProfile } from "../../../database/models/Nasabah";
 
 useDatabase();
 
 async function getHandler(req, res) {
     const limit = parseInt(req.query.limit) || 0;
-    const nasabah_profile_list = await NasabahProfile.find().limit(limit);
+    const keyword = req.query.keyword || "";
+    const nasabah_profile_list = await NasabahProfile.find({
+        $or: [
+            { name: { $regex: ".*" + keyword + ".*", $options: "i" } },
+            { rekening: { $regex: ".*" + keyword + ".*", $options: "i" } },
+            { nik: { $regex: ".*" + keyword + ".*", $options: "i" } },
+        ],
+    }).limit(limit);
 
     res.status(200).json(nasabah_profile_list);
 }
@@ -19,17 +26,17 @@ async function postHandler(req, res) {
 export default async (req, res) => {
     const { method } = req;
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
     switch (method) {
-        case 'GET':
+        case "GET":
             await getHandler(req, res);
             break;
-        case 'POST':
+        case "POST":
             await postHandler(req, res);
             break;
         default:
-            res.setHeader('Allow', ['GET', 'POST']);
+            res.setHeader("Allow", ["GET", "POST"]);
             res.status(405).json({ error: `Method ${method} Not Allowed` });
             break;
     }

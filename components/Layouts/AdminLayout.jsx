@@ -15,8 +15,8 @@ export default function AdminLayout({ children }) {
     return (
         <div className='w-full h-full'>
             <Head>
-            <title>Bank Sampah</title>
-         </Head>
+                <title>Bank Sampah</title>
+            </Head>
             <div className='flex flex-no-wrap'>
                 <Sidebar>
                     <Menu></Menu>

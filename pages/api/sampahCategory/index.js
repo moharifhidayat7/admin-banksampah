@@ -1,5 +1,5 @@
-import { useDatabase } from '../../../database/init';
-import { SampahCategory } from '../../../database/models/Sampah';
+import { useDatabase } from "../../../database/init";
+import { SampahCategory } from "../../../database/models/Sampah";
 
 useDatabase();
 
@@ -19,17 +19,17 @@ async function postHandler(req, res) {
 export default async (req, res) => {
     const { method } = req;
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
     switch (method) {
-        case 'GET':
+        case "GET":
             await getHandler(req, res);
             break;
-        case 'POST':
+        case "POST":
             await postHandler(req, res);
             break;
         default:
-            res.setHeader('Allow', ['GET', 'POST']);
+            res.setHeader("Allow", ["GET", "POST"]);
             res.status(405).json({ error: `Method ${method} Not Allowed` });
             break;
     }

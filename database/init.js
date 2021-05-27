@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export async function useDatabase() {
     mongoose.connect(process.env.MONGO_URL, {
@@ -6,7 +6,7 @@ export async function useDatabase() {
         useUnifiedTopology: true,
         useFindAndModify: false,
     });
-    const db = await mongoose.connection;
+    const db = mongoose.connection;
 
     return db;
 }

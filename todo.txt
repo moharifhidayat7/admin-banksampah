@@ -1,0 +1,5 @@
+-   Search Box
+-   Upload Foto
+-   Login
+-   Export
+-   Print

@@ -1,11 +1,18 @@
-import { useDatabase } from '../../../database/init';
-import { SampahTransaction } from '../../../database/models/SampahTransaction';
+import { useDatabase } from "../../../database/init";
+import { SampahTransaction } from "../../../database/models/SampahTransaction";
+import { PriceList } from "../../../database/models/PriceList";
+import { NasabahProfile } from "../../../database/models/Nasabah";
 
 useDatabase();
 
 async function getHandler(req, res) {
     const limit = parseInt(req.query.limit) || 0;
-    const sampah_transaction_list = await SampahTransaction.find().limit(limit);
+    const sampah_transaction_list = await SampahTransaction.find()
+        .limit(limit)
+        .populate({
+            path: "items",
+        })
+        .populate({ path: "_nasabah" });
 
     res.status(200).json(sampah_transaction_list);
 }
@@ -19,17 +26,17 @@ async function postHandler(req, res) {
 export default async (req, res) => {
     const { method } = req;
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
     switch (method) {
-        case 'GET':
+        case "GET":
             await getHandler(req, res);
             break;
-        case 'POST':
+        case "POST":
             await postHandler(req, res);
             break;
         default:
-            res.setHeader('Allow', ['GET', 'POST']);
+            res.setHeader("Allow", ["GET", "POST"]);
             res.status(405).json({ error: `Method ${method} Not Allowed` });
             break;
     }

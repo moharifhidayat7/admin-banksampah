@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminLayout from "../../../components/Layouts/AdminLayout";
 import PopUpComp from "../../../components/PopUpComp";
 import PembelianModal from "../../../components/Modals/PembelianModal";
@@ -12,83 +12,132 @@ import {
     TableCol,
 } from "../../../components/Table";
 
-function Pembelian() {
+function Pembelian({ priceList }) {
     const [modal, setModal] = useState(false);
-    const [da, setDa] = useState("");
+    const [transactions, setTransactions] = useState([]);
 
     const toggleModal = () => {
         setModal(!modal);
     };
+
+    const getTransactions = async () => {
+        const res = await fetch("http://localhost:3000/api/sampahTransaction");
+        const json = await res.json();
+
+        setTransactions(json);
+    };
+
+    const delTransaction = async (id) => {
+        await fetch("http://localhost:3000/api/sampahTransaction/" + id, {
+            method: "DELETE",
+        }).then((res) => getTransactions());
+    };
+
+    useEffect(() => {
+        getTransactions();
+    }, []);
 
     return (
         <AdminLayout>
             <PembelianModal
                 modal={modal}
                 toggleModal={toggleModal}
-                da={da}
-                setDa={setDa}
+                priceList={priceList}
+                getTransactions={getTransactions}
             />
 
-            <h1 className='text-4xl mb-5'>Pembelian</h1>
-            <div className='mx-auto bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded'>
-                <div className='flex flex-col lg:flex-row p-4 lg:p-8 justify-between items-start lg:items-stretch w-full'>
-                    <div className='inline-flex bg-white overflow-hidden focus-within:text-gray-800 text-gray-300 focus-within:ring-black rounded-md ring-2'>
-                        <input
-                            className='w-72 py-2 px-4 focus:outline-none bg-gray'
-                            placeholder='Cari ?'
-                            type='search'
-                            name='carinasabah'
-                            id='carinasabah'
-                        />
-                        <button
-                            id='carinasabah'
-                            className='items-center focus:outline-none flex p-1 '
-                        >
-                            <Icons.Search className='w-6' />
-                        </button>
-                    </div>
-                    <div className='flex justify-between space-x-1'>
-                        <button
-                            type='button'
-                            className='px-4 focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
-                            onClick={toggleModal}
-                        >
-                            Tambah Data
-                        </button>
-                        <button className='flex items-center shadow-md rounded-md overflow-hidden'>
-                            <Icons.DocumentText className='bg-yellow-300 h-full w-full' />
-                            <p className='bg-white font-bold w-full h-full pr-2 items-center flex'>
-                                Export
-                            </p>
-                        </button>
-                    </div>
-                </div>
-                <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
-                    <Table>
-                        <TableHead>
-                            <TableCol>No.</TableCol>
-                            <TableCol>Tanggal</TableCol>
-                            <TableCol>Tipe Transaksi</TableCol>
-                            <TableCol>Nasabah</TableCol>
-                            <TableCol>Rekening</TableCol>
-                            <TableCol>Jumlah</TableCol>
-                        </TableHead>
+            <div>
+                <h1 className='text-4xl mb-5 inline-block'>Transaksi</h1>
 
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>1.</TableCell>
-                                <TableCell>12-12-1223</TableCell>
-                                <TableCell>Cash</TableCell>
-                                <TableCell>Muhaimin</TableCell>
-                                <TableCell>123791</TableCell>
-                                <TableCell>Rp.388833</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </div>
+                <button
+                    type='button'
+                    className='px-4 inline-block align-top float-right focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
+                    onClick={toggleModal}
+                >
+                    Tambah Data
+                </button>
+            </div>
+            <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
+                <Table>
+                    <TableHead>
+                        <TableCol>Tanggal</TableCol>
+                        <TableCol>Nama</TableCol>
+                        <TableCol>Alamat</TableCol>
+                        <TableCol>Tipe Transaksi</TableCol>
+                        <TableCol>Jumlah</TableCol>
+                        <TableCol></TableCol>
+                    </TableHead>
+
+                    <TableBody>
+                        {transactions.map((trx, index) => {
+                            return (
+                                <TableRow key={trx._id}>
+                                    <TableCell>
+                                        {new Date(
+                                            trx.transactionDate
+                                        ).toLocaleString("id-ID", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </TableCell>
+                                    <TableCell>
+                                        {trx.guest
+                                            ? trx.guest.name
+                                            : trx._nasabah.name}
+                                    </TableCell>
+                                    <TableCell>
+                                        {trx.guest
+                                            ? trx.guest.address
+                                            : trx._nasabah.address}
+                                    </TableCell>
+                                    <TableCell>
+                                        {trx.transactionType}{" "}
+                                        {trx.transactionType == "saving"
+                                            ? `(${trx._nasabah.rekening})`
+                                            : ""}
+                                    </TableCell>
+
+                                    <TableCell>
+                                        {new Intl.NumberFormat("id-ID", {
+                                            style: "currency",
+                                            currency: "IDR",
+                                        }).format(
+                                            trx.items.reduce((tot, item) => {
+                                                return (
+                                                    tot + item.price * item.qty
+                                                );
+                                            }, 0)
+                                        )}
+                                    </TableCell>
+                                    <TableCell className='float-right'>
+                                        <button
+                                            className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                                            onClick={() =>
+                                                delTransaction(trx._id)
+                                            }
+                                        >
+                                            <Icons.Trash />
+                                        </button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
             </div>
         </AdminLayout>
     );
+}
+
+export async function getStaticProps() {
+    const res = await fetch("http://localhost:3000/api/priceList");
+    const priceList = await res.json();
+    return {
+        props: {
+            priceList,
+        },
+    };
 }
 
 export default Pembelian;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -16,13 +16,16 @@ const SampahTypeSchema = new Schema({
     },
     _category: {
         type: Schema.Types.ObjectId,
+        ref: "SampahCategory",
     },
     qtyfier: {
         type: String,
-        default: 'item',
+        default: "item",
     },
 });
-const SampahCategory = mongoose.model('Sampah Category', SampahCategorySchema);
-const SampahType = mongoose.model('Sampah Type', SampahTypeSchema);
+mongoose.models = {};
+
+const SampahCategory = mongoose.model("SampahCategory", SampahCategorySchema);
+const SampahType = mongoose.model("SampahType", SampahTypeSchema);
 
 export { SampahCategory, SampahType };

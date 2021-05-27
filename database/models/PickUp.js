@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -19,7 +19,8 @@ const PickUpSchema = new Schema({
         default: false,
     },
 });
+mongoose.models = {};
 
-const PickUp = mongoose.model('Pick Up', PickUpSchema);
+const PickUp = mongoose.model("PickUp", PickUpSchema);
 
 export { PickUp };

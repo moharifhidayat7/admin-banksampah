@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -8,11 +8,16 @@ const BankTransactionSchema = new Schema({
     },
     transactionType: {
         type: String,
-        enum: ['debet', 'credit'],
+        enum: ["debet", "credit"],
         required: true,
     },
-    _account: {
+    amount: {
+        type: Number,
+        required: true,
+    },
+    _nasabah: {
         type: Schema.Types.ObjectId,
+        ref: "NasabahProfile",
         required: true,
     },
     createdAt: {
@@ -20,9 +25,10 @@ const BankTransactionSchema = new Schema({
         default: Date.now,
     },
 });
+mongoose.models = {};
 
 const BankTransaction = mongoose.model(
-    'Bank Transaction',
+    "BankTransaction",
     BankTransactionSchema
 );
 

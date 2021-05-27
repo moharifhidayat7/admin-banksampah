@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useReducer, useState, useEffect } from "react";
 import {
     Table,
     TableBody,
@@ -9,96 +9,121 @@ import {
 } from "../Table";
 import * as Icons from "heroicons-react";
 import { useForm, useFieldArray } from "react-hook-form";
+import AsyncCreatableSelect from "react-select/async-creatable";
 
-const ItemRow = ({ index, field, register, errors, append, remove }) => {
-    const [jenis, setJenis] = useState([]);
-    const [jumlah, setJumlah] = useState(0);
+export default function PembelianModal({
+    priceList,
+    modal,
+    toggleModal,
+    getTransactions,
+}) {
+    const { register, handleSubmit, setValue, reset, errors } = useForm();
+
+    const [items, setItems] = useState([]);
+    const [temp, setTemp] = useState([]);
     const [qty, setQty] = useState(0);
+    const [total, setTotal] = useState(0);
+    const [selected, setSelected] = useState([]);
 
-    const handleJenis = (e) => {
-        const jenis = jenises.filter((jenis) => jenis.id == e.target.value)[0];
-        if (jenis == undefined) {
-            setJenis({ harga: "0", satuan: "-" });
+    const handleSelect = (e) => {
+        const selected = priceList.filter(
+            (jenis) => jenis._id == e.target.value
+        )[0];
+        setTemp({
+            ...selected,
+        });
+    };
+
+    const handleAdd = (e) => {
+        e.preventDefault();
+
+        if (temp.length < 1) {
+            return -1;
+        }
+
+        const find = items.filter((item) => item._id == temp._id);
+
+        if (find.length > 0) {
+            const newItems = items.map((item) => {
+                if (item._id == temp._id) {
+                    item.qty = qty;
+                }
+                return item;
+            });
+
+            setItems(newItems);
         } else {
-            setJenis(jenis);
+            setItems([...items, { ...temp, qty: qty }]);
         }
     };
 
-    const jenises = [
-        { id: 1, name: "Kardus", harga: 20000, satuan: "Kg" },
-        { id: 2, name: "Besi", harga: 10000, satuan: "Meter" },
-    ];
+    const handleDelete = (id) => {
+        const find = items.filter((item) => item._id != id);
 
-    const updateQty = (e) => {
-        e.preventDefault();
-        setQty(e.target.value);
+        setItems(find);
     };
 
     useEffect(() => {
-        setJumlah(jenis.harga * qty);
-    }, [handleJenis]);
+        setTotal(() => {
+            return items.reduce((tot, item) => {
+                return tot + item.price * item.qty;
+            }, 0);
+        });
+    }, [items]);
 
-    return (
-        <TableRow>
-            <TableCell>
-                <select
-                    name={`jenis[${index}].id`}
-                    className='w-full'
-                    onChange={handleJenis}
-                    ref={register({
-                        required: true,
-                    })}
-                >
-                    <option>Pilih Jenis Sampah ...</option>
-                    {jenises.map((jenis) => (
-                        <option key={jenis.id} value={jenis.id}>
-                            {jenis.name}
-                        </option>
-                    ))}
-                </select>
-            </TableCell>
-            <TableCell>
-                <label>{`Rp. ${jenis.harga}/${jenis.satuan}`}</label>
-            </TableCell>
-            <TableCell>
-                <input
-                    name={`jenis[${index}].qty`}
-                    type='text'
-                    className={`block border w-full p-2 ${
-                        errors.jenis && "border-red-500 border-2"
-                    }`}
-                    ref={register({
-                        required: true,
-                    })}
-                    placeholder='Qty.'
-                    onChange={updateQty}
-                    value={qty}
-                />
-            </TableCell>
-            <TableCell>
-                <label>{isNaN(jumlah) ? 0 : jumlah}</label>
-            </TableCell>
-            <TableCell>
-                <Icons.MinusCircle className='text-red-500 cursor-pointer' />
-            </TableCell>
-        </TableRow>
-    );
-};
+    useEffect(() => setTemp([]), []);
 
-export default function PembelianModal({ modal, toggleModal, setDa }) {
-    const { control, register, handleSubmit, watch, errors } = useForm();
-    const {
-        fields,
-        append,
-        prepend,
-        remove,
-        swap,
-        move,
-        insert,
-    } = useFieldArray({ control, name: "items" });
+    const onSubmit = async (data) => {
+        let body;
+        if (selected.__isNew__) {
+            body = {
+                transactionType: data.transactionType,
+                transactionDate: data.transactionDate,
+                guest: {
+                    name: selected.label,
+                    address: data.address,
+                    mobile: data.mobile,
+                },
+                items: items,
+            };
+        } else {
+            body = {
+                transactionType: data.transactionType,
+                transactionDate: data.transactionDate,
+                _nasabah: selected.value,
+                items: items,
+            };
+        }
+        await fetch("http://localhost:3000/api/sampahTransaction", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        }).then(async (res) => {
+            reset();
+            setItems([]);
+            setSelected([]);
+            toggleModal();
+            getTransactions();
+        });
+    };
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const searchNasabah = async (keyword) => {
+        const result = await fetch(
+            "http://localhost:3000/api/nasabahProfile?limit=10&keyword=" +
+                keyword
+        ).then(async (res) => {
+            return res.json();
+        });
+        return result.map((el) => {
+            return {
+                label: `${el.name} (${el.nik})`,
+                value: el._id,
+                address: el.address,
+                mobile: el.mobile,
+            };
+        });
     };
 
     return (
@@ -109,132 +134,188 @@ export default function PembelianModal({ modal, toggleModal, setDa }) {
             onClick={toggleModal}
         >
             <div
-                className='bg-white rounded shadow-lg w-8/12'
+                className='bg-white rounded shadow-lg md:w-1/3 w-1/3 w-full'
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className='border-b px-4 py-2 grid grid-cols-3 items-center'>
-                        <h3 className='font-semibold text-lg col-span-2'>
+                    <div className='border-b px-4 py-2 flex justify-between	'>
+                        <h3 className='font-semibold text-lg'>
                             Tambah Transaksi Sampah
                         </h3>
-                        <input
-                            type='text'
-                            placeholder='Cari Nasabah'
-                            className='border px-4 py-2 w-full'
-                        />
                     </div>
-                    <div className='p-5 grid grid-cols-4 gap-4'>
-                        <div className='col-span-2'>
-                            <div>
+                    <div className='p-5'>
+                        <div className='grid grid-cols-2 gap-4'>
+                            <div className='col-span-2'>
                                 <label>
                                     Nama <span className='text-red-500'>*</span>
                                 </label>
-                                <input
-                                    name='name'
-                                    type='text'
-                                    className={`block border w-full px-4 py-1 ${
+                                <AsyncCreatableSelect
+                                    instanceId='selectNasabah'
+                                    cacheOptions
+                                    defaultOptions
+                                    onChange={(e) => {
+                                        setValue("name", e.label);
+                                        setValue("address", e.address);
+                                        setValue("mobile", e.mobile);
+                                        setSelected(e);
+                                    }}
+                                    loadOptions={searchNasabah}
+                                    className={`${
                                         errors.name && "border-red-500 border-2"
                                     }`}
-                                    ref={register({ required: true })}
                                 />
-                                {errors.name && (
-                                    <span className='text-xs text-red-500'>
-                                        * Nama harus di isi!
-                                    </span>
-                                )}
                             </div>
-                            <div className='mt-2'>
-                                <label>
-                                    Alamat{" "}
-                                    <span className='text-red-500'>*</span>
-                                </label>
-                                <input
-                                    name='address'
-                                    type='text'
-                                    className={`block border w-full px-4 py-1 ${
-                                        errors.address &&
-                                        "border-red-500 border-2"
-                                    }`}
-                                    ref={register({ required: true })}
-                                />
-                                {errors.address && (
-                                    <span className='text-xs text-red-500'>
-                                        * Alamat harus di isi!
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                        <div>
                             <div>
-                                <label>No. HP</label>
-                                <input
-                                    name='phone'
-                                    type='text'
-                                    className='block border w-full px-4 py-1'
-                                    ref={register()}
-                                />
-                            </div>
-                            <div className='mt-2'>
-                                <label>
-                                    Jenis Transaksi{" "}
-                                    <span className='text-red-500'>*</span>
-                                </label>
-                                <div className='py-2'>
-                                    <label className='inline-flex items-center'>
-                                        <input
-                                            name='transactionType'
-                                            type='radio'
-                                            className='form-radio'
-                                            value='cash'
-                                            ref={register({ required: true })}
-                                        />
-                                        <span className='ml-2'>Tunai</span>
+                                <div className='hidden'>
+                                    <label>
+                                        Nama{" "}
+                                        <span className='text-red-500'>*</span>
                                     </label>
-                                    <label className='inline-flex items-center ml-6'>
-                                        <input
-                                            name='transactionType'
-                                            type='radio'
-                                            className='form-radio'
-                                            value='saving'
-                                            ref={register({ required: true })}
-                                        />
-                                        <span className='ml-2'>Tabung</span>
-                                    </label>
+                                    <input
+                                        name='name'
+                                        type='text'
+                                        className={`block border w-full px-4 py-1`}
+                                        ref={register({ required: true })}
+                                    />
                                 </div>
-                                {errors.transactionType && (
-                                    <span className='text-xs text-red-500'>
-                                        * Pilih salah satu!
-                                    </span>
-                                )}
+                                <div>
+                                    <label>
+                                        Alamat{" "}
+                                        <span className='text-red-500'>*</span>
+                                    </label>
+
+                                    <input
+                                        name='address'
+                                        type='text'
+                                        className={`block border w-full px-4 py-1 ${
+                                            errors.address &&
+                                            "border-red-500 border-2"
+                                        }`}
+                                        ref={register({ required: true })}
+                                    />
+                                    {errors.address && (
+                                        <span className='text-xs text-red-500'>
+                                            * Alamat harus di isi!
+                                        </span>
+                                    )}
+                                </div>
+                                <div className='mt-2'>
+                                    <label>No. HP</label>
+                                    <input
+                                        name='mobile'
+                                        type='text'
+                                        className='block border w-full px-4 py-1'
+                                        ref={register()}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div>
                             <div>
-                                <label>
-                                    Tanggal{" "}
-                                    <span className='text-red-500'>*</span>
-                                </label>
-                                <input
-                                    name='createdAt'
-                                    type='date'
-                                    className={`block border w-full px-4 py-1 ${
-                                        errors.createdAt &&
-                                        "border-red-500 border-2"
-                                    }`}
-                                    ref={register({ required: true })}
-                                />
-                                {errors.createdAt && (
-                                    <span className='text-xs text-red-500'>
-                                        * Tanggal harus di isi!
-                                    </span>
-                                )}
+                                <div>
+                                    <label>
+                                        Tanggal{" "}
+                                        <span className='text-red-500'>*</span>
+                                    </label>
+                                    <input
+                                        name='transactionDate'
+                                        type='date'
+                                        className={`block border w-full px-4 py-1 ${
+                                            errors.transactionDate &&
+                                            "border-red-500 border-2"
+                                        }`}
+                                        ref={register({ required: true })}
+                                    />
+                                    {errors.transactionDate && (
+                                        <span className='text-xs text-red-500'>
+                                            * Tanggal harus di isi!
+                                        </span>
+                                    )}
+                                </div>
+                                <div className='mt-2'>
+                                    <label>
+                                        Jenis Transaksi{" "}
+                                        <span className='text-red-500'>*</span>
+                                    </label>
+                                    <div className='py-1'>
+                                        <label className='inline-flex items-center'>
+                                            <input
+                                                name='transactionType'
+                                                type='radio'
+                                                className='form-radio'
+                                                value='cash'
+                                                ref={register({
+                                                    required: true,
+                                                })}
+                                            />
+                                            <span className='ml-2'>Tunai</span>
+                                        </label>
+                                        <label className='inline-flex items-center ml-6'>
+                                            <input
+                                                name='transactionType'
+                                                type='radio'
+                                                className='form-radio'
+                                                value='saving'
+                                                ref={register({
+                                                    required: true,
+                                                })}
+                                            />
+                                            <span className='ml-2'>Tabung</span>
+                                        </label>
+                                    </div>
+                                    {errors.transactionType && (
+                                        <span className='text-xs text-red-500'>
+                                            * Pilih salah satu!
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
+                        <hr className='mt-2' />
+                        <div className='mt-2'>
+                            <div className='grid grid-cols-3 gap-4'>
+                                <select
+                                    className='w-full border px-4 py-1'
+                                    onChange={handleSelect}
+                                    defaultValue='0'
+                                >
+                                    <option value='0' disabled>
+                                        Pilih Jenis Sampah
+                                    </option>
+                                    {priceList.map((list) => {
+                                        if (list.price != 0) {
+                                            return (
+                                                <option
+                                                    key={list._id}
+                                                    value={list._id}
+                                                >
+                                                    {list._sampahType.name}
+                                                </option>
+                                            );
+                                        }
+                                    })}
+                                </select>
+                                <input
+                                    type='number'
+                                    className={`block border w-full px-4 py-1`}
+                                    placeholder='Qty.'
+                                    value={qty}
+                                    onChange={(e) =>
+                                        setQty(parseInt(e.target.value))
+                                    }
+                                />
+                                <button
+                                    className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                                    onClick={handleAdd}
+                                >
+                                    Tambah Item
+                                </button>
+                            </div>
+                        </div>
+                        <hr className='mt-2' />
                     </div>
 
-                    <div className='border-t pl-5 h-72 overflow-y-scroll'>
+                    <div className='h-72 overflow-y-auto'>
                         <Table>
                             <TableHead>
                                 <TableCol>Jenis Sampah</TableCol>
@@ -244,43 +325,82 @@ export default function PembelianModal({ modal, toggleModal, setDa }) {
                                 <TableCol></TableCol>
                             </TableHead>
 
-                            <TableBody className='overflow-y-scroll h-6'>
-                                {fields.map((field, index) => (
-                                    <ItemRow
-                                        key={index}
-                                        index={index}
-                                        field={field}
-                                        register={register}
-                                        errors={errors}
-                                        remove={remove}
-                                    />
-                                ))}
+                            <TableBody className='h-6'>
+                                {items.map((item) => {
+                                    return (
+                                        <TableRow key={item._id}>
+                                            <TableCell>
+                                                <label>
+                                                    {item._sampahType.name}
+                                                </label>
+                                            </TableCell>
+                                            <TableCell>
+                                                <label>
+                                                    {new Intl.NumberFormat(
+                                                        "id-ID",
+                                                        {
+                                                            style: "currency",
+                                                            currency: "IDR",
+                                                        }
+                                                    ).format(item.price)}
+                                                    /{item._sampahType.qtyfier}
+                                                </label>
+                                            </TableCell>
+                                            <TableCell>
+                                                <label>{item.qty}</label>
+                                            </TableCell>
+                                            <TableCell>
+                                                <label>
+                                                    {new Intl.NumberFormat(
+                                                        "id-ID",
+                                                        {
+                                                            style: "currency",
+                                                            currency: "IDR",
+                                                        }
+                                                    ).format(
+                                                        item.price * item.qty
+                                                    )}
+                                                </label>
+                                            </TableCell>
+                                            <TableCell>
+                                                <button
+                                                    className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleDelete(item._id);
+                                                    }}
+                                                >
+                                                    <Icons.X />
+                                                </button>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
-                        <div className='flex justify-center mt-5'>
-                            <Icons.PlusCircle
-                                className='text-green-500 cursor-pointer'
-                                onClick={() => append({ items: "items" })}
-                            />
-                        </div>
                     </div>
                     <div className='flex justify-between items-center w-full border-t p-5'>
                         <div>
                             <span className='text-sm'>Total : </span>
                             <span className='font-bold text-md'>
-                                Rp. 200.000
+                                {new Intl.NumberFormat("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                }).format(total)}
                             </span>
                         </div>
                         <div>
-                            <button
-                                className='bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mr-1 close-modal'
+                            <a
+                                href='#'
+                                className='px-3 bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
                                 onClick={toggleModal}
                             >
                                 Cancel
-                            </button>
+                            </a>
+
                             <button
                                 type='submit'
-                                className='bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white cursor-pointer'
+                                className='px-3 bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
                             >
                                 Tambah
                             </button>

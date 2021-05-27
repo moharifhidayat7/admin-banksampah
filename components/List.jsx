@@ -50,7 +50,7 @@ const Item = ({ children, title, route, icon }) => {
 
 Item.defaultProps = {
     title: "List Title",
-    route: "#",
+    route: "",
 };
 
 const SubItem = ({ title, route }) => {

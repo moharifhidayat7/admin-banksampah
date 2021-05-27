@@ -1,21 +1,21 @@
 import { useDatabase } from "../../../database/init";
-import { BankTransaction } from "../../../database/models/BankTransaction";
+import { User } from "../../../database/models/User";
+import bcrypt from "bcrypt";
 
 useDatabase();
 
 async function getHandler(req, res) {
     const limit = parseInt(req.query.limit) || 0;
-    const bank_transaction_list = await BankTransaction.find()
-        .populate({ path: "_nasabah" })
-        .limit(limit);
+    const user_list = await User.find().limit(limit);
 
-    res.status(200).json(bank_transaction_list);
+    res.status(200).json(user_list);
 }
 async function postHandler(req, res) {
-    const data = req.body;
-    const bank_transaction_list = await BankTransaction.create(data);
+    bcrypt.hash(req.body.password, 10, async function (err, hash) {
+        const user_list = await User.create({ ...req.body, password: hash });
 
-    res.status(200).json(bank_transaction_list);
+        res.status(200).json(user_list);
+    });
 }
 
 export default async (req, res) => {

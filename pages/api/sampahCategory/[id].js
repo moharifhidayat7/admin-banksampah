@@ -1,5 +1,5 @@
-import { useDatabase } from '../../../database/init';
-import { SampahCategory } from '../../../database/models/Sampah';
+import { useDatabase } from "../../../database/init";
+import { SampahCategory } from "../../../database/models/Sampah";
 
 useDatabase();
 
@@ -34,20 +34,20 @@ async function deleteHandler(req, res) {
 export default async (req, res) => {
     const { method } = req;
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
     switch (method) {
-        case 'GET':
+        case "GET":
             await getHandler(req, res);
             break;
-        case 'PATCH':
+        case "PATCH":
             await patchHandler(req, res);
             break;
-        case 'DELETE':
+        case "DELETE":
             await deleteHandler(req, res);
             break;
         default:
-            res.setHeader('Allow', ['GET', 'PATCH', 'DELETE']);
+            res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
             res.status(405).json({ error: `Method ${method} Not Allowed` });
             break;
     }
