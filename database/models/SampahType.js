@@ -2,13 +2,6 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const SampahCategorySchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-});
-
 const SampahTypeSchema = new Schema({
     name: {
         type: String,
@@ -18,14 +11,17 @@ const SampahTypeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "SampahCategory",
     },
-    qtyfier: {
+    price: {
+        type: Number,
+        required: true,
+    },
+    denom: {
         type: String,
-        default: "item",
+        required: true,
     },
 });
 mongoose.models = {};
 
-const SampahCategory = mongoose.model("SampahCategory", SampahCategorySchema);
 const SampahType = mongoose.model("SampahType", SampahTypeSchema);
 
-export { SampahCategory, SampahType };
+export default SampahType;

@@ -1,10 +1,10 @@
 import createHandler from "../../../src/middleware/index";
-import BankTransaction from "../../../src/models/BankTransaction";
+import NasabahAccount from "../../../src/models/NasabahAccount";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const result = await BankTransaction.findById(req.query.id);
+    const result = await NasabahAccount.findById(req.query.id);
     res.status(200).json(result);
 });
 handler.patch(async (req, res) => {
@@ -14,7 +14,7 @@ handler.patch(async (req, res) => {
         runValidators: true,
     };
 
-    const result = await BankTransaction.findByIdAndUpdate(
+    const result = await NasabahAccount.findByIdAndUpdate(
         req.query.id,
         data,
         options
@@ -23,7 +23,7 @@ handler.patch(async (req, res) => {
 });
 
 handler.delete(async (req, res) => {
-    await BankTransaction.findByIdAndDelete(req.query.id, (error, result) => {
+    await NasabahAccount.findByIdAndDelete(req.query.id, (error, result) => {
         res.status(200).json({ result });
     });
 });

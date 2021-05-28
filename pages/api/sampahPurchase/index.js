@@ -1,16 +1,16 @@
 import createHandler from "../../../src/middleware/index";
-import NasabahProfile from "../../../src/models/NasabahProfile";
+import SampahPurchase from "../../../src/models/SampahPurchase";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
-    const result = await NasabahProfile.find().limit(limit);
+    const result = await SampahPurchase.find().limit(limit);
 
     res.status(200).json(result);
 });
 handler.post(async (req, res) => {
-    const result = await NasabahProfile.create(req.body);
+    const result = await SampahPurchase.create(req.body);
     return res.status(200).json(result);
 });
 
