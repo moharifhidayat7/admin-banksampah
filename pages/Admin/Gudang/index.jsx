@@ -16,10 +16,68 @@ import {
     TableCell,
     TableCol,
 } from "../../../components/Table";
+import { useEffect, useState } from "react";
 
-export default function Index() {
+export default function Index({ transactions }) {
+    const [tunai, setTunai] = useState(0);
+    const [tabungan, setTabungan] = useState(0);
+    const [pemasukan, setPemasukan] = useState(0);
+
+    const getTunai = () => {
+        const filter = transactions.filter(
+            (trx) => trx.transactionType == "cash"
+        );
+        const total = filter.reduce((p, c) => {
+            const sum = c.items.reduce((tot, item) => {
+                return tot + item.price * item.qty;
+            }, 0);
+            return p + sum;
+        }, 0);
+        setTunai(total);
+    };
+
+    const getTabungan = () => {
+        const filter = transactions.filter(
+            (trx) => trx.transactionType == "saving"
+        );
+        const total = filter.reduce((p, c) => {
+            const sum = c.items.reduce((tot, item) => {
+                return tot + item.price * item.qty;
+            }, 0);
+            return p + sum;
+        }, 0);
+        setTabungan(total);
+    };
+
+    const getPemasukan = () => {
+        const filter = transactions.filter(
+            (trx) =>
+                trx.transactionType == "pemasukan" ||
+                trx.transactionType == "penjualan"
+        );
+        const total = filter.reduce((p, c) => {
+            return p + c.amount;
+        }, 0);
+
+        setPemasukan(total);
+    };
+
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
+    };
+
+    useEffect(() => {
+        getTunai();
+        getTabungan();
+        getPemasukan();
+    }, []);
+
     return (
         <AdminLayout>
+            <h1 className='text-2xl mb-4'>Transaksi Admin Gudang</h1>
             <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
                 <DashboardCard
                     borderColor='border-red-400'
@@ -31,7 +89,7 @@ export default function Index() {
                         />
                     }
                     title='Total Pembelian Tunai Sampah'
-                    value='Rp. 353365959'
+                    value={formatRp(tunai)}
                 />
                 <DashboardCard
                     borderColor='border-green-400'
@@ -42,7 +100,7 @@ export default function Index() {
                         />
                     }
                     title='Total Saldo Tabungan Nasabah'
-                    value='Rp. 353365959'
+                    value={formatRp(tabungan)}
                 />
                 <DashboardCard
                     borderColor='border-blue-400'
@@ -52,11 +110,11 @@ export default function Index() {
                             size='100%'
                         />
                     }
-                    title='Total Sampah Masuk'
-                    value='562623 Kg'
+                    title='Saldo Gudang'
+                    value={formatRp(pemasukan - tunai - tabungan)}
                 />
             </div>
-            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5'>
+            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 hidden'>
                 <div className='md:col-span-2'>
                     <div className='bg-white rounded shadow-md'>
                         <div className='p-5'>
@@ -161,4 +219,14 @@ export default function Index() {
             </div>
         </AdminLayout>
     );
+}
+
+export async function getServerSideProps() {
+    const res = await fetch("http://localhost:3000/api/sampahTransaction");
+    const transactions = await res.json();
+    return {
+        props: {
+            transactions,
+        },
+    };
 }

@@ -9,7 +9,64 @@ import {
     CashOutline,
 } from "heroicons-react";
 
-function index() {
+import { useState, useEffect } from "react";
+
+function index({ transactions }) {
+    const [tunai, setTunai] = useState(0);
+    const [tabungan, setTabungan] = useState(0);
+    const [pemasukan, setPemasukan] = useState(0);
+
+    const getTunai = () => {
+        const filter = transactions.filter(
+            (trx) => trx.transactionType == "cash"
+        );
+        const total = filter.reduce((p, c) => {
+            const sum = c.items.reduce((tot, item) => {
+                return tot + item.price * item.qty;
+            }, 0);
+            return p + sum;
+        }, 0);
+        setTunai(total);
+    };
+
+    const getTabungan = () => {
+        const filter = transactions.filter(
+            (trx) => trx.transactionType == "saving"
+        );
+        const total = filter.reduce((p, c) => {
+            const sum = c.items.reduce((tot, item) => {
+                return tot + item.price * item.qty;
+            }, 0);
+            return p + sum;
+        }, 0);
+        setTabungan(total);
+    };
+
+    const getPemasukan = () => {
+        const filter = transactions.filter(
+            (trx) =>
+                trx.transactionType == "pemasukan" ||
+                trx.transactionType == "penjualan"
+        );
+        const total = filter.reduce((p, c) => {
+            return p + c.amount;
+        }, 0);
+
+        setPemasukan(total);
+    };
+
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
+    };
+
+    useEffect(() => {
+        getTunai();
+        getTabungan();
+        getPemasukan();
+    }, []);
     return (
         <BhrLayout>
             <h1 className='text-2xl mb-4'>Transaksi Admin Gudang</h1>
@@ -24,7 +81,7 @@ function index() {
                         />
                     }
                     title='Total Pembelian Tunai Sampah'
-                    value='Rp. 353365959'
+                    value={formatRp(tunai)}
                 />
                 <DashboardCard
                     borderColor='border-green-400'
@@ -35,7 +92,7 @@ function index() {
                         />
                     }
                     title='Total Saldo Tabungan Nasabah'
-                    value='Rp. 353365959'
+                    value={formatRp(tabungan)}
                 />
                 <DashboardCard
                     borderColor='border-blue-400'
@@ -45,15 +102,27 @@ function index() {
                             size='100%'
                         />
                     }
-                    title='Total Sampah Masuk'
-                    value='562623 Kg'
+                    title='Saldo Gudang'
+                    value={formatRp(pemasukan - tunai - tabungan)}
                 />
             </div>
             <div>
-            <h1 className='text-2xl mt-4'>Transaksi Admin  Penjualan Produk</h1>
+                <h1 className='text-2xl mt-4'>
+                    Transaksi Admin Penjualan Produk
+                </h1>
             </div>
         </BhrLayout>
     );
+}
+
+export async function getServerSideProps() {
+    const res = await fetch("http://localhost:3000/api/sampahTransaction");
+    const transactions = await res.json();
+    return {
+        props: {
+            transactions,
+        },
+    };
 }
 
 export default index;

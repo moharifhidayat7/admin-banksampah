@@ -32,9 +32,7 @@ function Pembelian({ transactions }) {
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>
-                    Transaksi Pembelian Sampah
-                </h1>
+                <h1 className='text-4xl mb-5 inline-block'>Transaksi Sampah</h1>
 
                 <div className='float-right'>
                     <Link href='Transaksi/penjualan'>
@@ -62,7 +60,7 @@ function Pembelian({ transactions }) {
                         <TableCol>Nama</TableCol>
                         <TableCol className='w-80'>Alamat</TableCol>
                         <TableCol>Tipe Transaksi</TableCol>
-                        <TableCol>Metode Pembayaran</TableCol>
+                        <TableCol>Pembayaran</TableCol>
                         <TableCol>Jumlah</TableCol>
                         <TableCol className='w-56'>Keterangan</TableCol>
                         <TableCol></TableCol>

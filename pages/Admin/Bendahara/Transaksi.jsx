@@ -38,6 +38,13 @@ function Pemasukan() {
         toggleModal();
     };
 
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
+    };
+
     useEffect(() => {
         getItems();
     }, []);
@@ -51,7 +58,9 @@ function Pemasukan() {
                 edit={edit}
             />
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Transaksi Nasabah Bank Sampah</h1>
+                <h1 className='text-4xl mb-5 inline-block'>
+                    Transaksi Nasabah Bank Sampah
+                </h1>
 
                 <button
                     type='button'
@@ -89,9 +98,7 @@ function Pemasukan() {
                                             second: "2-digit",
                                         })}
                                     </TableCell>
-                                    <TableCell>
-                                        {item._nasabah.name}
-                                    </TableCell>
+                                    <TableCell>{item._nasabah.name}</TableCell>
                                     <TableCell>
                                         {item._nasabah.rekening}
                                     </TableCell>
@@ -107,12 +114,40 @@ function Pemasukan() {
                                                 ? "+ "
                                                 : "- "
                                         }`}
-                                        {new Intl.NumberFormat("id-ID", {
-                                            style: "currency",
-                                            currency: "IDR",
-                                        }).format(item.amount)}
+                                        {item._sampahTransaction
+                                            ? formatRp(
+                                                  item._sampahTransaction.items.reduce(
+                                                      (tot, item) => {
+                                                          return (
+                                                              tot +
+                                                              item.price *
+                                                                  item.qty
+                                                          );
+                                                      },
+                                                      0
+                                                  )
+                                              )
+                                            : formatRp(item.amount)}
                                     </TableCell>
-                                    <TableCell>{item.note}</TableCell>
+                                    <TableCell>
+                                        {item._sampahTransaction ? (
+                                            <span>
+                                                Transaksi Sampah (
+                                                <a
+                                                    href='#'
+                                                    className='text-blue-500 hover:underline'
+                                                >
+                                                    {
+                                                        item._sampahTransaction
+                                                            ._id
+                                                    }
+                                                </a>
+                                                )
+                                            </span>
+                                        ) : (
+                                            item.note
+                                        )}
+                                    </TableCell>
                                     <TableCell
                                         className={`${
                                             item.transactionType == "debet"
@@ -128,14 +163,18 @@ function Pemasukan() {
                                         >
                                             <Icons.Pencil />
                                         </button>
-                                        <button
-                                            className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                                            onClick={() => {
-                                                delItems(item._id);
-                                            }}
-                                        >
-                                            <Icons.Trash />
-                                        </button>
+                                        {item._sampahTransaction ? (
+                                            ""
+                                        ) : (
+                                            <button
+                                                className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                                                onClick={() => {
+                                                    delItems(item._id);
+                                                }}
+                                            >
+                                                <Icons.Trash />
+                                            </button>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             );

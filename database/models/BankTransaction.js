@@ -11,9 +11,18 @@ const BankTransactionSchema = new Schema({
         enum: ["debet", "credit"],
         required: true,
     },
+    _sampahTransaction: {
+        type: Schema.Types.ObjectId,
+        ref: "SampahTransaction",
+        required: function () {
+            return this.amount == null;
+        },
+    },
     amount: {
         type: Number,
-        required: true,
+        required: function () {
+            return this._sampahTransaction == null;
+        },
     },
     _nasabah: {
         type: Schema.Types.ObjectId,

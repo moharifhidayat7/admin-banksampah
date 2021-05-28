@@ -1,5 +1,6 @@
 import { useDatabase } from "../../../database/init";
 import { BankTransaction } from "../../../database/models/BankTransaction";
+import { SampahTransaction } from "../../../database/models/SampahTransaction";
 
 useDatabase();
 
@@ -7,6 +8,7 @@ async function getHandler(req, res) {
     const limit = parseInt(req.query.limit) || 0;
     const bank_transaction_list = await BankTransaction.find()
         .populate({ path: "_nasabah" })
+        .populate({ path: "_sampahTransaction" })
         .limit(limit);
 
     res.status(200).json(bank_transaction_list);

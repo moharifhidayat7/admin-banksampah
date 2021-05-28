@@ -2,6 +2,7 @@ import { useDatabase } from "../../../database/init";
 import { SampahTransaction } from "../../../database/models/SampahTransaction";
 import { PriceList } from "../../../database/models/PriceList";
 import { NasabahProfile } from "../../../database/models/Nasabah";
+import { BankTransaction } from "../../../database/models/BankTransaction";
 
 useDatabase();
 
@@ -18,7 +19,18 @@ async function getHandler(req, res) {
 }
 async function postHandler(req, res) {
     const data = req.body;
-    const sampah_transaction_list = await SampahTransaction.create(data);
+    const sampah_transaction_list = await SampahTransaction.create(
+        data,
+        async function (err, trx) {
+            if (err) return handleError(err);
+            await BankTransaction.create({
+                ...data,
+                transactionType: "debet",
+                _sampahTransaction: trx._id,
+            });
+            return trx;
+        }
+    );
 
     res.status(200).json(sampah_transaction_list);
 }
