@@ -1,5 +1,6 @@
-import { useDatabase } from '../../../database/init';
-import { SampahTransaction } from '../../../database/models/SampahTransaction';
+import { useDatabase } from "../../../database/init";
+import { SampahTransaction } from "../../../database/models/SampahTransaction";
+import { BankTransaction } from "../../../database/models/BankTransaction";
 
 useDatabase();
 
@@ -24,8 +25,12 @@ async function patchHandler(req, res) {
 async function deleteHandler(req, res) {
     await SampahTransaction.findByIdAndDelete(
         req.query.id,
-        { rawResult: true },
-        (error, result) => {
+        async (error, result) => {
+            if (result.transactionType == "saving") {
+                await BankTransaction.findOneAndRemove({
+                    _sampahTransaction: result._id,
+                });
+            }
             res.status(200).json({ result });
         }
     );
@@ -34,20 +39,20 @@ async function deleteHandler(req, res) {
 export default async (req, res) => {
     const { method } = req;
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
     switch (method) {
-        case 'GET':
+        case "GET":
             await getHandler(req, res);
             break;
-        case 'PATCH':
+        case "PATCH":
             await patchHandler(req, res);
             break;
-        case 'DELETE':
+        case "DELETE":
             await deleteHandler(req, res);
             break;
         default:
-            res.setHeader('Allow', ['GET', 'PATCH', 'DELETE']);
+            res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
             res.status(405).json({ error: `Method ${method} Not Allowed` });
             break;
     }
