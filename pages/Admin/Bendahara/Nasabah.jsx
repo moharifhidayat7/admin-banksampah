@@ -53,7 +53,7 @@ function Nasabah() {
                 edit={edit}
             />
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Nasabah</h1>
+                <h1 className='text-4xl mb-5 inline-block'>Data Nasabah</h1>
 
                 <button
                     type='button'

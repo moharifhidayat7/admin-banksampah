@@ -32,7 +32,9 @@ function Pembelian({ transactions }) {
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Transaksi</h1>
+                <h1 className='text-4xl mb-5 inline-block'>
+                    Transaksi Pembelian Sampah
+                </h1>
 
                 <div className='float-right'>
                     <Link href='Transaksi/penjualan'>

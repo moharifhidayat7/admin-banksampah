@@ -51,7 +51,7 @@ function Pemasukan() {
                 edit={edit}
             />
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Transaksi Bank</h1>
+                <h1 className='text-4xl mb-5 inline-block'>Transaksi Nasabah Bank Sampah</h1>
 
                 <button
                     type='button'
@@ -65,7 +65,8 @@ function Pemasukan() {
                 <Table>
                     <TableHead>
                         <TableCol>Tanggal</TableCol>
-                        <TableCol>Rekening</TableCol>
+                        <TableCol>Nama</TableCol>
+                        <TableCol>No. Rekening</TableCol>
                         <TableCol>Jumlah</TableCol>
                         <TableCol>Keterangan</TableCol>
                         <TableCol>Tipe Transaksi</TableCol>
@@ -87,6 +88,9 @@ function Pemasukan() {
                                             minute: "2-digit",
                                             second: "2-digit",
                                         })}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item._nasabah.name}
                                     </TableCell>
                                     <TableCell>
                                         {item._nasabah.rekening}
