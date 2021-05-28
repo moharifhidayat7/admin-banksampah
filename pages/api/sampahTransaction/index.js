@@ -1,8 +1,8 @@
 import { useDatabase } from "../../../database/init";
 import { SampahTransaction } from "../../../database/models/SampahTransaction";
 import { PriceList } from "../../../database/models/PriceList";
-import { NasabahProfile } from "../../../database/models/Nasabah";
 import { BankTransaction } from "../../../database/models/BankTransaction";
+import { NasabahProfile } from "../../../database/models/Nasabah";
 
 useDatabase();
 

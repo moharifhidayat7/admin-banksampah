@@ -32,7 +32,7 @@ function Pembelian({ transactions }) {
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Transaksi Sampah</h1>
+                <h1 className='text-4xl mb-5 inline-block'>Pembelian Sampah Nasabah</h1>
 
                 <div className='float-right'>
                     <Link href='Transaksi/penjualan'>
@@ -57,10 +57,12 @@ function Pembelian({ transactions }) {
                 <Table>
                     <TableHead>
                         <TableCol className='w-32'>Tanggal</TableCol>
+                        <TableCol>NIK</TableCol>
                         <TableCol>Nama</TableCol>
                         <TableCol className='w-80'>Alamat</TableCol>
+                        <TableCol className="hidden">Tipe Transaksi</TableCol>
                         <TableCol>Tipe Transaksi</TableCol>
-                        <TableCol>Pembayaran</TableCol>
+                        <TableCol >Item</TableCol>
                         <TableCol>Jumlah</TableCol>
                         <TableCol className='w-56'>Keterangan</TableCol>
                         <TableCol></TableCol>
@@ -80,13 +82,16 @@ function Pembelian({ transactions }) {
                                         })}
                                     </TableCell>
                                     <TableCell>
+                                        778887
+                                    </TableCell>
+                                    <TableCell>
                                         {trx.guest
                                             ? trx.guest.name
                                             : trx._nasabah
                                             ? trx._nasabah.name
                                             : "-"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell className="hidden">
                                         {trx.guest
                                             ? trx.guest.address
                                             : trx._nasabah
@@ -116,7 +121,10 @@ function Pembelian({ transactions }) {
                                             ? `Tabungan (${trx._nasabah.rekening})`
                                             : "Tunai"}
                                     </TableCell>
-
+                                    <TableCell className="w-56"
+                                    >
+                                        {trx.items.map((item, index)=> (<li key={index}>{item._sampahType.name}</li>))}
+                                    </TableCell>
                                     <TableCell
                                         className={
                                             trx.transactionType == "saving" ||
@@ -148,6 +156,12 @@ function Pembelian({ transactions }) {
                                     </TableCell>
                                     <TableCell>{trx.note}</TableCell>
                                     <TableCell className='float-right'>
+                                    <button
+                                            className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                                            
+                                        >
+                                            <Icons.Eye />
+                                        </button>
                                         <button
                                             className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
                                             onClick={() =>
