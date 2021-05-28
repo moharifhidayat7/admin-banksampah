@@ -1,10 +1,10 @@
 import { useDatabase } from "../../../database/init";
-import { Finance } from "../../../database/models/Finance";
+import { Transaction } from "../../../database/models/Transaction";
 
 useDatabase();
 
 async function getHandler(req, res) {
-    const transaction = await Finance.findById(req.query.id);
+    const transaction = await Transaction.findById(req.query.id);
     res.status(200).json(transaction);
 }
 async function patchHandler(req, res) {
@@ -14,7 +14,7 @@ async function patchHandler(req, res) {
         runValidators: true,
     };
 
-    const transaction = await Finance.findByIdAndUpdate(
+    const transaction = await Transaction.findByIdAndUpdate(
         req.query.id,
         data,
         options
@@ -22,7 +22,7 @@ async function patchHandler(req, res) {
     res.status(200).json(transaction);
 }
 async function deleteHandler(req, res) {
-    await Finance.findByIdAndDelete(
+    await Transaction.findByIdAndDelete(
         req.query.id,
         { rawResult: true },
         (error, result) => {
