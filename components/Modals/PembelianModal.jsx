@@ -24,6 +24,7 @@ export default function PembelianModal({
     const [qty, setQty] = useState(0);
     const [total, setTotal] = useState(0);
     const [selected, setSelected] = useState([]);
+    const [disabled, setDisabled] = useState(true);
 
     const handleSelect = (e) => {
         const selected = priceList.filter(
@@ -160,6 +161,14 @@ export default function PembelianModal({
                                         setValue("address", e.address);
                                         setValue("mobile", e.mobile);
                                         setSelected(e);
+                                        if (
+                                            selected.hasOwnProperty("__isNew__")
+                                        ) {
+                                            setDisabled(true);
+                                        } else {
+                                            setValue("transactionType", "cash");
+                                            setDisabled(false);
+                                        }
                                     }}
                                     loadOptions={searchNasabah}
                                     className={`${
@@ -193,6 +202,7 @@ export default function PembelianModal({
                                             errors.address &&
                                             "border-red-500 border-2"
                                         }`}
+                                        disabled={disabled ? "disabled" : ""}
                                         ref={register({ required: true })}
                                     />
                                     {errors.address && (
@@ -207,6 +217,7 @@ export default function PembelianModal({
                                         name='mobile'
                                         type='text'
                                         className='block border w-full px-4 py-1'
+                                        disabled={disabled ? "disabled" : ""}
                                         ref={register()}
                                     />
                                 </div>
@@ -259,6 +270,9 @@ export default function PembelianModal({
                                                 ref={register({
                                                     required: true,
                                                 })}
+                                                disabled={
+                                                    disabled ? "" : "disabled"
+                                                }
                                             />
                                             <span className='ml-2'>Tabung</span>
                                         </label>

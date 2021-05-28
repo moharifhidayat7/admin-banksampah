@@ -1,6 +1,8 @@
-const TableCol = ({ children }) => {
+const TableCol = ({ children, className }) => {
     return (
-        <th className='dark:text-gray-400 font-normal pr-6 text-left text-sm tracking-normal leading-4'>
+        <th
+            className={`dark:text-gray-400 font-normal pr-6 text-left text-sm tracking-normal leading-4 ${className}`}
+        >
             {children}
         </th>
     );
