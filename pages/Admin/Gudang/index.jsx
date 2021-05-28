@@ -30,7 +30,7 @@ export default function Index() {
                             size='100%'
                         />
                     }
-                    title='Total Pengeluaran Tunai'
+                    title='Total Pembelian Tunai Sampah'
                     value='Rp. 353365959'
                 />
                 <DashboardCard
@@ -41,7 +41,7 @@ export default function Index() {
                             size='100%'
                         />
                     }
-                    title='Total Pemasukan Bank'
+                    title='Total Saldo Tabungan Nasabah'
                     value='Rp. 353365959'
                 />
                 <DashboardCard

@@ -47,7 +47,7 @@ function Pembelian({ priceList }) {
             />
 
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Transaksi</h1>
+                <h1 className='text-4xl mb-5 inline-block'>Transaksi Pembelian Sampah</h1>
 
                 <button
                     type='button'
@@ -63,7 +63,7 @@ function Pembelian({ priceList }) {
                         <TableCol>Tanggal</TableCol>
                         <TableCol>Nama</TableCol>
                         <TableCol>Alamat</TableCol>
-                        <TableCol>Tipe Transaksi</TableCol>
+                        <TableCol>Keterangan</TableCol>
                         <TableCol>Jumlah</TableCol>
                         <TableCol></TableCol>
                     </TableHead>

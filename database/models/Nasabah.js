@@ -61,7 +61,6 @@ const NasabahProfileSchema = new Schema({
     },
     rekening: {
         type: String,
-        required: true,
     },
     createdAt: {
         type: Date,
