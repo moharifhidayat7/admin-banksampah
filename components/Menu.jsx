@@ -19,12 +19,16 @@ export default function Menu() {
                 route='/Admin/Gudang/Transaksi'
                 icon={<Icons.Cash size='1rem' />}
                 title='Transaksi Sampah'
-            />
+            >
+                 <SubItem title='Pembelian Sampah'/>
+                            <SubItem title='Penjualan Sampah'/>
+            </Item>
             <Item
                 route='/Admin/Gudang/Sampah'
                 icon={<Icons.Trash size='1rem' />}
                 title='Sampah'
-            />
+            ><SubItem title='Harga Sampah'/>
+            <SubItem title='Stok Sampah' route="Sampah/stok" /></Item>
         </List>
     );
 }
