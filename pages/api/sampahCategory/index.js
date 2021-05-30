@@ -5,7 +5,10 @@ const handler = createHandler();
 
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
-    const result = await SampahCategory.find().limit(limit);
+    const keyword = req.query.keyword || "";
+    const result = await SampahCategory.find({
+        name: { $regex: ".*" + keyword + ".*", $options: "i" },
+    }).limit(limit);
 
     res.status(200).json(result);
 });

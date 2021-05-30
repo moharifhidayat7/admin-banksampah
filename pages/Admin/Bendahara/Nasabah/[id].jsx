@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import TambahNasabahModal from "../../../../components/Modals/TambahNasabahModal";
+import TransaksiBankModal from "../../../../components/Modals/TransaksiBankModal";
+
 import BhrLayout from "../../../../components/Layouts/BhrLayout";
 import {
     Table,
@@ -9,76 +11,175 @@ import {
     TableCell,
     TableCol,
 } from "../../../../components/Table";
+import Link from "next/link";
 import * as Icons from "heroicons-react";
+import { useRouter } from "next/router";
 
 function Nasabah({ nasabah }) {
-    const [modal, setModal] = useState(false);
-    const [items, setItems] = useState([]);
+    const router = useRouter();
 
-    const getItems = async () => {
-        const res = await fetch("http://localhost:3000/api/bankTransaction");
-        const json = await res.json();
-        setItems(json);
+    const [modalData, setModalData] = useState([]);
+    const [modal, setModal] = useState(false);
+
+    const [modalTitle, setmodalTitle] = useState("");
+
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+    const refreshData = () => {
+        router.replace(router.asPath);
     };
 
-    useEffect(() => {
-        getItems();
-    }, []);
+    const deleteHandler = async (id) => {
+        await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${id}`,
+            {
+                method: "DELETE",
+            }
+        ).then(async (res) => {
+            router.replace("/Admin/Bendahara/Nasabah");
+        });
+    };
+
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
+    };
+
+    const formatDate = (date) => {
+        return new Date(date).toLocaleString("id-ID", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
+    };
 
     return (
         <BhrLayout>
-            <div>
-                <h1 className='text-4xl mb-5 inline-block'>Detail Nasabah</h1>
+            <TransaksiBankModal
+                modal={modal}
+                toggleModal={toggleModal}
+                modalData={modalData}
+                modalTitle={modalTitle}
+            />
+            <div className='flex justify-between'>
+                <h1 className='text-2xl mb-5 inline-block'>
+                    Detail Nasabah ({nasabah.name})
+                </h1>
+                <div>
+                    <button
+                        onClick={() =>
+                            router.push(
+                                `/Admin/Bendahara/Nasabah/edit/${nasabah._id}`
+                            )
+                        }
+                        className='inline-block align-middle mr-2 px-3 bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
+                    >
+                        <Icons.Pencil className='inline-block align-middle' />
+                        <span className='align-middle'>Edit Nasabah</span>
+                    </button>
+                    <button
+                        type='button'
+                        onClick={() => {
+                            deleteHandler(nasabah._id);
+                        }}
+                        className='align-middle px-3 bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                    >
+                        <Icons.Trash className='inline-block align-middle' />
+                        <span className='align-middle'>Hapus Nasabah</span>
+                    </button>
+                </div>
             </div>
-            <div className='flex sm:flex-row flex-col'>
-                <div className='md:w-96'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4'>
+                <div className='grid grid-cols-1 gap-4'>
                     <img
-                        src='https://via.placeholder.com/300/150'
-                        className='w-full'
+                        src='https://via.placeholder.com/150'
+                        className='w-full border'
                         alt='place'
                     />
-                    <div className='bg-white rounded shadow mt-4 mb-4'>
-                        <div className='border-gray-300 border-b p-5 grid gap-2'>
+                    <div className='bg-white rounded shadow grid grid-cols-1 md:gap-4'>
+                        <div className='border-gray-300 p-5 grid gap-2'>
                             <div>
-                                <div className='font-bold'>NIK</div>
+                                <div className='text-sm font-bold'>NIK</div>
                                 <div>{nasabah.nik}</div>
                             </div>
                             <div>
-                                <div className='font-bold'>Nama</div>
+                                <div className='text-sm font-bold'>Nama</div>
                                 <div>{nasabah.name}</div>
                             </div>
                             <div>
-                                <div className='font-bold'>Alamat</div>
+                                <div className='text-sm font-bold'>Alamat</div>
                                 <div>{nasabah.address}</div>
                             </div>
                             <div>
-                                <div className='font-bold'>Jenis Kelamin</div>
+                                <div className='text-sm font-bold'>
+                                    Jenis Kelamin
+                                </div>
                                 <div>{nasabah.gender}</div>
                             </div>
                             <div>
-                                <div className='font-bold'>Email</div>
-                                <div>{nasabah.email}</div>
+                                <div className='text-sm font-bold'>Email</div>
+                                <div>{nasabah.email || "-"}</div>
                             </div>
                             <div>
-                                <div className='font-bold'>No. HP</div>
+                                <div className='text-sm font-bold'>No. HP</div>
                                 <div>{nasabah.mobile}</div>
+                            </div>
+                            <div>
+                                <div className='text-sm font-bold'>
+                                    Tanggal Registrasi
+                                </div>
+                                <div>{formatDate(nasabah.createdAt)}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className='md:pl-5 w-full mb-8'>
-                    <div className='text-2xl pb-4'>Saldo</div>
-                    <div className='grid md:grid-cols-4 grid-cols-2 gap-4'>
-                        <div className='bg-green-500 text-white rounded shadow border-b p-5'>
-                            <div className='text-sm'>
-                                Rekening ({nasabah.rekening})
+                <div className='col-span-3 mt-4 md:mt-0'>
+                    <div className='grid md:grid-cols-2 gap-4'>
+                        <div className='grid grid-cols-2 gap-2'>
+                            <div className='col-span-2 text-center bg-white rounded shadow border-b p-5'>
+                                <div className='text-xs font-bold'>
+                                    Total Saldo Rekening ({nasabah.rekening})
+                                </div>
+                                <div className='block text-xl font-bold text-blue-500'>
+                                    {formatRp(5000000)}
+                                </div>
                             </div>
-                            <div className='text-xl font-bold'>
-                                Rp. 50000000
-                            </div>
+                            <button
+                                onClick={() => {
+                                    setModalData(nasabah);
+                                    setmodalTitle("Penarikan");
+                                    toggleModal();
+                                }}
+                                className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                            >
+                                <div className='inline-block pr-2 align-middle'>
+                                    <Icons.Minus />
+                                </div>
+                                <span className='inline-block align-middle'>
+                                    Penarikan
+                                </span>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setModalData(nasabah);
+                                    setmodalTitle("Pemasukan");
+                                    toggleModal();
+                                }}
+                                className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                            >
+                                <div className='inline-block pr-2 align-middle'>
+                                    <Icons.Plus />
+                                </div>
+                                <span className='inline-block align-middle'>
+                                    Pemasukan
+                                </span>
+                            </button>
                         </div>
                     </div>
-                    <div className='text-2xl py-4'>Transaksi Terakhir</div>
+                    <div className='text-xl py-4'>Transaksi Terakhir</div>
                     <Table>
                         <TableHead>
                             <TableCol>Tanggal</TableCol>
@@ -88,7 +189,7 @@ function Nasabah({ nasabah }) {
                             <TableCol>Tipe Transaksi</TableCol>
                             <TableCol></TableCol>
                         </TableHead>
-                        <TableBody>
+                        {/* <TableBody>
                             {items.map((item) => {
                                 return (
                                     <TableRow key={item._id}>
@@ -106,17 +207,17 @@ function Nasabah({ nasabah }) {
                                             })}
                                         </TableCell>
                                         <TableCell>
-                                            {item._nasabah.rekening}
+                                            {item.rekening}
                                         </TableCell>
                                         <TableCell
                                             className={`${
-                                                item.transactionType == "debet"
+                                                item.transactionType == "Pemasukan"
                                                     ? "text-green-500"
                                                     : "text-red-500"
                                             }`}
                                         >
                                             {`${
-                                                item.transactionType == "debet"
+                                                item.transactionType == "Pemasukan"
                                                     ? "+ "
                                                     : "- "
                                             }`}
@@ -153,7 +254,7 @@ function Nasabah({ nasabah }) {
                                     </TableRow>
                                 );
                             })}
-                        </TableBody>
+                        </TableBody> */}
                     </Table>
                 </div>
             </div>

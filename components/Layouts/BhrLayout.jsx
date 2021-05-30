@@ -30,15 +30,22 @@ export default function AdminLayout({ children }) {
                             route='/Admin/Bendahara/Nasabah'
                             icon={<Icons.UserGroup size='1rem' />}
                             title='Nasabah'
-                        />
+                        >
+                            <SubItem
+                                route='/Admin/Bendahara/Nasabah'
+                                title='Data Nasabah'
+                            />
+                            <SubItem
+                                route='/Admin/Bendahara/Nasabah/tambah'
+                                title='Tambah Nasabah'
+                            />
+                        </Item>
 
                         <Item
                             route='/Admin/Bendahara/Transaksi'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Bank'
-                        >
-                           
-                        </Item>
+                        ></Item>
                         <Item
                             route='/Admin/Bendahara/User'
                             icon={<Icons.User size='1rem' />}

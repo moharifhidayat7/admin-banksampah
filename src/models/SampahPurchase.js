@@ -1,41 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import "./NasabahProfile";
-import "./SampahCategory";
-import "./SampahType";
 
 const MODEL_NAME = "SampahPurchase";
-
-const ItemSchema = new Schema({
-    _sampahType: {
-        _id: {
-            type: Schema.Types.ObjectId,
-            ref: "SampahType",
-            required: true,
-        },
-        _category: {
-            type: Schema.Types.ObjectId,
-            ref: "SampahCategory",
-            required: true,
-            autopopulate: true,
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        name: {
-            type: String,
-            required: true,
-        },
-        denom: {
-            type: String,
-            required: true,
-        },
-    },
-    qty: {
-        type: Number,
-        required: true,
-    },
-});
 
 const schema = new Schema(
     {
@@ -45,43 +11,59 @@ const schema = new Schema(
             required: true,
         },
         _nasabah: {
-            type: Schema.Types.ObjectId,
-            ref: "NasabahProfile",
-            required: function () {
-                return this.transactionType == "TABUNG";
+            _id: {
+                type: Schema.Types.ObjectId,
+                ref: "NasabahProfile",
+                autopopulate: true,
             },
-            autopopulate: true,
+            name: {
+                type: String,
+                required: true,
+            },
+            address: {
+                type: String,
+                required: true,
+            },
+            mobile: {
+                type: String,
+            },
         },
         note: {
             type: String,
         },
-        name: {
-            type: String,
-            required: function () {
-                return this._nasabah == null;
-            },
-        },
-        address: {
-            type: String,
-            required: function () {
-                return this._nasabah == null;
-            },
-        },
-        mobile: {
-            type: String,
-            required: function () {
-                return this._nasabah == null;
-            },
-        },
         transactionDate: {
-            type: Date,
-            default: Date.now,
-        },
-        items: {
-            type: [ItemSchema],
+            type: String,
             required: true,
-            autopopulate: true,
         },
+        items: [
+            {
+                _sampahType: {
+                    _id: {
+                        type: String,
+                    },
+                    category: {
+                        type: String,
+                        required: true,
+                    },
+                    price: {
+                        type: Number,
+                        required: true,
+                    },
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    denom: {
+                        type: String,
+                        required: true,
+                    },
+                },
+                qty: {
+                    type: Number,
+                    required: true,
+                },
+            },
+        ],
     },
     { timestamps: true }
 );

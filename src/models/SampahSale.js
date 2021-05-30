@@ -46,10 +46,35 @@ const schema = new Schema(
             type: Date,
             default: Date.now,
         },
-        items: {
-            type: [ItemSchema],
-            required: true,
-        },
+        items: [
+            {
+                _sampahType: {
+                    _id: {
+                        type: String,
+                    },
+                    category: {
+                        type: String,
+                        required: true,
+                    },
+                    price: {
+                        type: Number,
+                        required: true,
+                    },
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    denom: {
+                        type: String,
+                        required: true,
+                    },
+                },
+                qty: {
+                    type: Number,
+                    required: true,
+                },
+            },
+        ],
     },
     { timestamps: true }
 );
