@@ -16,11 +16,9 @@ import { useRouter } from "next/router";
 
 export default function Nasabah({ nasabahProfile }) {
     const router = useRouter();
-
     const refreshData = () => {
         router.replace(router.asPath);
     };
-
     const deleteHandler = async (id) => {
         await fetch(
             `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${id}`,

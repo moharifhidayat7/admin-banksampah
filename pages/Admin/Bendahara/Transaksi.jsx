@@ -22,15 +22,20 @@ function Pemasukan() {
     };
 
     const getItems = async () => {
-        const res = await fetch("http://localhost:3000/api/bankTransaction");
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction`
+        );
         const json = await res.json();
         setItems(json);
     };
 
     const delItems = async (id) => {
-        await fetch("http://localhost:3000/api/bankTransaction/" + id, {
-            method: "DELETE",
-        }).then((res) => getItems());
+        await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction/${id}`,
+            {
+                method: "DELETE",
+            }
+        ).then((res) => getItems());
     };
 
     const handleEdit = (item) => {
@@ -76,9 +81,10 @@ function Pemasukan() {
                         <TableCol>Tanggal</TableCol>
                         <TableCol>Nama</TableCol>
                         <TableCol>No. Rekening</TableCol>
+                        <TableCol>Tipe Transaksi</TableCol>
+
                         <TableCol>Jumlah</TableCol>
                         <TableCol>Keterangan</TableCol>
-                        <TableCol>Tipe Transaksi</TableCol>
                         <TableCol></TableCol>
                     </TableHead>
                     <TableBody>
@@ -104,13 +110,22 @@ function Pemasukan() {
                                     </TableCell>
                                     <TableCell
                                         className={`${
-                                            item.transactionType == "debet"
+                                            item.transactionType == "Pemasukan"
+                                                ? "text-green-500"
+                                                : "text-red-500"
+                                        }`}
+                                    >
+                                        {item.transactionType}
+                                    </TableCell>
+                                    <TableCell
+                                        className={`${
+                                            item.transactionType == "Pemasukan"
                                                 ? "text-green-500"
                                                 : "text-red-500"
                                         }`}
                                     >
                                         {`${
-                                            item.transactionType == "debet"
+                                            item.transactionType == "Pemasukan"
                                                 ? "+ "
                                                 : "- "
                                         }`}
@@ -148,15 +163,7 @@ function Pemasukan() {
                                             item.note
                                         )}
                                     </TableCell>
-                                    <TableCell
-                                        className={`${
-                                            item.transactionType == "debet"
-                                                ? "text-green-500"
-                                                : "text-red-500"
-                                        }`}
-                                    >
-                                        {item.transactionType}
-                                    </TableCell>
+
                                     <TableCell className='float-right'>
                                         <button
                                             className={`hidden bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}

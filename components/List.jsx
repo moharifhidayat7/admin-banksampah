@@ -21,9 +21,10 @@ const Item = ({ children, title, route, icon }) => {
         setDropdown(!dropdown);
     };
 
-    const listClass = dropdown
-        ? "text-white pb-2 pt-3 bg-gray-900"
-        : "text-gray-400 py-2";
+    const listClass =
+        dropdown || router.pathname === route
+            ? "text-white pb-2 pt-3 bg-gray-900"
+            : "text-gray-400 py-2";
 
     return (
         <li

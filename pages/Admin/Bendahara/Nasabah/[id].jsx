@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import TambahNasabahModal from "../../../../components/Modals/TambahNasabahModal";
+import TransaksiBankModal from "../../../../components/Modals/TransaksiBankModal";
+
 import BhrLayout from "../../../../components/Layouts/BhrLayout";
 import {
     Table,
@@ -15,6 +17,18 @@ import { useRouter } from "next/router";
 
 function Nasabah({ nasabah }) {
     const router = useRouter();
+
+    const [modalData, setModalData] = useState([]);
+    const [modal, setModal] = useState(false);
+
+    const [modalTitle, setmodalTitle] = useState("");
+
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
 
     const deleteHandler = async (id) => {
         await fetch(
@@ -44,6 +58,12 @@ function Nasabah({ nasabah }) {
 
     return (
         <BhrLayout>
+            <TransaksiBankModal
+                modal={modal}
+                toggleModal={toggleModal}
+                modalData={modalData}
+                modalTitle={modalTitle}
+            />
             <div className='flex justify-between'>
                 <h1 className='text-2xl mb-5 inline-block'>
                     Detail Nasabah ({nasabah.name})
@@ -127,7 +147,14 @@ function Nasabah({ nasabah }) {
                                     {formatRp(5000000)}
                                 </div>
                             </div>
-                            <button className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'>
+                            <button
+                                onClick={() => {
+                                    setModalData(nasabah);
+                                    setmodalTitle("Penarikan");
+                                    toggleModal();
+                                }}
+                                className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                            >
                                 <div className='inline-block pr-2 align-middle'>
                                     <Icons.Minus />
                                 </div>
@@ -135,7 +162,14 @@ function Nasabah({ nasabah }) {
                                     Penarikan
                                 </span>
                             </button>
-                            <button className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'>
+                            <button
+                                onClick={() => {
+                                    setModalData(nasabah);
+                                    setmodalTitle("Pemasukan");
+                                    toggleModal();
+                                }}
+                                className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                            >
                                 <div className='inline-block pr-2 align-middle'>
                                     <Icons.Plus />
                                 </div>

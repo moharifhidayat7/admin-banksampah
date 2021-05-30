@@ -12,7 +12,7 @@ import {
     TableCol,
 } from "../../../components/Table";
 
-export default function PembelianSampah({ sampahPurchase }) {
+export default function PembelianSampah({ sampahSale }) {
     const router = useRouter();
 
     const refreshData = () => {
@@ -40,16 +40,16 @@ export default function PembelianSampah({ sampahPurchase }) {
         <AdminLayout>
             <div>
                 <h1 className='text-4xl mb-5 inline-block'>
-                    Pembelian Sampah Nasabah
+                    Penjualan Sampah Bank Sampah
                 </h1>
 
                 <div className='float-right'>
-                    <Link href='/Admin/Gudang/PembelianSampah/tambah'>
+                    <Link href='/Admin/Gudang/PenjualanSampah/tambah'>
                         <a
                             role='button'
-                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-red-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-red-500 hover:bg-white hover:text-red-500 focus:ring-red-500 focus:bg-white focus:text-red-500 '
+                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
                         >
-                            Beli Sampah
+                            Jual Sampah
                         </a>
                     </Link>
                 </div>
@@ -58,16 +58,14 @@ export default function PembelianSampah({ sampahPurchase }) {
                 <Table>
                     <TableHead>
                         <TableCol className='w-32'>Tanggal</TableCol>
-                        <TableCol>NIK</TableCol>
-                        <TableCol>Nama</TableCol>
-                        <TableCol className='w-80'>Alamat</TableCol>
-                        <TableCol>Tipe Transaksi</TableCol>
+                        <TableCol>Pembeli</TableCol>
                         <TableCol>Jumlah</TableCol>
+                        <TableCol>Keterangan</TableCol>
                         <TableCol></TableCol>
                     </TableHead>
 
                     <TableBody>
-                        {sampahPurchase.map((trx, index) => {
+                        {sampahSale.map((trx, index) => {
                             return (
                                 <TableRow key={trx._id}>
                                     <TableCell>
@@ -79,18 +77,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                                             day: "numeric",
                                         })}
                                     </TableCell>
-                                    <TableCell>
-                                        {trx._nasabah._id
-                                            ? trx._nasabah._id.nik
-                                            : "-"}
-                                    </TableCell>
-                                    <TableCell>{trx._nasabah.name}</TableCell>
-                                    <TableCell>
-                                        {trx._nasabah.address}
-                                    </TableCell>
-                                    <TableCell className='text-red-500'>
-                                        {trx.transactionType}
-                                    </TableCell>
+                                    <TableCell>PT-BLABLA</TableCell>
                                     <TableCell className='text-red-500'>
                                         {formatRp(
                                             trx.items.reduce((tot, item) => {
@@ -135,12 +122,12 @@ export default function PembelianSampah({ sampahPurchase }) {
 
 export async function getServerSideProps() {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase`
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahSale`
     );
-    const sampahPurchase = await res.json();
+    const sampahSale = await res.json();
     return {
         props: {
-            sampahPurchase,
+            sampahSale,
         },
     };
 }

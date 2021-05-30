@@ -31,6 +31,20 @@ export default function Menu() {
                 />
             </Item>
             <Item
+                icon={<Icons.Cash size='1rem' />}
+                route='/Admin/Gudang/PenjualanSampah'
+                title='Penjualan Sampah'
+            >
+                <SubItem
+                    title='Data Penjualan Sampah'
+                    route='/Admin/Gudang/PenjualanSampah'
+                />
+                <SubItem
+                    title='Jual Sampah'
+                    route='/Admin/Gudang/PenjualanSampah/tambah'
+                />
+            </Item>
+            <Item
                 route='/Admin/Gudang/HargaSampah'
                 icon={<Icons.Trash size='1rem' />}
                 title='Harga Sampah'
