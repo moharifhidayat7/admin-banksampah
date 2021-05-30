@@ -40,11 +40,12 @@ export default function AdminLayout({ children }) {
                      />
                   </Item>
                   <Item
-                     route="/Admin/PenjualanProduk/Transaksi"
+                     route="/Admin/PenjualanProduk/Etalase"
                      icon={<Icons.Collection size="1rem" />}
                      title="Etalase Produk"
                   />
                   <Item
+                    route="/Admin/PenjualanProduk/DetailTransaksi"
                      icon={<Icons.Cash size="1rem" />}
                      title="Detail Transaksi"
                   />
