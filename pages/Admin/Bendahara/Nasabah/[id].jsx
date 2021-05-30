@@ -22,6 +22,8 @@ function Nasabah({ nasabah }) {
     const [modal, setModal] = useState(false);
 
     const [modalTitle, setmodalTitle] = useState("");
+    const [items, setItems] = useState([]);
+    const [saldo, setSaldo] = useState(0);
 
     const toggleModal = () => {
         setModal(!modal);
@@ -40,6 +42,27 @@ function Nasabah({ nasabah }) {
             router.replace("/Admin/Bendahara/Nasabah");
         });
     };
+
+    const getTransaction = async () => {
+        await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction?nasabah=${nasabah._id}`
+        ).then(async (res) => {
+            const result = await res.json();
+            setItems(result);
+
+            setSaldo(
+                result.reduce((total, item) => {
+                    if (item.transactionType == "Pemasukan") {
+                        return total + item.amount;
+                    } else {
+                        return total - item.amount;
+                    }
+                }, 0)
+            );
+        });
+    };
+
+    useEffect(() => getTransaction(), []);
 
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
@@ -68,7 +91,7 @@ function Nasabah({ nasabah }) {
                 <h1 className='text-2xl mb-5 inline-block'>
                     Detail Nasabah ({nasabah.name})
                 </h1>
-                <div>
+                <div className='text-right'>
                     <button
                         onClick={() =>
                             router.push(
@@ -92,8 +115,8 @@ function Nasabah({ nasabah }) {
                     </button>
                 </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4'>
-                <div className='grid grid-cols-1 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-7 gap-0 md:gap-4'>
+                <div className='grid grid-cols-1 gap-4 col-span-2'>
                     <img
                         src='https://via.placeholder.com/150'
                         className='w-full border'
@@ -136,7 +159,7 @@ function Nasabah({ nasabah }) {
                         </div>
                     </div>
                 </div>
-                <div className='col-span-3 mt-4 md:mt-0'>
+                <div className='col-span-5 mt-4 md:mt-0'>
                     <div className='grid md:grid-cols-2 gap-4'>
                         <div className='grid grid-cols-2 gap-2'>
                             <div className='col-span-2 text-center bg-white rounded shadow border-b p-5'>
@@ -144,7 +167,7 @@ function Nasabah({ nasabah }) {
                                     Total Saldo Rekening ({nasabah.rekening})
                                 </div>
                                 <div className='block text-xl font-bold text-blue-500'>
-                                    {formatRp(5000000)}
+                                    {formatRp(saldo)}
                                 </div>
                             </div>
                             <button
@@ -183,13 +206,11 @@ function Nasabah({ nasabah }) {
                     <Table>
                         <TableHead>
                             <TableCol>Tanggal</TableCol>
-                            <TableCol>Rekening</TableCol>
-                            <TableCol>Jumlah</TableCol>
-                            <TableCol>Keterangan</TableCol>
                             <TableCol>Tipe Transaksi</TableCol>
-                            <TableCol></TableCol>
+                            <TableCol>Nominal</TableCol>
+                            <TableCol>Keterangan</TableCol>
                         </TableHead>
-                        {/* <TableBody>
+                        <TableBody>
                             {items.map((item) => {
                                 return (
                                     <TableRow key={item._id}>
@@ -206,18 +227,27 @@ function Nasabah({ nasabah }) {
                                                 second: "2-digit",
                                             })}
                                         </TableCell>
-                                        <TableCell>
-                                            {item.rekening}
+                                        <TableCell
+                                            className={`${
+                                                item.transactionType ==
+                                                "Pemasukan"
+                                                    ? "text-green-500"
+                                                    : "text-red-500"
+                                            }`}
+                                        >
+                                            {item.transactionType}
                                         </TableCell>
                                         <TableCell
                                             className={`${
-                                                item.transactionType == "Pemasukan"
+                                                item.transactionType ==
+                                                "Pemasukan"
                                                     ? "text-green-500"
                                                     : "text-red-500"
                                             }`}
                                         >
                                             {`${
-                                                item.transactionType == "Pemasukan"
+                                                item.transactionType ==
+                                                "Pemasukan"
                                                     ? "+ "
                                                     : "- "
                                             }`}
@@ -227,34 +257,10 @@ function Nasabah({ nasabah }) {
                                             }).format(item.amount)}
                                         </TableCell>
                                         <TableCell>{item.note}</TableCell>
-                                        <TableCell
-                                            className={`${
-                                                item.transactionType == "debet"
-                                                    ? "text-green-500"
-                                                    : "text-red-500"
-                                            }`}
-                                        >
-                                            {item.transactionType}
-                                        </TableCell>
-                                        <TableCell className='float-right'>
-                                            <button
-                                                className={`hidden bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}
-                                            >
-                                                <Icons.Pencil />
-                                            </button>
-                                            <button
-                                                className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                                                onClick={() => {
-                                                    delItems(item._id);
-                                                }}
-                                            >
-                                                <Icons.Trash />
-                                            </button>
-                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
-                        </TableBody> */}
+                        </TableBody>
                     </Table>
                 </div>
             </div>

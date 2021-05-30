@@ -58,6 +58,10 @@ export default function Menu() {
                     title='Tambah Jenis Sampah'
                 />
             </Item>
+            <Item route='#' icon={<Icons.Trash size='1rem' />} title='Rekap'>
+                <SubItem route='#' title='Rekap Stok Sampah' />
+                <SubItem route='#' title='Rekap Penjualan Sampah' />
+            </Item>
         </List>
     );
 }

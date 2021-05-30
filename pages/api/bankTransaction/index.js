@@ -5,7 +5,14 @@ const handler = createHandler();
 
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
-    const result = await BankTransaction.find().limit(limit);
+    const nasabah = req.query.nasabah || "";
+    let result;
+
+    if (nasabah != "") {
+        result = await BankTransaction.find({ _nasabah: nasabah });
+    } else {
+        result = await BankTransaction.find().limit(limit);
+    }
 
     res.status(200).json(result);
 });
