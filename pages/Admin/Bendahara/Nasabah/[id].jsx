@@ -164,7 +164,8 @@ function Nasabah({ nasabah }) {
                         <div className='grid grid-cols-2 gap-2'>
                             <div className='col-span-2 text-center bg-white rounded shadow border-b p-5'>
                                 <div className='text-xs font-bold'>
-                                    Total Saldo Rekening ({nasabah.rekening})
+                                    Total Saldo Rekening
+                                    {/* ({nasabah.rekening}) */}
                                 </div>
                                 <div className='block text-xl font-bold text-blue-500'>
                                     {formatRp(saldo)}
