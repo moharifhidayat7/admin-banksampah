@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import TambahNasabahModal from "../../../components/Modals/TambahNasabahModal";
-import BhrLayout from "../../../components/Layouts/BhrLayout";
+import BhrLayout from "../../../../components/Layouts/BhrLayout";
 import Link from "next/link";
 
 import {
@@ -10,7 +9,7 @@ import {
     TableRow,
     TableCell,
     TableCol,
-} from "../../../components/Table";
+} from "../../../../components/Table";
 import * as Icons from "heroicons-react";
 import { useRouter } from "next/router";
 

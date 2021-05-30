@@ -24,7 +24,7 @@ function Penjualan() {
     return (
         <AdminLayout>
             <div className='w-full'>
-                <div className='bg-white rounded shadow-lg m-auto md:w-1/3 sm:w-10/12 w-full'>
+                <div className='bg-white rounded shadow-lg m-auto md:w-2/5 sm:w-10/12 w-full'>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='border-b px-4 py-2 flex justify-between	'>
                             <h3 className='font-semibold text-lg'>

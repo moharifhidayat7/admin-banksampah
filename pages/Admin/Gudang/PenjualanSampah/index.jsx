@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AdminLayout from "../../../components/Layouts/AdminLayout";
+import AdminLayout from "../../../../components/Layouts/AdminLayout";
 import * as Icons from "heroicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,7 +10,7 @@ import {
     TableRow,
     TableCell,
     TableCol,
-} from "../../../components/Table";
+} from "../../../../components/Table";
 
 export default function PembelianSampah({ sampahSale }) {
     const router = useRouter();

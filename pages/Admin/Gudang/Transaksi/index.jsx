@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AdminLayout from "../../../components/Layouts/AdminLayout";
+import AdminLayout from "../../../../components/Layouts/AdminLayout";
 import * as Icons from "heroicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,7 +10,7 @@ import {
     TableRow,
     TableCell,
     TableCol,
-} from "../../../components/Table";
+} from "../../../../components/Table";
 
 function Pembelian({ transactions }) {
     const [modal, setModal] = useState(false);
@@ -32,7 +32,9 @@ function Pembelian({ transactions }) {
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Pembelian Sampah Nasabah</h1>
+                <h1 className='text-4xl mb-5 inline-block'>
+                    Pembelian Sampah Nasabah
+                </h1>
 
                 <div className='float-right'>
                     <Link href='Transaksi/penjualan'>
@@ -60,9 +62,9 @@ function Pembelian({ transactions }) {
                         <TableCol>NIK</TableCol>
                         <TableCol>Nama</TableCol>
                         <TableCol className='w-80'>Alamat</TableCol>
-                        <TableCol className="hidden">Tipe Transaksi</TableCol>
+                        <TableCol className='hidden'>Tipe Transaksi</TableCol>
                         <TableCol>Tipe Transaksi</TableCol>
-                        <TableCol >Item</TableCol>
+                        <TableCol>Item</TableCol>
                         <TableCol>Jumlah</TableCol>
                         <TableCol className='w-56'>Keterangan</TableCol>
                         <TableCol></TableCol>
@@ -81,9 +83,7 @@ function Pembelian({ transactions }) {
                                             day: "numeric",
                                         })}
                                     </TableCell>
-                                    <TableCell>
-                                        778887
-                                    </TableCell>
+                                    <TableCell>778887</TableCell>
                                     <TableCell>
                                         {trx.guest
                                             ? trx.guest.name
@@ -91,7 +91,7 @@ function Pembelian({ transactions }) {
                                             ? trx._nasabah.name
                                             : "-"}
                                     </TableCell>
-                                    <TableCell className="hidden">
+                                    <TableCell className='hidden'>
                                         {trx.guest
                                             ? trx.guest.address
                                             : trx._nasabah
@@ -121,9 +121,12 @@ function Pembelian({ transactions }) {
                                             ? `Tabungan (${trx._nasabah.rekening})`
                                             : "Tunai"}
                                     </TableCell>
-                                    <TableCell className="w-56"
-                                    >
-                                        {trx.items.map((item, index)=> (<li key={index}>{item._sampahType.name}</li>))}
+                                    <TableCell className='w-56'>
+                                        {trx.items.map((item, index) => (
+                                            <li key={index}>
+                                                {item._sampahType.name}
+                                            </li>
+                                        ))}
                                     </TableCell>
                                     <TableCell
                                         className={
@@ -156,10 +159,7 @@ function Pembelian({ transactions }) {
                                     </TableCell>
                                     <TableCell>{trx.note}</TableCell>
                                     <TableCell className='float-right'>
-                                    <button
-                                            className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
-                                            
-                                        >
+                                        <button className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'>
                                             <Icons.Eye />
                                         </button>
                                         <button

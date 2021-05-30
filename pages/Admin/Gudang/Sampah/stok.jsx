@@ -30,29 +30,30 @@ function Stok({ priceList, transactions, sampahCategory }) {
     };
 
     const getQty = (sampahId) => {
-      console.log(sampahId)
-        const items = transactions.map((trx)=>{
-          return trx.items
-        })
-        const group = items.filter(item => item.length>0)
+        console.log(sampahId);
+        const items = transactions.map((trx) => {
+            return trx.items;
+        });
+        const group = items.filter((item) => item.length > 0);
 
-        const qtt = group.map(g=>{
-          return g.filter(s=>s._sampahType._id == sampahId._sampahType._id)
-        })
-        const total = qtt.reduce((total, item)=>{
-          console.log(item[0])
-          return total + item[0].qty
-        },0)
-        return total
-
-    }
+        const qtt = group.map((g) => {
+            return g.filter(
+                (s) => s._sampahType._id == sampahId._sampahType._id
+            );
+        });
+        const total = qtt.reduce((total, item) => {
+            console.log(item[0]);
+            return total + item[0].qty;
+        }, 0);
+        return total;
+    };
 
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>Stok Sampah Gudang</h1>
-
-                
+                <h1 className='text-4xl mb-5 inline-block'>
+                    Stok Sampah Gudang
+                </h1>
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>
@@ -68,45 +69,36 @@ function Stok({ priceList, transactions, sampahCategory }) {
                     <TableBody>
                         {priceList.map((type, index) => {
                             if (type.price != 0) {
-                            return (
-                                <TableRow key={type._id}>
-                                    <TableCell>
-                                {type._sampahType.name}
-                                    </TableCell>
-                                    <TableCell>
-                                    {
-                                                            type._sampahType
-                                                                ._category.name
-                                                        }
-                                    </TableCell>
-                                    <TableCell>
-                                      {/* {getQty(type)} */}
-                                    </TableCell>
-                                    <TableCell>
-                                    </TableCell>
-                                    <TableCell
-                                    >
-                                        asdsd
-                                    </TableCell>
-                                    
-                                    <TableCell className='float-right'>
-                                    <button
-                                            className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
-                                            
-                                        >
-                                            <Icons.Eye />
-                                        </button>
-                                        <button
-                                            className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                                            onClick={() =>
-                                                delTransaction(trx._id)
-                                            }
-                                        >
-                                            <Icons.Trash />
-                                        </button>
-                                    </TableCell>
-                                </TableRow>
-                            );}
+                                return (
+                                    <TableRow key={type._id}>
+                                        <TableCell>
+                                            {type._sampahType.name}
+                                        </TableCell>
+                                        <TableCell>
+                                            {type._sampahType._category.name}
+                                        </TableCell>
+                                        <TableCell>
+                                            {/* {getQty(type)} */}
+                                        </TableCell>
+                                        <TableCell></TableCell>
+                                        <TableCell>asdsd</TableCell>
+
+                                        <TableCell className='float-right'>
+                                            <button className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'>
+                                                <Icons.Eye />
+                                            </button>
+                                            <button
+                                                className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                                                onClick={() =>
+                                                    delTransaction(trx._id)
+                                                }
+                                            >
+                                                <Icons.Trash />
+                                            </button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            }
                         })}
                     </TableBody>
                 </Table>
@@ -126,7 +118,7 @@ export async function getServerSideProps() {
         props: {
             transactions,
             priceList,
-            sampahCategory
+            sampahCategory,
         },
     };
 }
