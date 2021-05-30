@@ -6,8 +6,11 @@ const schema = new Schema(
     {
         rekening: {
             type: String,
-            required: true,
             unique: true,
+            required: true,
+            default: function () {
+                return Math.floor(1000000 + Math.random() * 9000000);
+            },
         },
         nik: {
             type: String,

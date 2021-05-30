@@ -11,22 +11,10 @@ import {
 } from "../../../components/Table";
 import * as Icons from "heroicons-react";
 
-function Nasabah() {
-    const [items, setItems] = useState([]);
-    const getItems = async () => {
-        const res = await fetch("http://localhost:3000/api/nasabahProfile");
-        const json = await res.json();
-
-        setItems(json);
-    };
-
-    useEffect(() => {
-        getItems();
-    }, []);
-
+export default function Nasabah({ nasabahProfile }) {
     return (
         <AdminLayout>
-            <h1 className='text-4xl mb-5'>Nasabah</h1>
+            <h1 className='text-4xl mb-5'>Data Nasabah</h1>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>
                     <TableHead>
@@ -34,13 +22,13 @@ function Nasabah() {
                         <TableCol>NIK</TableCol>
                         <TableCol>Nama</TableCol>
                         <TableCol>Alamat</TableCol>
-                        <TableCol>L/P</TableCol>
+                        <TableCol>Jenis Kelamin</TableCol>
                         <TableCol>No. HP</TableCol>
                         <TableCol>Keanggotaan</TableCol>
                     </TableHead>
 
                     <TableBody>
-                        {items.map((item, index) => {
+                        {nasabahProfile.map((item) => {
                             return (
                                 <TableRow key={item._id}>
                                     <TableCell>{item.rekening}</TableCell>
@@ -60,4 +48,14 @@ function Nasabah() {
     );
 }
 
-export default Nasabah;
+export async function getServerSideProps() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile`
+    );
+    const nasabahProfile = await res.json();
+    return {
+        props: {
+            nasabahProfile,
+        },
+    };
+}

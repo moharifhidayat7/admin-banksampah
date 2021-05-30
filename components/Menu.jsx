@@ -1,5 +1,4 @@
 import * as Icons from "heroicons-react";
-
 import { List, Item, SubItem } from "./List";
 
 export default function Menu() {
@@ -14,21 +13,37 @@ export default function Menu() {
                 route='/Admin/Gudang/Nasabah'
                 icon={<Icons.UserGroup size='1rem' />}
                 title='Nasabah'
-            />
-            <Item
-                route='/Admin/Gudang/Transaksi'
-                icon={<Icons.Cash size='1rem' />}
-                title='Transaksi Sampah'
             >
-                 <SubItem title='Pembelian Sampah'/>
-                            <SubItem title='Penjualan Sampah'/>
+                <SubItem route='/Admin/Gudang/Nasabah' title='Data Nasabah' />
             </Item>
             <Item
-                route='/Admin/Gudang/Sampah'
+                icon={<Icons.Cash size='1rem' />}
+                route='/Admin/Gudang/PembelianSampah'
+                title='Pembelian Sampah'
+            >
+                <SubItem
+                    title='Data Pembelian Sampah'
+                    route='/Admin/Gudang/PembelianSampah'
+                />
+                <SubItem
+                    title='Beli Sampah'
+                    route='/Admin/Gudang/PembelianSampah/tambah'
+                />
+            </Item>
+            <Item
+                route='/Admin/Gudang/HargaSampah'
                 icon={<Icons.Trash size='1rem' />}
-                title='Sampah'
-            ><SubItem title='Harga Sampah'/>
-            <SubItem title='Stok Sampah' route="Sampah/stok" /></Item>
+                title='Harga Sampah'
+            >
+                <SubItem
+                    route='/Admin/Gudang/HargaSampah'
+                    title='Data Harga Sampah'
+                />
+                <SubItem
+                    route='/Admin/Gudang/HargaSampah/tambah'
+                    title='Tambah Jenis Sampah'
+                />
+            </Item>
         </List>
     );
 }

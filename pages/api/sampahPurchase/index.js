@@ -10,8 +10,12 @@ handler.get(async (req, res) => {
     res.status(200).json(result);
 });
 handler.post(async (req, res) => {
-    const result = await SampahPurchase.create(req.body);
-    return res.status(200).json(result);
+    try {
+        const result = await SampahPurchase.create(req.body);
+        res.status(200).json(result);
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 export default handler;

@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import "./SampahCategory";
 
 const MODEL_NAME = "SampahType";
 
@@ -9,10 +8,17 @@ const schema = new Schema(
             type: String,
             required: true,
         },
-        _category: {
-            type: Schema.Types.ObjectId,
-            ref: "SampahCategory",
-            autopopulate: true,
+        category: {
+            type: String,
+            enum: [
+                "Kertasan",
+                "Emberan",
+                "Botol",
+                "Logam/Besi",
+                "Kresek/Plastik",
+                "Lain - Lain",
+            ],
+            required: true,
         },
         price: {
             type: Number,
