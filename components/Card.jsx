@@ -1,9 +1,9 @@
 const Card = ({ img, title, stok, deskripsi, harga,berat }) => {
    return (
-      <div className="w-72 bg-white rounded-lg overflow-hidden  shadow-xl">
+      <div className="w-64 bg-white rounded-lg overflow-hidden  shadow-xl">
          <img className="h-40 w-full object-cover" src={img} alt={img} />
 
-         <div className="px-4 py-2">
+         <div className="px-4 py-2 ">
             <h1 className="text-gray-900 font-bold text-lg uppercase h-8">
              {title} {berat}
             </h1>

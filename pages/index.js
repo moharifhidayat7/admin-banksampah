@@ -1,4 +1,4 @@
-import Index from './Admin/Bendahara/index'
+import Index from './Kasir/index'
 export default function index() {
    return <Index />;
 }
