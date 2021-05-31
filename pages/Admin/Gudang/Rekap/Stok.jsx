@@ -28,7 +28,7 @@ export default function index({ stok }) {
 
     return (
         <AdminLayout>
-            <h1 className='text-4xl'>Data Harga Sampah</h1>
+            <h1 className='text-4xl'>Rekap Pembelian Sampah</h1>
             <div className='mt-5'>
                 <div className='overflow-x-auto'>
                     <Table>

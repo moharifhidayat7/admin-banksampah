@@ -46,11 +46,11 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Bank'
                         ></Item>
-                        <Item
+                        {/* <Item
                             route='/Admin/Bendahara/User'
                             icon={<Icons.User size='1rem' />}
                             title='User'
-                        />
+                        /> */}
                     </List>
                 </Sidebar>
                 <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />

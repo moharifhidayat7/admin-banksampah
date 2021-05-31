@@ -13,16 +13,6 @@ handler.get(async (req, res) => {
         arr.push(...result[i].items);
     }
 
-    // const e = newRes.map((a) => {
-    //     return a;
-    // });
-
-    // newRes.forEach((element) => {
-    //     b = element.filter(
-    //         (f) => f._sampahType._id == "60b358efc911c905f85879e7"
-    //     );
-    // });
-
     const group = types.map((type) => {
         const e = arr.filter((a) => a._sampahType._id == type._id);
 
