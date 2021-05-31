@@ -53,6 +53,16 @@ export default function PembelianSampah({ sampahPurchase }) {
                         </a>
                     </Link>
                 </div>
+                <div className='float-right'>
+                    <Link href='/Admin/Gudang/PembelianSampah/tambah'>
+                        <a
+                            role='button'
+                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-red-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-red-500 hover:bg-white hover:text-red-500 focus:ring-red-500 focus:bg-white focus:text-red-500 '
+                        >
+                            Beli Sampah
+                        </a>
+                    </Link>
+                </div>
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>
