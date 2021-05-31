@@ -5,7 +5,19 @@ const handler = createHandler();
 
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
-    const result = await SampahType.find().limit(limit);
+    let result;
+    if (req.query.group) {
+        result = await SampahType.aggregate([
+            {
+                $group: {
+                    _id: "$category",
+                    items: { $push: "$$ROOT" },
+                },
+            },
+        ]);
+    } else {
+        result = await SampahType.find().limit(limit);
+    }
 
     res.status(200).json(result);
 });

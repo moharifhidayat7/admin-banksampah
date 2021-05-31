@@ -55,7 +55,7 @@ export default function index({ sampahType }) {
                                 return (
                                     <TableRow key={type._id}>
                                         <TableCell>{type.name}</TableCell>
-                                        <TableCell>{type.name}</TableCell>
+                                        <TableCell>{type.category}</TableCell>
                                         <TableCell>{type.denom}</TableCell>
                                         <TableCell>
                                             {formatRp(type.price)}
@@ -96,6 +96,7 @@ export async function getServerSideProps() {
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType`
     );
     const sampahType = await res.json();
+
     return {
         props: {
             sampahType,

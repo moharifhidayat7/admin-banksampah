@@ -17,9 +17,12 @@ handler.get(async (req, res) => {
     res.status(200).json(result);
 });
 handler.post(async (req, res) => {
-    const result = await NasabahProfile.create(req.body);
-
-    return res.status(200).json(result);
+    try {
+        const result = await NasabahProfile.create(req.body);
+        return res.status(200).json(result);
+    } catch (e) {
+        return res.status(409).json(e);
+    }
 });
 
 export default handler;

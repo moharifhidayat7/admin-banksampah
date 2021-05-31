@@ -46,7 +46,7 @@ export default function Menu() {
             </Item>
             <Item
                 route='/Admin/Gudang/HargaSampah'
-                icon={<Icons.Trash size='1rem' />}
+                icon={<Icons.CurrencyDollar size='1rem' />}
                 title='Harga Sampah'
             >
                 <SubItem
@@ -58,8 +58,15 @@ export default function Menu() {
                     title='Tambah Jenis Sampah'
                 />
             </Item>
-            <Item route='#' icon={<Icons.Trash size='1rem' />} title='Rekap'>
-                <SubItem route='#' title='Rekap Stok Sampah' />
+            <Item
+                route='#'
+                icon={<Icons.DocumentReport size='1rem' />}
+                title='Rekap'
+            >
+                <SubItem
+                    route='/Admin/Gudang/Rekap/Stok'
+                    title='Rekap Stok Sampah'
+                />
                 <SubItem route='#' title='Rekap Penjualan Sampah' />
             </Item>
         </List>

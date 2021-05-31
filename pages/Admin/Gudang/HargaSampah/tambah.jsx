@@ -12,7 +12,7 @@ export default function tambahJenisSampah() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(async (res) => {
+        }).then((res) => {
             router.push("/Admin/Gudang/HargaSampah");
         });
     };
