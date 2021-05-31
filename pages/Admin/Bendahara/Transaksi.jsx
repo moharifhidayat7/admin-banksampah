@@ -64,7 +64,7 @@ function Pemasukan() {
             />
             <div>
                 <h1 className='text-4xl mb-5 inline-block'>
-                    Transaksi Nasabah Bank Sampah
+                    Transaksi Tabungan Nasabah
                 </h1>
 
                 <button
@@ -72,7 +72,7 @@ function Pemasukan() {
                     className='px-4 inline-block align-top float-right focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
                     onClick={toggleModal}
                 >
-                    Tambah Data
+                    Tabung/Tarik Tunai
                 </button>
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>

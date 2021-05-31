@@ -11,18 +11,18 @@ import {
 
 import { useState, useEffect } from "react";
 
-function index({ transactions }) {
+export default function index({ sampahPurchase }) {
     const [tunai, setTunai] = useState(0);
     const [tabungan, setTabungan] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
 
     const getTunai = () => {
-        const filter = transactions.filter(
-            (trx) => trx.transactionType == "cash"
+        const filter = sampahPurchase.filter(
+            (trx) => trx.transactionType == "CASH"
         );
         const total = filter.reduce((p, c) => {
             const sum = c.items.reduce((tot, item) => {
-                return tot + item.price * item.qty;
+                return tot + item._sampahType.price * item.qty;
             }, 0);
             return p + sum;
         }, 0);
@@ -30,29 +30,16 @@ function index({ transactions }) {
     };
 
     const getTabungan = () => {
-        const filter = transactions.filter(
-            (trx) => trx.transactionType == "saving"
+        const filter = sampahPurchase.filter(
+            (trx) => trx.transactionType == "TABUNG"
         );
         const total = filter.reduce((p, c) => {
             const sum = c.items.reduce((tot, item) => {
-                return tot + item.price * item.qty;
+                return tot + item._sampahType.price * item.qty;
             }, 0);
             return p + sum;
         }, 0);
         setTabungan(total);
-    };
-
-    const getPemasukan = () => {
-        const filter = transactions.filter(
-            (trx) =>
-                trx.transactionType == "pemasukan" ||
-                trx.transactionType == "penjualan"
-        );
-        const total = filter.reduce((p, c) => {
-            return p + c.amount;
-        }, 0);
-
-        setPemasukan(total);
     };
 
     const formatRp = (number) => {
@@ -65,7 +52,6 @@ function index({ transactions }) {
     useEffect(() => {
         getTunai();
         getTabungan();
-        getPemasukan();
     }, []);
     return (
         <BhrLayout>
@@ -116,13 +102,14 @@ function index({ transactions }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch("http://localhost:3000/api/sampahTransaction");
-    const transactions = await res.json();
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase`
+    );
+    const sampahPurchase = await res.json();
+
     return {
         props: {
-            transactions,
+            sampahPurchase,
         },
     };
 }
-
-export default index;

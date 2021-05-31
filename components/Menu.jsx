@@ -21,14 +21,6 @@ export default function Menu() {
                 route='/Admin/Gudang/PembelianSampah'
                 title='Pembelian Sampah'
             >
-                <SubItem
-                    title='Data Pembelian Sampah'
-                    route='/Admin/Gudang/PembelianSampah'
-                />
-                <SubItem
-                    title='Beli Sampah'
-                    route='/Admin/Gudang/PembelianSampah/tambah'
-                />
             </Item>
             <Item
                 icon={<Icons.Cash size='1rem' />}

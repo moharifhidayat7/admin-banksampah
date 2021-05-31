@@ -18,7 +18,7 @@ import {
 } from "../../../components/Table";
 import { useEffect, useState } from "react";
 
-export default function Index({ sampahPurchase }) {
+export default function Index({ sampahPurchase, transfer }) {
     const [tunai, setTunai] = useState(0);
     const [tabungan, setTabungan] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
@@ -48,6 +48,14 @@ export default function Index({ sampahPurchase }) {
         }, 0);
         setTabungan(total);
     };
+    const getTransfer = () => {
+        const total = transfer.reduce((p, c) => {
+            return p + c.amount;
+        }, 0);
+
+        setPemasukan(total)
+    }
+
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
             style: "currency",
@@ -58,6 +66,7 @@ export default function Index({ sampahPurchase }) {
     useEffect(() => {
         getTunai();
         getTabungan();
+        getTransfer();
     }, []);
 
     return (
@@ -96,7 +105,7 @@ export default function Index({ sampahPurchase }) {
                         />
                     }
                     title='Saldo Gudang'
-                    value={formatRp(pemasukan - tunai - tabungan)}
+                    value={formatRp(pemasukan - tunai)}
                 />
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 hidden'>
@@ -212,9 +221,15 @@ export async function getServerSideProps() {
     );
     const sampahPurchase = await res.json();
 
+    const res2 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/transfer?to=Gudang`
+    );
+    const transfer = await res2.json();
+
     return {
         props: {
             sampahPurchase,
+            transfer
         },
     };
 }
