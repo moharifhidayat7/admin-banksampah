@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.2",
+    "@tailwindcss/line-clamp": "^0.2.1",
     "bcrypt": "^5.0.1",
     "deta": "0.0.10",
     "faker": "^5.5.3",
