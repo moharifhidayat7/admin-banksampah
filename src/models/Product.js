@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import "./ProductCategory"
+import "./ProductCategory";
 
 const MODEL_NAME = "Product";
 
@@ -18,12 +18,20 @@ const schema = new Schema(
             ref: "ProductCategory",
             autopopulate: true,
         },
+        picture: {
+            type: String,
+            required: true,
+        },
         description: {
             type: String,
         },
         stock: {
             type: Number,
             default: -1,
+        },
+        status: {
+            type: String,
+            default: "Aktif",
         },
     },
     { timestamps: true }
