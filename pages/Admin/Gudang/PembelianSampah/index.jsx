@@ -47,24 +47,14 @@ export default function PembelianSampah({ sampahPurchase }) {
                     <Link href='/Admin/Gudang/PembelianSampah/tambah'>
                         <a
                             role='button'
-                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-red-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-red-500 hover:bg-white hover:text-red-500 focus:ring-red-500 focus:bg-white focus:text-red-500 '
-                        >
-                            Beli Sampah
-                        </a>
-                    </Link>
-                </div>
-                <div className='float-right'>
-                    <Link href='/Admin/Gudang/PembelianSampah/tambah'>
-                        <a
-                            role='button'
-                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-red-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-red-500 hover:bg-white hover:text-red-500 focus:ring-red-500 focus:bg-white focus:text-red-500 '
+                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
                         >
                             Beli Sampah
                         </a>
                     </Link>
                 </div>
             </div>
-            <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
+            <div className='w-full overflow-x-auto'>
                 <Table>
                     <TableHead>
                         <TableCol className='w-32'>Tanggal</TableCol>
@@ -95,13 +85,11 @@ export default function PembelianSampah({ sampahPurchase }) {
                                             : "-"}
                                     </TableCell>
                                     <TableCell>{trx._nasabah.name}</TableCell>
-                                    <TableCell>
+                                    <TableCell className='truncate'>
                                         {trx._nasabah.address}
                                     </TableCell>
-                                    <TableCell className='text-red-500'>
-                                        {trx.transactionType}
-                                    </TableCell>
-                                    <TableCell className='text-red-500'>
+                                    <TableCell>{trx.transactionType}</TableCell>
+                                    <TableCell>
                                         {formatRp(
                                             trx.items.reduce((tot, item) => {
                                                 return (

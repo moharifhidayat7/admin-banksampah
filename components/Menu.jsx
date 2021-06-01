@@ -12,44 +12,23 @@ export default function Menu() {
             <Item
                 route='/Admin/Gudang/Nasabah'
                 icon={<Icons.UserGroup size='1rem' />}
-                title='Nasabah'
-            >
-                <SubItem route='/Admin/Gudang/Nasabah' title='Data Nasabah' />
-            </Item>
+                title='Data Nasabah'
+            />
             <Item
                 icon={<Icons.Cash size='1rem' />}
                 route='/Admin/Gudang/PembelianSampah'
-                title='Pembelian Sampah'
-            >
-            </Item>
+                title='Data Pembelian Sampah'
+            ></Item>
             <Item
                 icon={<Icons.Cash size='1rem' />}
                 route='/Admin/Gudang/PenjualanSampah'
-                title='Penjualan Sampah'
-            >
-                <SubItem
-                    title='Data Penjualan Sampah'
-                    route='/Admin/Gudang/PenjualanSampah'
-                />
-                <SubItem
-                    title='Jual Sampah'
-                    route='/Admin/Gudang/PenjualanSampah/tambah'
-                />
-            </Item>
+                title='Data Penjualan Sampah'
+            ></Item>
             <Item
                 route='/Admin/Gudang/HargaSampah'
                 icon={<Icons.CurrencyDollar size='1rem' />}
-                title='Harga Sampah'
-            >
-                <SubItem
-                    route='/Admin/Gudang/HargaSampah'
-                    title='Data Harga Sampah'
-                />
-                <SubItem
-                    route='/Admin/Gudang/HargaSampah/tambah'
-                    title='Tambah Jenis Sampah'
-                />
-            </Item>
+                title='Data Harga Sampah'
+            ></Item>
             <Item
                 route='#'
                 icon={<Icons.DocumentReport size='1rem' />}

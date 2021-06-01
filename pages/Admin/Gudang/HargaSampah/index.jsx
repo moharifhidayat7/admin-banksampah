@@ -39,7 +39,22 @@ export default function index({ sampahType }) {
 
     return (
         <AdminLayout>
-            <h1 className='text-4xl'>Data Harga Sampah</h1>
+            <div>
+                <h1 className='text-4xl mb-5 inline-block'>
+                    Data Harga Sampah
+                </h1>
+
+                <div className='float-right'>
+                    <Link href='/Admin/Gudang/HargaSampah/tambah'>
+                        <a
+                            role='button'
+                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
+                        >
+                            Tambah Jenis Sampah
+                        </a>
+                    </Link>
+                </div>
+            </div>
             <div className='mt-5'>
                 <div className='overflow-x-auto'>
                     <Table>

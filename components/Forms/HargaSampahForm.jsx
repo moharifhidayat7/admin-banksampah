@@ -16,7 +16,7 @@ export default function HargaSampahForm({ onSubmit, data, title }) {
     };
 
     return (
-        <div className='bg-white rounded shadow m-auto w-full sm:w-10/12 md:w-3/5'>
+        <div className='bg-white rounded shadow m-auto w-full sm:w-10/12 md:w-1/4'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='border-b px-4 py-2 flex justify-between	'>
                     <h3 className='font-semibold text-lg'>{title}</h3>
@@ -25,7 +25,8 @@ export default function HargaSampahForm({ onSubmit, data, title }) {
                     <div className='grid gap-4'>
                         <div>
                             <label>
-                                Nama <span className='text-red-500'>*</span>
+                                Jenis Sampah{" "}
+                                <span className='text-red-500'>*</span>
                             </label>
                             <input
                                 name='name'
