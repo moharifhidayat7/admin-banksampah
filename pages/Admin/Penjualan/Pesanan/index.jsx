@@ -11,7 +11,7 @@ import * as Icons from "heroicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function Product({ products }) {
+export default function Product({ orders }) {
     const router = useRouter();
     const refreshData = () => {
         router.replace(router.asPath);
@@ -49,23 +49,43 @@ export default function Product({ products }) {
                         <TableCol></TableCol>
                     </TableHead>
                     <TableBody>
-                        {products.map((product) => {
+                        {orders.map((order) => {
                             return (
-                                <TableRow key={product._id}>
-                                    <TableCell>34333</TableCell>
+                                <TableRow key={order._id}>
+                                    <TableCell>{order._id}</TableCell>
                                     <TableCell className='py-2'>
-                                        <p>
-                                            adasdasdasd <br />
-                                            asdasd asd asd asd <br />
-                                            asdasdasd
-                                        </p>
+                                        <ul>
+                                            {order.items.map((item) => {
+                                                <li key={item._id}>
+                                                    {item.qty} x{" "}
+                                                    {item._product.name}
+                                                </li>;
+                                            })}
+                                        </ul>
                                     </TableCell>
-                                    <TableCell>34333</TableCell>
+                                    <TableCell>{order.customer}</TableCell>
                                     <TableCell>
-                                        {formatRp(product.price)}
+                                        {formatRp(
+                                            order.items.reduce(
+                                                (total, item) => {
+                                                    return (
+                                                        total +
+                                                        item.qty * item.price
+                                                    );
+                                                }
+                                            )
+                                        )}
                                     </TableCell>
-                                    <TableCell>Aktif</TableCell>
-                                    <TableCell>21/22/2025</TableCell>
+                                    <TableCell>{order.status}</TableCell>
+                                    <TableCell>
+                                        {new Date(
+                                            order.createdAt
+                                        ).toLocaleString("id-ID", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </TableCell>
                                     <TableCell className='text-right'>
                                         <Link href='#'>
                                             <a
@@ -105,11 +125,11 @@ export default function Product({ products }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`);
-    const products = await res.json();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/order`);
+    const orders = await res.json();
     return {
         props: {
-            products,
+            orders,
         },
     };
 }

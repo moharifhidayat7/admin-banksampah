@@ -29,41 +29,29 @@ export default function AdminLayout({ children }) {
                         <Item
                             route='/Admin/Bendahara/Nasabah'
                             icon={<Icons.UserGroup size='1rem' />}
-                            title='Nasabah'
-                        >
-                            <SubItem
-                                route='/Admin/Bendahara/Nasabah'
-                                title='Data Nasabah'
-                            />
-                            <SubItem
-                                route='/Admin/Bendahara/Nasabah/tambah'
-                                title='Tambah Nasabah'
-                            />
-                        </Item>
-                        <Item
+                            title='Data Nasabah'
+                        ></Item>
+                        {/* <Item
                         route="/Admin/Bendahara/Internal"
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Internal'
                         >
-                        </Item>
+                        </Item> */}
                         <Item
                             route='/Admin/Bendahara/Transaksi'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Tabungan Nasabah'
-                        >
-                        </Item>
+                        ></Item>
                         <Item
                             route='/Admin/Bendahara/PembelianSampah'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Pembelian Sampah'
-                        >
-                        </Item>
+                        ></Item>
                         <Item
                             route='/Admin/Bendahara/PenjualanSampah'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Penjualan Sampah'
-                        >
-                        </Item>
+                        ></Item>
                         {/* <Item
                             route='/Admin/Bendahara/User'
                             icon={<Icons.User size='1rem' />}

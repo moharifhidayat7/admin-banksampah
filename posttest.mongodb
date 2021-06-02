@@ -1,0 +1,25 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('banksampah');
+
+
+// Insert a few documents into the sales collection.
+db.orders.insertMany([
+  { 'items': [
+      {"_product": {
+            "_id": "60b5dd816c38dd2c84822222",
+            "name": "Kompos 10Kg",
+            "price": 10000,
+            },"qty": 7
+        },
+{_product: {
+"_id": "60b5dd816c38dd2c84822222",
+"name": "Kompos 5Kg",
+"price": 20000,
+},"qty": 10}
+  ]},
+]);

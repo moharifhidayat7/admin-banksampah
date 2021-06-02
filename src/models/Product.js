@@ -41,3 +41,5 @@ schema.plugin(require("mongoose-autopopulate"));
 
 export default mongoose.models[MODEL_NAME] ||
     mongoose.model(MODEL_NAME, schema);
+
+export { schema as ProductSchema };
