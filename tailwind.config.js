@@ -28,6 +28,8 @@ module.exports = {
             appearance: ["hover", "focus"],
             ringColor: ["hover", "active", "focus-within"],
             textColor: ["focus-within"],
+            width: ['hover','focus'],
+            transform: ['hover', 'focus'],
         },
     },
     plugins: [

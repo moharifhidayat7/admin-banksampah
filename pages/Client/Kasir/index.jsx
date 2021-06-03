@@ -1,152 +1,167 @@
 import Card from "../../../components/Card";
 import { useState, useEffect } from "react";
-
-
+import NavbarProduk from "../../../components/Navbar/NavbarProduk";
+import * as Smooth from "react-scroll";
+import * as Icon from "heroicons-react";
 export default function index({ products }) {
-    const [keranjang, setKeranjang] = useState([]);
+   const [keranjang, setKeranjang] = useState([]);
 
-    const formatRp = (number) => {
-        return new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-        }).format(number);
-    };
+   const formatRp = (number) => {
+      return new Intl.NumberFormat("id-ID", {
+         style: "currency",
+         currency: "IDR",
+      }).format(number);
+   };
+   const [bt, setBt] = useState("hidden");
+   useEffect(() => {
+      window.addEventListener("scroll", (event) => {
+         if (window.scrollY >= 160) {
+            setBt("");
+         } else {
+            setBt("hidden");
+         }
+      });
+   }, []);
 
-    return (
-        <>
-            <div className='fixed top-0 w-full'>
-                <div className='bg-gradient-to-l from-green-600 to-gray-500 h-12 shadow-lg flex items-center'>
-                    <p className='text-center w-full font-mono font-bold text-lg'>
-                        KASIR PEMBELIAN PRODUK
-                    </p>
-                </div>
+   return (
+      <div className="">
+         <NavbarProduk />
+         <Smooth.Link smooth to="home">
+            <button
+               className={`z-50 bg-blue-800  font-bold bg-opacity-30 w-10 p-2 fixed left-4 bottom-4 rounded-md ${bt} `}
+            >
+               <Icon.Home />
+            </button>
+         </Smooth.Link>
+
+         <div className="grid lg:grid-cols-3 gap-5 mx-14 mb-4">
+            <div className="col-span-2">
+               <div
+                  id="kompos"
+                  className="text-lg mt-4 top-0 sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
+               >
+                  KOMPOS
+               </div>
+               <div className="grid lg:grid-cols-4 gap-2 grid-rows-2">
+                  {products.map((product) => {
+                     return (
+                        <Card
+                           key={product._id}
+                           img="/3541851566.jpg"
+                           data={product}
+                           keranjang={keranjang}
+                           setKeranjang={setKeranjang}
+                           formatRp={formatRp}
+                        />
+                     );
+                  })}
+               </div>
+               <div
+                  id="kreatif"
+                  className="text-lg mt-4 sticky top-0 bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
+               >
+                  Kreatif
+               </div>
+               <div className="grid lg:grid-cols-4 gap-2 grid-rows-2">
+                  {products.map((product) => {
+                     return (
+                        <Card
+                           key={product._id}
+                           img="/3541851566.jpg"
+                           data={product}
+                           keranjang={keranjang}
+                           setKeranjang={setKeranjang}
+                           formatRp={formatRp}
+                        />
+                     );
+                  })}
+               </div>
+               <div
+                  id="allproduct"
+                  className="text-lg  sticky mt-4 top-0 bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
+               >
+                  All Product
+               </div>
+               <div className="grid lg:grid-cols-4 gap-2 grid-rows-2">
+                  {products.map((product) => {
+                     return (
+                        <Card
+                           key={product._id}
+                           img="/3541851566.jpg"
+                           data={product}
+                           keranjang={keranjang}
+                           setKeranjang={setKeranjang}
+                           formatRp={formatRp}
+                        />
+                     );
+                  })}
+               </div>
             </div>
-            <div className='grid grid-cols-3 mt-16 gap-5 px-8'>
-                <div className='col-span-2'>
-                    <div className='text-2xl mb-2'> Etalase Produk</div>
-                    <div className='flex space-x-4 flex-wrap'>
-                        {products.map((product) => {
-                            return (
-                                <Card
-                                    key={product._id}
-                                    img='/3541851566.jpg'
-                                    data={product}
-                                    keranjang={keranjang}
-                                    setKeranjang={setKeranjang}
-                                    formatRp={formatRp}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
-                <div>
-                    <div className='text-2xl mb-2'>Keranjang</div>
-                    <div className='bg-white rounded-xl p-2 px-4 '>
-                        <p className='font-semibold mb-4'>Ringkasan belanja <button onClick={()=>setKeranjang([])} className="float-right text-white px-2 py-1 block bg-red-500 hover:bg-red-800 text-xs rounded-lg focus:outline-none">Kosongkan</button></p>
-                        {keranjang.map((item, index) => {
-                            return (
-                                <div
-                                    key={index + 100}
-                                    className='flex justify-between font-mono text-gray-600'
-                                >
-                                    <p>
-                                        {item.qty} x {item.name}
-                                    </p>
-                                    <p>{formatRp(item.price * item.qty)}</p>
-                                </div>
-                            );
-                        })}
-                        <hr />
-                        <div className='my-4 font-semibold flex justify-between'>
-                            <p>Total Harga</p>
-                            <p>
-                                {formatRp(
-                                    keranjang.reduce((tot, item) => {
-                                        return tot + item.price * item.qty;
-                                    }, 0)
-                                )}
-                            </p>
-                        </div>
-                        <button className='text-lg font-bold text-white bg-green-500 w-full rounded-md py-2 hover:bg-green-600 transition'>
-                            Bayar
-                        </button>
-                    </div>
-                    <div className='my-4 hidden'>
-                        <div className='bg-white rounded shadow-md hidden sm:hidden md:hidden lg:block'>
-                            <div className='border-gray-300 border-b p-5'>
-                                <h1 className='text-gray-800 font-bold'>
-                                    Notifikasi Pembelian Produk Online
-                                </h1>
-                            </div>
-                            <div>
-                                <div className='flex items-center space-x-5 px-5 py-2 bg-yellow-100 border-gray border-b'>
-                                    <div className='flex-grow'>
-                                        <small className='font-bold'>
-                                            Kompos 15Kg (2 pcs){" "}
-                                        </small>{" "}
-                                        <span className='text-xs ml-2 text-gray'>
-                                            Iis Dahlila
-                                        </span>
-                                        <small className='font-bold block'>
-                                            Total Rp.200.000
-                                        </small>
-                                        <div>
-                                            <small>
-                                                Dusun Kampunganyar RT 02 RW 05
-                                                Desa Gumuk, Kecamatan Licin
-                                            </small>
-                                        </div>
-                                    </div>
-                                    <div className='flex-none space-x-2 '>
-                                        <p className='text-sm'>
-                                            Telah di konfirmasi
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className='flex items-center space-x-5 px-5 py-2 border-gray border-b'>
-                                    <div className='flex-grow'>
-                                        <small className='font-bold'>
-                                            Pot (2 pcs)
-                                        </small>
-                                        <span className='text-xs ml-2 text-gray'>
-                                            Slamet
-                                        </span>
-                                        <small className='block font-bold'>
-                                            Total Rp.300.000
-                                        </small>
-
-                                        <small>
-                                            Dusun Kampunganyar RT 02 RW 05 Desa
-                                            Gumuk, Kecamatan Licin
-                                        </small>
-                                    </div>
-                                    <div className='flex-none space-x-2'>
-                                        <button className='text-xs rounded bg-red-500 text-white py-1 px-2'>
-                                            X
-                                        </button>
-                                        <button className='text-xs rounded bg-green-500 text-white py-1 px-2'>
-                                            Y
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className='text-center text-sm p-4'>
-                                    Akan Tersedia Saat Online
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className='top-0 sticky'>
+               <div className="text-lg mt-4 top-0 sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2">
+                Pencarian Populer
+               </div>
+               <div className='bg-white p-2'>Pot Bunga</div>
+               <div className='bg-white p-2'>Buju Recycle</div>
             </div>
-        </>
-    );
+         </div>
+
+         {/* Checkout */}
+         <div className="fixed bottom-4 right-14 w-96">
+            <div className="text-lg mt-4  bg-white font-medium text-gray-500 border-b border-gray-300 p-2">
+               Keranjang
+            </div>
+            <div className="bg-white p-2 px-4">
+               <p className="font-semibold mb-4">
+                  Ringkasan belanja
+                  <button
+                     onClick={() => setKeranjang([])}
+                     className="float-right text-white px-2 py-1 block bg-red-500 hover:bg-red-800 text-xs rounded-lg focus:outline-none"
+                  >
+                     Kosongkan
+                  </button>
+               </p>
+               <div className="h-44 overflow-y-auto">
+                  {keranjang.map((item, index) => {
+                     return (
+                        <div
+                           key={index + 100}
+                           className="flex justify-between  font-mono text-gray-600"
+                        >
+                           <p>
+                              {item.qty} x {item.name}
+                           </p>
+                           <p>{formatRp(item.price * item.qty)}</p>
+                        </div>
+                     );
+                  })}
+               </div>
+               <hr />
+               <div className="my-4 font-semibold flex justify-between">
+                  <p>Total Harga</p>
+                  <p>
+                     {formatRp(
+                        keranjang.reduce((tot, item) => {
+                           return tot + item.price * item.qty;
+                        }, 0)
+                     )}
+                  </p>
+               </div>
+               <button className="text-lg font-bold text-white bg-green-500 w-full rounded-md py-2 hover:bg-green-600 transition">
+                  Bayar
+               </button>
+            </div>
+         </div>
+      </div>
+   );
 }
 
 export async function getServerSideProps() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`);
-    const products = await res.json();
-    return {
-        props: {
-            products,
-        },
-    };
+   const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`);
+   const products = await res.json();
+   return {
+      props: {
+         products,
+      },
+   };
 }

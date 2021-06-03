@@ -1,5 +1,5 @@
 body {
-   background-color: #ebebeb;
+   background-color: rgb(240, 240, 240)
 }
 
 input[type="number"]::-webkit-inner-spin-button,
