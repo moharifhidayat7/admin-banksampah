@@ -2,9 +2,9 @@ import ClientLayout from "../../../components/Layouts/ClientLayout";
 import * as Icons from "heroicons-react";
 import PenjualanSampahModal from "../../../components/Modals/PenjualanSampahModal";
 import PembelianSampahModal from "../../../components/Modals/PembelianSampahModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function index({ sampahType, sampahPurchase }) {
+export default function index({ sampahType, sampahPurchase,sampahPurchase2, transfer }) {
     const [modal, setModal] = useState(false);
     const [modalP, setModalP] = useState(false);
 
@@ -21,6 +21,36 @@ export default function index({ sampahType, sampahPurchase }) {
             currency: "IDR",
         }).format(number);
     };
+
+    const [tunai, setTunai] = useState(0);
+    const [pemasukan, setPemasukan] = useState(0);
+
+    const getTunai = () => {
+        const filter = sampahPurchase2.filter(
+            (trx) => trx.transactionType == "CASH"
+        );
+        const total = filter.reduce((p, c) => {
+            const sum = c.items.reduce((tot, item) => {
+                return tot + item._sampahType.price * item.qty;
+            }, 0);
+            return p + sum;
+        }, 0);
+        setTunai(total);
+    };
+
+    
+    const getTransfer = () => {
+        const total = transfer.reduce((p, c) => {
+            return p + c.amount;
+        }, 0);
+
+        setPemasukan(total);
+    };
+
+    useEffect(() => {
+        getTunai();
+        getTransfer();
+    }, []);
 
     return (
         <ClientLayout>
@@ -114,7 +144,14 @@ export default function index({ sampahType, sampahPurchase }) {
                         >
                             <span className='align-middle'>Jual Sampah</span>
                         </button>
+                        <div className='p-5 ring-1 bg-blue-500 text-white text-center rounded-lg'>
+                            <div className=''>Saldo Gudang</div>
+                            <div className='text-2xl'>
+                                {formatRp(pemasukan-tunai)}
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </ClientLayout>
@@ -130,10 +167,23 @@ export async function getServerSideProps() {
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase?client`
     );
     const sampahPurchase = await res2.json();
+
+    const res3 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase`
+    );
+    const sampahPurchase2 = await res3.json();
+
+    const res4 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/transfer?to=Gudang`
+    );
+    const transfer = await res4.json();
+
     return {
         props: {
             sampahType,
             sampahPurchase,
+            sampahPurchase2,
+            transfer
         },
     };
 }

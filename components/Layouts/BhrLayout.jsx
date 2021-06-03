@@ -31,12 +31,12 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.UserGroup size='1rem' />}
                             title='Data Nasabah'
                         ></Item>
-                        {/* <Item
+                        <Item
                         route="/Admin/Bendahara/Internal"
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Internal'
                         >
-                        </Item> */}
+                        </Item>
                         <Item
                             route='/Admin/Bendahara/Transaksi'
                             icon={<Icons.Cash size='1rem' />}

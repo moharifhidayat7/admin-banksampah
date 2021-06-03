@@ -8,7 +8,7 @@ import {
     TableCol,
 } from "../../../components/Table";
 import * as Icons from "heroicons-react";
-export default function PembelianSampah({ sampahPurchase }) {
+export default function PembelianSampah({ sampahSale }) {
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
             style: "currency",
@@ -19,7 +19,7 @@ export default function PembelianSampah({ sampahPurchase }) {
         <ClientLayout>
             <div className='flex justify-between'>
                 <h3 className='uppercase font-medium mb-3'>
-                    Transaksi Pembelian Sampah
+                    Transaksi Penjualan Sampah
                 </h3>
                 {/* <div className='flex space-x-1'>
                     <div>
@@ -57,11 +57,11 @@ export default function PembelianSampah({ sampahPurchase }) {
                     <TableHead>
                         <TableCol>Id</TableCol>
                         <TableCol>Tanggal</TableCol>
-                        <TableCol>Nama</TableCol>
-                        <TableCol>Total</TableCol>
+                        <TableCol>Pembeli</TableCol>
+                        <TableCol>Harga Jual</TableCol>
                     </TableHead>
                     <TableBody>
-                        {sampahPurchase.map((trx) => {
+                        {sampahSale.map((trx) => {
                             return (
                                 <TableRow key={trx._id}>
                                     <TableCell>{trx._id}</TableCell>
@@ -74,15 +74,11 @@ export default function PembelianSampah({ sampahPurchase }) {
                                             day: "numeric",
                                         })}
                                     </TableCell>
-                                    <TableCell>{trx._nasabah.name}</TableCell>
+                                    <TableCell>{trx.customer}</TableCell>
                                     <TableCell>
-                                        {formatRp(
+                                    {formatRp(
                                             trx.items.reduce((tot, item) => {
-                                                return (
-                                                    tot +
-                                                    item._sampahType.price *
-                                                        item.qty
-                                                );
+                                                return tot + item.price;
                                             }, 0)
                                         )}
                                     </TableCell>
@@ -97,12 +93,12 @@ export default function PembelianSampah({ sampahPurchase }) {
 }
 export async function getServerSideProps() {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase?limit=4&newest`
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahSale?limit=4`
     );
-    const sampahPurchase = await res.json();
+    const sampahSale = await res.json();
     return {
         props: {
-            sampahPurchase,
+            sampahSale,
         },
     };
 }

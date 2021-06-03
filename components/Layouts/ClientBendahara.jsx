@@ -32,17 +32,17 @@ export default function ClientLayout({ children }) {
                 <div className='bg-white rounded shadow p-5 mb-5 flex justify-between'>
                     <div className='flex space-x-4'>
                         <ClientNav
-                            route='/Client/Gudang'
+                            route='/Client/Bendahara'
                             text='Halaman Utama'
                         />
                         <ClientNav
-                            route='/Client/Gudang/PembelianSampah'
-                            text='Data Pembelian'
+                            route='/Client/Bendahara/PembelianSampah'
+                            text='Data Penarikan'
                         />
 
                         <ClientNav
-                            route='/Client/Gudang/PenjualanSampah'
-                            text='Data Penjualan'
+                            route='/Client/Bendahara/PenjualanSampah'
+                            text='Data Pemasukan'
                         />
                     </div>
                     <div className='uppercase font-medium flex items-center'>

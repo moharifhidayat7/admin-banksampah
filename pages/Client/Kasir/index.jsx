@@ -1,6 +1,7 @@
 import Card from "../../../components/Card";
 import { useState, useEffect } from "react";
 
+
 export default function index({ products }) {
     const [keranjang, setKeranjang] = useState([]);
 
@@ -41,7 +42,7 @@ export default function index({ products }) {
                 <div>
                     <div className='text-2xl mb-2'>Keranjang</div>
                     <div className='bg-white rounded-xl p-2 px-4 '>
-                        <p className='font-semibold mb-4'>Ringkasan belanja</p>
+                        <p className='font-semibold mb-4'>Ringkasan belanja <button onClick={()=>setKeranjang([])} className="float-right text-white px-2 py-1 block bg-red-500 hover:bg-red-800 text-xs rounded-lg focus:outline-none">Kosongkan</button></p>
                         {keranjang.map((item, index) => {
                             return (
                                 <div
