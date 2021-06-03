@@ -129,20 +129,7 @@ function Pemasukan() {
                                                 ? "+ "
                                                 : "- "
                                         }`}
-                                        {item._sampahTransaction
-                                            ? formatRp(
-                                                  item._sampahTransaction.items.reduce(
-                                                      (tot, item) => {
-                                                          return (
-                                                              tot +
-                                                              item.price *
-                                                                  item.qty
-                                                          );
-                                                      },
-                                                      0
-                                                  )
-                                              )
-                                            : formatRp(item.amount)}
+                                        {formatRp(item.amount)}
                                     </TableCell>
                                     <TableCell>
                                         {item._sampahTransaction ? (

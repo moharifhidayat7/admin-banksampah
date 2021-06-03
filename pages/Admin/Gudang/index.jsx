@@ -53,8 +53,8 @@ export default function Index({ sampahPurchase, transfer }) {
             return p + c.amount;
         }, 0);
 
-        setPemasukan(total)
-    }
+        setPemasukan(total);
+    };
 
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
@@ -96,7 +96,7 @@ export default function Index({ sampahPurchase, transfer }) {
                     title='Total Saldo Tabungan Nasabah'
                     value={formatRp(tabungan)}
                 />
-                <DashboardCard
+                {/* <DashboardCard
                     borderColor='border-blue-400'
                     icon={
                         <CashOutline
@@ -106,7 +106,7 @@ export default function Index({ sampahPurchase, transfer }) {
                     }
                     title='Saldo Gudang'
                     value={formatRp(pemasukan - tunai)}
-                />
+                /> */}
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 hidden'>
                 <div className='md:col-span-2'>
@@ -229,7 +229,7 @@ export async function getServerSideProps() {
     return {
         props: {
             sampahPurchase,
-            transfer
+            transfer,
         },
     };
 }

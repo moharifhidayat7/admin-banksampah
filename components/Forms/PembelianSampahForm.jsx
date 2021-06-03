@@ -18,10 +18,16 @@ export default function PembelianSampahForm({
     onSubmit,
     data,
     title,
+    cancel,
 }) {
-    const { register, handleSubmit, setValue, unregister, errors } = useForm();
+    const { register, handleSubmit, setValue, unregister, reset, errors } =
+        useForm();
     const router = useRouter();
     const handleCancel = (formData) => {
+        if (cancel != "") {
+            cancel();
+            return;
+        }
         if (formData != "") {
             router.back();
         } else {
@@ -53,6 +59,8 @@ export default function PembelianSampahForm({
     const send = (formData) => {
         if (items.length > 0) {
             onSubmit(formData, items, nasabah);
+            reset();
+            setItems([]);
         } else {
             setValidItem(true);
         }
@@ -144,7 +152,7 @@ export default function PembelianSampahForm({
     }, [items]);
 
     return (
-        <div className='bg-white rounded shadow m-auto md:w-2/5 w-full'>
+        <div className='bg-white rounded shadow m-auto md:w-1/2 w-full'>
             <form onSubmit={handleSubmit(send)}>
                 <div className='border-b px-4 py-2 flex justify-between	'>
                     <h3 className='font-semibold text-lg'>{title}</h3>
@@ -166,6 +174,7 @@ export default function PembelianSampahForm({
                                         setValue("_nasabah");
                                         setDisabled(false);
                                         mustCash();
+                                        setDefaultNasabah(e);
                                     } else {
                                         setDefaultNasabah(e);
                                         setNasabah(e);

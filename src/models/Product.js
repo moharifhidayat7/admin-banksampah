@@ -18,10 +18,6 @@ const schema = new Schema(
             ref: "ProductCategory",
             autopopulate: true,
         },
-        picture: {
-            type: String,
-            required: true,
-        },
         description: {
             type: String,
         },

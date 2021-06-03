@@ -28,7 +28,7 @@ export default function index({ products }) {
                             return (
                                 <Card
                                     key={product._id}
-                                    img='https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2019/12/29/3541851566.jpg'
+                                    img='/3541851566.jpg'
                                     data={product}
                                     keranjang={keranjang}
                                     setKeranjang={setKeranjang}
@@ -51,7 +51,7 @@ export default function index({ products }) {
                                     <p>
                                         {item.qty} x {item.name}
                                     </p>
-                                    <p>{formatRp(item.price)}</p>
+                                    <p>{formatRp(item.price * item.qty)}</p>
                                 </div>
                             );
                         })}
@@ -61,7 +61,7 @@ export default function index({ products }) {
                             <p>
                                 {formatRp(
                                     keranjang.reduce((tot, item) => {
-                                        return tot + item.price;
+                                        return tot + item.price * item.qty;
                                     }, 0)
                                 )}
                             </p>

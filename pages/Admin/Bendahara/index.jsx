@@ -80,7 +80,7 @@ export default function index({ sampahPurchase }) {
                     title='Total Saldo Tabungan Nasabah'
                     value={formatRp(tabungan)}
                 />
-                <DashboardCard
+                {/* <DashboardCard
                     borderColor='border-blue-400'
                     icon={
                         <CashOutline
@@ -90,7 +90,7 @@ export default function index({ sampahPurchase }) {
                     }
                     title='Saldo Gudang'
                     value={formatRp(pemasukan - tunai - tabungan)}
-                />
+                /> */}
             </div>
             <div>
                 <h1 className='text-2xl mt-4'>

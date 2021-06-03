@@ -21,7 +21,7 @@ export default function PembelianSampah({ sampahSale }) {
 
     const delTransaction = async (id) => {
         await fetch(
-            `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase/${id}`,
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahSale/${id}`,
             {
                 method: "DELETE",
             }
@@ -59,8 +59,8 @@ export default function PembelianSampah({ sampahSale }) {
                     <TableHead>
                         <TableCol className='w-32'>Tanggal</TableCol>
                         <TableCol>Pembeli</TableCol>
-                        <TableCol>Jumlah</TableCol>
-                        <TableCol>Keterangan</TableCol>
+                        <TableCol>Item</TableCol>
+                        <TableCol>Harga Jual</TableCol>
                         <TableCol></TableCol>
                     </TableHead>
 
@@ -77,30 +77,38 @@ export default function PembelianSampah({ sampahSale }) {
                                             day: "numeric",
                                         })}
                                     </TableCell>
-                                    <TableCell>PT-BLABLA</TableCell>
-                                    <TableCell className='text-red-500'>
+                                    <TableCell>{trx.customer}</TableCell>
+                                    <TableCell>
+                                        {trx.items.map((item) => {
+                                            return (
+                                                <span>
+                                                    {item.qty} x{" "}
+                                                    {item._sampahType.name}{" "}
+                                                    <br />
+                                                </span>
+                                            );
+                                        })}
+                                    </TableCell>
+                                    <TableCell>
                                         {formatRp(
                                             trx.items.reduce((tot, item) => {
-                                                return (
-                                                    tot +
-                                                    item._sampahType.price *
-                                                        item.qty
-                                                );
+                                                return tot + item.price;
                                             }, 0)
                                         )}
                                     </TableCell>
+
                                     <TableCell className='float-right'>
-                                        <button
+                                        {/* <button
                                             onClick={() => {
                                                 router.push(
-                                                    "/Admin/Gudang/PembelianSampah/" +
+                                                    "/Admin/Gudang/PenjualanSampah/" +
                                                         trx._id
                                                 );
                                             }}
                                             className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
                                         >
                                             <Icons.Eye />
-                                        </button>
+                                        </button> */}
                                         <button
                                             className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
                                             onClick={() =>

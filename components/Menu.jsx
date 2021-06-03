@@ -29,7 +29,7 @@ export default function Menu() {
                 icon={<Icons.CurrencyDollar size='1rem' />}
                 title='Data Harga Sampah'
             ></Item>
-            <Item
+            {/* <Item
                 route='#'
                 icon={<Icons.DocumentReport size='1rem' />}
                 title='Rekap'
@@ -39,7 +39,7 @@ export default function Menu() {
                     title='Rekap Stok Sampah'
                 />
                 <SubItem route='#' title='Rekap Penjualan Sampah' />
-            </Item>
+            </Item> */}
         </List>
     );
 }

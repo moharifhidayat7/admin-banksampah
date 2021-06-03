@@ -37,11 +37,11 @@ export default function ClientLayout({ children }) {
                         />
                         <ClientNav
                             route='/Client/Gudang/PembelianSampah'
-                            text='Pembelian'
+                            text='Data Pembelian'
                         />
                     </div>
                     <div className='uppercase font-medium flex items-center'>
-                        Login
+                        {/* Login */}
                     </div>
                 </div>
                 <div className='h-80 block bg-white rounded shadow p-5'>

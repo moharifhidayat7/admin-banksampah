@@ -5,46 +5,15 @@ const MODEL_NAME = "SampahSale";
 
 const schema = new Schema(
     {
-        transactionType: {
-            type: String,
-            enum: ["TABUNG", "CASH"],
-            required: true,
-        },
-        _nasabah: {
-            type: Schema.Types.ObjectId,
-            ref: "NasabahProfile",
-            required: function () {
-                return this.transactionType == "TABUNG";
-            },
-            autopopulate: true,
-        },
-        noNota: {
-            type: String,
-        },
         note: {
             type: String,
         },
-        name: {
+        customer: {
             type: String,
-            required: function () {
-                return this._nasabah == null;
-            },
-        },
-        address: {
-            type: String,
-            required: function () {
-                return this._nasabah == null;
-            },
-        },
-        mobile: {
-            type: String,
-            required: function () {
-                return this._nasabah == null;
-            },
+            required: true,
         },
         transactionDate: {
-            type: Date,
-            default: Date.now,
+            type: String,
         },
         items: [
             {
@@ -70,6 +39,10 @@ const schema = new Schema(
                     },
                 },
                 qty: {
+                    type: Number,
+                    required: true,
+                },
+                price: {
                     type: Number,
                     required: true,
                 },

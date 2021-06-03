@@ -31,11 +31,11 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.ArrowCircleDown size='1rem' />}
                             title='Produk'
                         ></Item>
-                        <Item
+                        {/* <Item
                             route='/Admin/Penjualan/Etalase'
                             icon={<Icons.Collection size='1rem' />}
                             title='Etalase Produk'
-                        />
+                        /> */}
                         <Item
                             route='/Admin/Penjualan/Pesanan'
                             icon={<Icons.ShoppingCart size='1rem' />}

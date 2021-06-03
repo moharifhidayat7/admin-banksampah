@@ -63,9 +63,9 @@ export default function Product({ products }) {
                                     <TableCell className='py-2'>
                                         <div className='inline-block align-middle'>
                                             <img
-                                                src='https://picsum.photos/100'
+                                                src='/3541851566.jpg'
                                                 alt='item'
-                                                className='h-20'
+                                                className='w-20'
                                             />
                                         </div>
                                         <div className='inline-block align-top ml-5 w-96 h-16'>

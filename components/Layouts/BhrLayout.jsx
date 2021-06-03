@@ -42,7 +42,7 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Tabungan Nasabah'
                         ></Item>
-                        <Item
+                        {/* <Item
                             route='/Admin/Bendahara/PembelianSampah'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Pembelian Sampah'
@@ -51,7 +51,7 @@ export default function AdminLayout({ children }) {
                             route='/Admin/Bendahara/PenjualanSampah'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Penjualan Sampah'
-                        ></Item>
+                        ></Item> */}
                         {/* <Item
                             route='/Admin/Bendahara/User'
                             icon={<Icons.User size='1rem' />}

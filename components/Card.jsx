@@ -1,6 +1,21 @@
+import { ItemDescription } from "semantic-ui-react";
+
 const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
     const addKeranjang = (item) => {
-        setKeranjang([...keranjang, item]);
+        const find = keranjang.filter((ker) => ker._id == item._id);
+
+        if (find.length > 0) {
+            const newItems = keranjang.map((ker) => {
+                if (ker._id == item._id) {
+                    ker.qty += 1;
+                }
+                return ker;
+            });
+
+            setKeranjang(newItems);
+        } else {
+            setKeranjang([...keranjang, { ...item, qty: 1 }]);
+        }
     };
 
     return (

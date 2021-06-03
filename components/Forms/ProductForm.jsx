@@ -9,7 +9,7 @@ export default function ProductForm({ onSubmit, data, title }) {
     const router = useRouter();
 
     return (
-        <div className='bg-white rounded shadow m-auto md:w-1/4 sm:w-10/12 w-full'>
+        <div className='bg-white rounded shadow m-auto md:w-1/2 sm:w-10/12 w-full'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='border-b px-4 py-2 flex justify-between	'>
                     <h3 className='font-semibold text-lg'>{title}</h3>
