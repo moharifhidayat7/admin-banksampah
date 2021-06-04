@@ -19,7 +19,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
    };
 
    return (
-      <div className="w-full bg-white overflow-hidden z-0 shadow-xl hover:shadow transform hover:scale-105">
+      <div className="w-full bg-white overflow-hidden z-0 shadow-xl hover:shadow  transform hover:scale-105">
          <img className="h-40 w-full object-cover" src={img} alt={img} />
 
          <div className="py-1 px-3">
