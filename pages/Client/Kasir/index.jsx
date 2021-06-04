@@ -24,7 +24,7 @@ export default function index({ products }) {
    }, []);
 
    return (
-      <div className="">
+      <div>
          <NavbarProduk />
          <Smooth.Link smooth to="home">
             <button
@@ -34,11 +34,11 @@ export default function index({ products }) {
             </button>
          </Smooth.Link>
 
-         <div className="grid lg:grid-cols-3 gap-5 mx-14 mb-4">
-            <div className="col-span-2">
+         <div className="grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-2 lg:gap-10 mx-14 mb-4">
+            <div className="md:col-span-2 space-y-4">
                <div
                   id="kompos"
-                  className="text-lg mt-4 top-0 sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
+                  className="text-lg z-10 mt-4 top-0 sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
                >
                   KOMPOS
                </div>
@@ -58,7 +58,7 @@ export default function index({ products }) {
                </div>
                <div
                   id="kreatif"
-                  className="text-lg mt-4 sticky top-0 bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
+                  className="text-lg z-10 mt-4 sticky top-0 bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
                >
                   Kreatif
                </div>
@@ -78,7 +78,7 @@ export default function index({ products }) {
                </div>
                <div
                   id="allproduct"
-                  className="text-lg  sticky mt-4 top-0 bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
+                  className="text-lg z-10 sticky mt-4 top-0 bg-white font-medium text-gray-500 border-b border-gray-300 p-2"
                >
                   All Product
                </div>
@@ -97,18 +97,16 @@ export default function index({ products }) {
                   })}
                </div>
             </div>
-            <div className='top-0 sticky'>
-               <div className="text-lg mt-4 top-0 sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2">
-                Pencarian Populer
+            <div className="top-0 sticky">
+               <div className="text-lg mt-4 top-0  sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2">
+                  Pencarian Populer
                </div>
-               <div className='bg-white p-2'>Pot Bunga</div>
-               <div className='bg-white p-2'>Buju Recycle</div>
+               <div className="bg-white p-2">Pot Bunga</div>
+               <div className="bg-white p-2">Buju Recycle</div>
             </div>
-         </div>
-
-         {/* Checkout */}
-         <div className="fixed bottom-4 right-14 w-96">
-            <div className="text-lg mt-4  bg-white font-medium text-gray-500 border-b border-gray-300 p-2">
+               {/* Checkout */}
+         <div className="lg:fixed sm:w-80  lg:bottom-4 lg:right-14 lg:mx-0 lg:w-96">
+            <div className="text-lg w-full mt-4  bg-white font-medium text-gray-500 border-b border-gray-300 p-2">
                Keranjang
             </div>
             <div className="bg-white p-2 px-4">
@@ -152,7 +150,10 @@ export default function index({ products }) {
                </button>
             </div>
          </div>
-      </div>
+    
+         </div>
+
+        </div>
    );
 }
 

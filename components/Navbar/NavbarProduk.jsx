@@ -1,4 +1,4 @@
-import { SearchOutline } from "heroicons-react";
+import * as Icon from "heroicons-react";
 import * as Smooth from "react-scroll";
 export default function NavbarProduk() {
   return (
@@ -8,7 +8,7 @@ export default function NavbarProduk() {
           <div className="font-thin font-bold text-4xl text-blue-800 mr-24">
              KASIR
           </div>
-          <div className="flex items-center space-x-10 mr-10">
+          <div className="lg:flex hidden items-center space-x-10 mr-10">
              <Smooth.Link to="kreatif" smooth>
                 <button className="font-sans focus:outline-none focus:border-pink-500  text-xl border-b-2 border-transparent hover:border-pink-500 transform hover:scale-105 py-1">
                    Kreatif
@@ -27,10 +27,10 @@ export default function NavbarProduk() {
              </Smooth.Link>
           </div>
 
-          <div className="text-gray-400 flex items-center focus-within:text-pink-500">
-             <SearchOutline size="1.2rem" className="z-10" />
+          <div className="text-gray-400 lg:flex items-center hidden focus-within:text-pink-500">
+             <Icon.SearchOutline size="1.2rem" className="z-10" />
              <input
-                className="flex border-b-2  -ml-4 pl-5 border-gray-400 items-center text-lg transform w-28 focus:w-60 duration-300 focus:text-gray-500  focus:scale-105 focus:border-pink-500  focus:outline-none"
+                className="flex border-b-2  -ml-4 pl-5 border-gray-400 items-center text-lg transform lg:w-28 w-36 focus:w-60 lg:focus:w-72 duration-300 focus:text-gray-500  focus:scale-105 focus:border-pink-500  focus:outline-none"
                 type="search"
                 name="cari"
                 id="cariProduk"
@@ -38,7 +38,7 @@ export default function NavbarProduk() {
              />
           </div>
        </div>
-       <div>Login</div>
+       <div className='lg:hidden'><Icon.Menu/></div>
     </div>
  </div>
   )

@@ -19,7 +19,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
    };
 
    return (
-      <div className="w-full bg-white overflow-hidden shadow">
+      <div className="w-full bg-white overflow-hidden z-0 shadow-xl hover:shadow transform hover:scale-105">
          <img className="h-40 w-full object-cover" src={img} alt={img} />
 
          <div className="py-1 px-3">
@@ -32,7 +32,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
 
          <div className="flex items-center justify-between px-4 pb-2">
              <button  className="px-3 py-1 bg-red-500">-</button>
-             <input className='w-24 text-center focus:outline-none' placeholder='0' type="number" name="" id="" />
+             <input className='lg:w-10 xl:24 text-center focus:outline-none' placeholder='0' type="number" name="" id="" />
             <button
                onClick={(e) => {
                   e.preventDefault();
