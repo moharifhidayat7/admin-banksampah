@@ -17,14 +17,13 @@ export default function Pembelian() {
          <form action="">
             <div className="bg-white shadow-md m-4 lg:grid lg:grid-cols-3 lg:gap-4  rounded-sm p-2 space-y-4">
                <div className="space-y-4 lg:col-span-1">
-               <div className="flex lg:hidden flex-col space-y-2 md:flex-row md:space-y-0  justify-between">
+                  <div className="flex lg:hidden flex-col space-y-2 md:flex-row md:space-y-0  justify-between">
                      <h3 className="flex text-gray-800">
                         <Icon.ShoppingCart /> Gudang <Icon.ChevronRight />
                         Pembelian
                      </h3>
                      <h3 className="text-gray-800 ">
-                
-                       Sisa Saldo Gudang : <strong>Rp.192.168.001</strong> 
+                        Sisa Saldo Gudang : <strong>Rp.192.168.001</strong>
                      </h3>
                   </div>
                   <CardGudang title="Informasi Nota">
@@ -100,8 +99,7 @@ export default function Pembelian() {
                         Pembelian
                      </h3>
                      <h3 className="text-gray-800 ">
-                
-                       Sisa Saldo Gudang : <strong>Rp.192.168.001</strong> 
+                        Sisa Saldo Gudang : <strong>Rp.192.168.001</strong>
                      </h3>
                   </div>
 

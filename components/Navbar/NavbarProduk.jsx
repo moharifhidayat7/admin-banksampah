@@ -38,6 +38,9 @@ export default function NavbarProduk() {
              />
           </div>
        </div>
+       <div className='flex space-x-10 items-center'>
+          <p>Admin</p> <p>Logout</p>
+       </div>
        <div className='lg:hidden'><Icon.Menu/></div>
     </div>
  </div>
