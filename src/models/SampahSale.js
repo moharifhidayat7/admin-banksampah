@@ -12,6 +12,12 @@ const schema = new Schema(
             type: String,
             required: true,
         },
+        address: {
+            type: String,
+        },
+        mobile: {
+            type: String,
+        },
         transactionDate: {
             type: String,
         },

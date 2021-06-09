@@ -11,13 +11,30 @@ import {
 } from "../../../components/Table";
 import {useState} from 'react'
 import * as Icons from 'heroicons-react'
+import { register } from "react-scroll/modules/mixins/scroller";
+import {useForm} from 'react-hook-form'
 
 // Optional alamat,nohp,infolain
 export default function Penjualan({sampahType}) {
+   const { register, handleSubmit, setValue, reset, errors } = useForm();
    const [items, setItems] = useState([])
    const [qty, setQty] = useState(0);
    const [price, setPrice] = useState(0)
    const [temp, setTemp] = useState([]);
+
+   const onSubmit = async (data) => {
+      await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sampahSale`, {
+         method: "POST",
+         headers: {
+             "Content-Type": "application/json",
+         },
+         body: JSON.stringify({...data, items: items, transactionDate: '2021-06-06'}),
+     }).then(async (res) => {
+         alert("Penjualan Sampah Berhasil");
+         reset()
+         setItems([])
+     });
+   }
 
    const handleAdd = (e) => {
       e.preventDefault();
@@ -72,7 +89,7 @@ export default function Penjualan({sampahType}) {
    return (
       <div>
          <NavbarGudang />
-         <form action="">
+         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="bg-white shadow-md m-4 lg:grid lg:grid-cols-3 lg:gap-4  rounded-sm p-2 space-y-4">
                <div className="space-y-4 lg:col-span-1">
                   <h3 className="flex text-gray-800 lg:hidden">
@@ -98,6 +115,8 @@ export default function Penjualan({sampahType}) {
                               Nama <span className="text-red-500">*</span>
                            </label>
                            <input
+                              name="customer"
+                              ref={register({required: true})}
                               type="text"
                               className="py-0.5 focus:outline-none w-1/2 border px-0.5"
                            />
@@ -107,6 +126,8 @@ export default function Penjualan({sampahType}) {
                         <div className="flex justify-between items-center">
                            <label>Alamat</label>
                            <input
+                              name="address"
+                              ref={register()}
                               type="text"
                               className="py-0.5 focus:outline-none w-1/2 border px-0.5"
                            />
@@ -116,9 +137,22 @@ export default function Penjualan({sampahType}) {
                         <div className="flex justify-between items-center">
                            <label>No. Hp</label>
                            <input
+                              name="mobile"
+                              ref={register()}
                               type="text"
                               className="py-0.5 focus:outline-none w-1/2 border px-0.5"
                            />
+                        </div>
+                     </div>
+                     <div className="p-2">
+                        <div className="flex justify-between items-center">
+                           <label>Keterangan</label>
+                           <textarea
+                           name="note"
+                           ref={register()}
+                           row="3"
+                              className="py-0.5 focus:outline-none w-1/2 border px-0.5"
+                           ></textarea>
                         </div>
                      </div>
                   </CardGudang>
