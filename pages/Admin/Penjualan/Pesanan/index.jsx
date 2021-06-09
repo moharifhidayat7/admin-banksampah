@@ -10,18 +10,12 @@ import {
 import * as Icons from "heroicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Product({ orders }) {
     const router = useRouter();
     const refreshData = () => {
         router.replace(router.asPath);
-    };
-    const deleteHandler = async (id) => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product/${id}`, {
-            method: "DELETE",
-        }).then(async (res) => {
-            refreshData();
-        });
     };
 
     const formatRp = (number) => {
@@ -40,11 +34,12 @@ export default function Product({ orders }) {
                 <Table>
                     <TableHead>
                         <TableCol className='w-28'>No. Pesanan</TableCol>
+                        <TableCol>Tanggal</TableCol>
+
                         <TableCol className='w-96'>Produk</TableCol>
                         <TableCol>Pembeli</TableCol>
                         <TableCol>Total</TableCol>
                         <TableCol>Status</TableCol>
-                        <TableCol>Tanggal</TableCol>
 
                         <TableCol></TableCol>
                     </TableHead>
@@ -53,30 +48,7 @@ export default function Product({ orders }) {
                             return (
                                 <TableRow key={order._id}>
                                     <TableCell>{order._id}</TableCell>
-                                    <TableCell className='py-2'>
-                                        <ul>
-                                            {order.items.map((item) => {
-                                                <li key={item._id}>
-                                                    {item.qty} x{" "}
-                                                    {item._product.name}
-                                                </li>;
-                                            })}
-                                        </ul>
-                                    </TableCell>
-                                    <TableCell>{order.customer}</TableCell>
-                                    <TableCell>
-                                        {formatRp(
-                                            order.items.reduce(
-                                                (total, item) => {
-                                                    return (
-                                                        total +
-                                                        item.qty * item.price
-                                                    );
-                                                }
-                                            )
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{order.status}</TableCell>
+
                                     <TableCell>
                                         {new Date(
                                             order.createdAt
@@ -86,8 +58,37 @@ export default function Product({ orders }) {
                                             day: "numeric",
                                         })}
                                     </TableCell>
+                                    <TableCell className='py-2'>
+                                        <ul>
+                                            {order.items.map((item) => {
+                                                return (
+                                                    <li key={item._product._id}>
+                                                        {item.qty} x{" "}
+                                                        {item._product.name}
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </TableCell>
+
+                                    <TableCell>{order.customer}</TableCell>
+                                    <TableCell>
+                                        {formatRp(
+                                            order.items.reduce(
+                                                (total, item) => {
+                                                    return (
+                                                        total +
+                                                        item.qty *
+                                                            item._product.price
+                                                    );
+                                                },
+                                                0
+                                            )
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{order.status}</TableCell>
                                     <TableCell className='text-right'>
-                                        <Link href='#'>
+                                        {/* <Link href='#'>
                                             <a
                                                 className={`inline-block bg-gray-500 align-middle hover:bg-white shadow-md border-white rounded-md border-2 hover:border-gray-500 hover:text-gray-500 focus:outline-none p-1 text-white`}
                                             >
@@ -96,23 +97,29 @@ export default function Product({ orders }) {
                                                     Lihat Detail
                                                 </span>
                                             </a>
-                                        </Link>
-                                        <Link href='#'>
-                                            <a
-                                                className={`inline-block bg-green-500 align-middle hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white`}
-                                            >
-                                                <Icons.Check className='inline-block' />
-                                                <span className='align-middle ml-1'>
-                                                    Konfirmasi
-                                                </span>
-                                            </a>
-                                        </Link>
-                                        <button className='bg-red-500 align-middle hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'>
-                                            <Icons.X className='inline-block' />
-                                            <span className='align-middle ml-1'>
-                                                Batalkan
-                                            </span>
-                                        </button>
+                                        </Link> */}
+                                        {order.status != "Sudah Dibayar" ? (
+                                            <div>
+                                                <Link href='#'>
+                                                    <a
+                                                        className={`inline-block bg-green-500 align-middle hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white`}
+                                                    >
+                                                        <Icons.Check className='inline-block' />
+                                                        <span className='align-middle ml-1'>
+                                                            Konfirmasi
+                                                        </span>
+                                                    </a>
+                                                </Link>
+                                                <button className='bg-red-500 align-middle hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'>
+                                                    <Icons.X className='inline-block' />
+                                                    <span className='align-middle ml-1'>
+                                                        Batalkan
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            ""
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             );
