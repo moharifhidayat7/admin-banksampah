@@ -80,7 +80,7 @@ export default function Product({ products }) {
                                         {formatRp(product.price)}
                                     </TableCell>
                                     <TableCell>{product.stock}</TableCell>
-                                    <TableCell>Aktif</TableCell>
+                                    <TableCell>{product.status}</TableCell>
                                     <TableCell className='text-right'>
                                         <Link
                                             href={`/Admin/Penjualan/Produk/edit/${product._id}`}

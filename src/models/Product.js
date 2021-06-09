@@ -27,7 +27,7 @@ const schema = new Schema(
         },
         status: {
             type: String,
-            default: "Aktif",
+            enum: ['Offline','Online']
         },
     },
     { timestamps: true }

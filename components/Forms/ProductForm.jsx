@@ -103,6 +103,23 @@ export default function ProductForm({ onSubmit, data, title }) {
                         </div>
                         <div>
                             <label>
+                                Kategori{" "}
+                                <span className='text-red-500'>*</span>
+                            </label>
+                            <select name="status" className={`block border w-full px-4 py-1 ${
+                                    errors.status && "border-red-500 border-2"
+                                }`} ref={register({required: "Pilih Salah Satu"})}>
+                                <option value="Offline">Offline</option>
+                                <option value="Online">Online</option>
+                            </select>
+                            {errors.status && (
+                                <span className='text-xs text-red-500'>
+                                    "* " +{errors.status.message}
+                                </span>
+                            )}
+                        </div>
+                        <div>
+                            <label>
                                 Deskripsi Produk{" "}
                                 <span className='text-red-500'>*</span>
                             </label>
