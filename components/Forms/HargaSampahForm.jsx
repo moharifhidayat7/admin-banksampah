@@ -16,7 +16,7 @@ export default function HargaSampahForm({ onSubmit, data, title }) {
     };
 
     return (
-        <div className='bg-white rounded shadow m-auto w-full sm:w-10/12 md:w-1/4'>
+        <div className='bg-white rounded shadow m-auto w-full sm:w-10/12 md:w-1/2'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='border-b px-4 py-2 flex justify-between	'>
                     <h3 className='font-semibold text-lg'>{title}</h3>

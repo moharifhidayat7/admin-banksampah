@@ -15,6 +15,7 @@ handler.get(async (req, res) => {
     res.status(200).json(result);
 });
 handler.post(async (req, res) => {
+    console.log(req.body)
     const result = await Transfer.create(req.body);
     return res.status(200).json(result);
 });

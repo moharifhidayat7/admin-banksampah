@@ -1,7 +1,24 @@
 import NavbarBendahara from "../../../components/Navbar/NavbarBendahara";
 import CardGudang from "../../../components/CardGudang";
 import * as Icon from "heroicons-react";
+import {useForm} from 'react-hook-form'
+
 export default function Pendaftaran() {
+   const { register, handleSubmit, setValue, reset, errors } = useForm();
+   const onSubmit = async (data) => {
+      console.log(data)
+      await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile`, {
+         method: "POST",
+         headers: {
+             "Content-Type": "application/json",
+         },
+         body: JSON.stringify(data),
+     }).then(async (res) => {
+         alert("Pendaftaran Nasabah Berhasil");
+         reset()
+     });
+   }
+   
    return (
       <div>
          <NavbarBendahara />
@@ -10,7 +27,7 @@ export default function Pendaftaran() {
                <h3 className="text-center uppercase font-medium mb-4">
                   Daftar Nasabah Bank Sampah
                </h3>
-               <form action="">
+               <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mx-10 flex flex-col  my-4 space-y-3">
                      <div className="lg:flex lg:justify-between lg:space-x-2 lg:mx-20">
                         <div className="flex flex-col lg:w-1/2">
@@ -18,7 +35,9 @@ export default function Pendaftaran() {
                               NIK <span className="text-red-600">*</span>
                            </label>
                            <input
-                              placeholder="112233"
+                              ref={register({required: true})}
+                              name="nik"
+                              placeholder=""
                               type="text"
                               className="border-b-2 focus:outline-none hover:border-pink-500"
                            />
@@ -28,6 +47,8 @@ export default function Pendaftaran() {
                               Nama <span className="text-red-600">*</span>
                            </label>
                            <input
+                           ref={register({required: true})}
+                           name="name"
                               placeholder="John"
                               type="text"
                               className="border-b-2 focus:outline-none hover:border-pink-500"
@@ -35,13 +56,29 @@ export default function Pendaftaran() {
                         </div>
                      </div>
                      <div className="lg:flex lg:justify-between lg:space-x-2 lg:mx-20">
+                     <div className="flex flex-col w-full">
+                           <label htmlFor="">
+                              Alamat <span className="text-red-600">*</span>
+                           </label>
+                           <input
+                           ref={register({required: true})}
+                           name="address"
+                              type="text"
+                              className="border-b-2 focus:outline-none hover:border-pink-500"
+                           />
+                        </div>
+                     </div>
+                     <div className="lg:flex lg:justify-between lg:space-x-2 lg:mx-20">
+                     
                         <div className="flex flex-col lg:w-1/2">
                            <label htmlFor="">
                               Tanggal Lahir
                               <span className="text-red-600"> *</span>
                            </label>
                            <input
+                           ref={register({required: true})}
                               type="date"
+                              name="birthdate"
                               className="border-b-2 focus:outline-none hover:border-pink-500"
                            />
                         </div>
@@ -51,9 +88,9 @@ export default function Pendaftaran() {
                               <span className="text-red-600">*</span>
                            </label>
                            <select
-                              name=""
+                           ref={register({required: true})}
+                              name="gender"
                               className="border-b-2 lg:mt-0.5 focus:outline-none hover:border-pink-500"
-                              id=""
                            >
                               <option value="Laki-Laki">Laki-Laki</option>
                               <option value="Perempuan">Perempuan</option>
@@ -66,8 +103,10 @@ export default function Pendaftaran() {
                               No. Hp <span className="text-red-600">*</span>
                            </label>
                            <input
+                           ref={register({required: true})}
                               placeholder="082XXXXXX"
                               type="number"
+                              name="mobile"
                               className="border-b-2 focus:outline-none hover:border-pink-500"
                            />
                         </div>
@@ -78,7 +117,8 @@ export default function Pendaftaran() {
                               <span className="text-red-600">*</span>
                            </label>
                            <select
-                              name=""
+                           ref={register({required: true})}
+                              name="accountType"
                               className="border-b-2 focus:outline-none hover:border-pink-500"
                               id=""
                            >
@@ -92,6 +132,8 @@ export default function Pendaftaran() {
                         <input
                            placeholder="example@gmail.com"
                            type="email"
+                           name="email"
+                           ref={register()}
                            className="border-b-2 focus:outline-none hover:border-pink-500"
                         />
                      </div>
@@ -104,7 +146,7 @@ export default function Pendaftaran() {
                            className="border-b-2 pb-1 focus:outline-none hover:border-pink-500"
                         />
                      </div>
-                     <button className="py-1 px-10 lg:mx-20 bg-blue-800  text-white ring ring-transparent hover:ring-blue-800 focus:outline-none hover:bg-white hover:text-blue-800">Create</button>
+                     <button type="submit" className="py-1 px-10 lg:mx-20 bg-blue-800  text-white ring ring-transparent hover:ring-blue-800 focus:outline-none hover:bg-white hover:text-blue-800">Create</button>
                   </div>
                 
                </form>

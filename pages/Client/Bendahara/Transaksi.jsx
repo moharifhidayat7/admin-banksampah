@@ -1,7 +1,25 @@
 import NavbarBendahara from "../../../components/Navbar/NavbarBendahara";
 import CardGudang from "../../../components/CardGudang";
 import * as Icon from "heroicons-react";
+import {useForm} from "react-hook-form"
+
+
 export default function Transaksi() {
+   const { register, handleSubmit, setValue, reset, errors } = useForm();
+   const onSubmit = async (data) => {
+      console.log(data)
+      await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/transfer`, {
+         method: "POST",
+         headers: {
+             "Content-Type": "application/json",
+         },
+         body: JSON.stringify(data),
+     }).then(async (res) => {
+         alert("Transfer Berhasil");
+         reset()
+     });
+   }
+
    return (
       <div>
          <NavbarBendahara />
@@ -10,28 +28,22 @@ export default function Transaksi() {
             <div className="bg-white lg:pb-32 shadow-lg col-span-1 p-4 m-4 rounded-sm flex flex-col">
                <div className="flex justify-between">
                   <h3 className="flex flex-wrap text-gray-800 mb-4">
-                     <Icon.ShoppingCart /> Bendahara <Icon.ChevronRight />
-                     Transaksi <Icon.ChevronRight /> Internal
+                     Transaksi Internal
                   </h3>
-                  <a
-                     href="http://localhost:3000/Client/Bendahara/Pendaftaran"
-                     className="text-red-500 block lg:hidden"
-                  >
-                     <Icon.Refresh />
-                  </a>
                </div>
-               <form action="" className="space-y-3 ">
+               <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 ">
                   <div className="flex justify-between items-center">
                      <label htmlFor="">
                         Penerima <span className="text-red-500">*</span>
                      </label>
                      <select
-                        name=""
-                        id=""
+                        name="to"
                         className="p-1 focus:outline-none w-1/2 border"
+                        ref={register({required: true})}
                      >
-                        <option value="">Admin Gudang</option>
-                        <option value="">Rumah Kretif & Kompos</option>
+                        <option value="Gudang">Admin Gudang</option>
+                        <option value="Rumah Kreatif">Rumah Kretif</option>
+                        <option value="Kompos">Kompos</option>
                      </select>
                   </div>
                   <div className="flex justify-between items-center">
@@ -40,29 +52,18 @@ export default function Transaksi() {
                      </label>
                      <input
                         type="number"
-                        name=""
-                        id=""
+                        name="amount"
                         className="focus:outline-none w-1/2 p-1 border"
-                     />
-                  </div>
-                  <div className="flex justify-between items-center">
-                     <label htmlFor="">Tanggal</label>
-                     <input
-                        type="date"
-                        disabled
-                        value="2021-10-15"
-                        name=""
-                        id=""
-                        className="focus:outline-none w-1/2 p-1 bg-gray-200 border"
+                        ref={register({required: true})}
                      />
                   </div>
                   <div className="flex justify-between items-center">
                      <label htmlFor="">Keterangan</label>
                      <textarea
-                        name=""
-                        id=""
+                        name="note"
                         placeholder="Jika ada"
                         className="border w-1/2 focus:outline-none p-1"
+                        ref={register()}
                      ></textarea>
                   </div>
                   <div className="flex justify-end ">
@@ -75,8 +76,7 @@ export default function Transaksi() {
             <div className="bg-white  shadow-lg  col-span-2 p-4 m-4  rounded-sm flex flex-col">
                <div className="flex justify-between">
                   <h3 className="flex flex-wrap text-gray-800 mb-4">
-                     <Icon.ShoppingCart /> Bendahara <Icon.ChevronRight />
-                     Transaksi <Icon.ChevronRight /> Tarik&Tabung
+                     Transaksi Tarik & Tabung
                   </h3>
                   <a
                      href="http://localhost:3000/Client/Bendahara/Transaksi"

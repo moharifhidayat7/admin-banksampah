@@ -9,17 +9,13 @@ const schema = new Schema(
         },
         to: {
             type: String,
-            enum: ["Gudang", "Rumah Kreatif"],
+            enum: ["Gudang", "Rumah Kreatif", "Kompos"],
             required: true,
         },
         amount: {
             type: Number,
             required: true,
         },
-        transferDate: {
-          type: String,
-          required: true
-        }
     },
     { timestamps: true }
 );
