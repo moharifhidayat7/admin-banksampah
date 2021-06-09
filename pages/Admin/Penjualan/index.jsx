@@ -1,40 +1,67 @@
 import PenjualanLayout from "../../../components/Layouts/PenjualanLayout";
 import DashboardCard from "../../../components/DashboardCard";
 import {
-   UserGroupOutline,
-   UserAddOutline,
-   SwitchVerticalOutline,
-   CollectionOutline,
-   CashOutline,
+    UserGroupOutline,
+    UserAddOutline,
+    SwitchVerticalOutline,
+    CollectionOutline,
+    CashOutline,
 } from "heroicons-react";
-import { Collection } from "mongoose";
-export default function Index() {
-   return (
-      <PenjualanLayout>
-         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
-            <DashboardCard
-               borderColor="border-green-400"
-               textColor="text-green-500"
-               icon={
-                  <SwitchVerticalOutline
-                     className="text-green-500"
-                     size="100%"
-                  />
-               }
-               title="Total Pemasukan Penjualan Produk"
-               value="Rp. 353365959"
-            />
-            <DashboardCard
-               borderColor="border-yellow-400"
-               textColor="text-yellow-500"
-               icon={
-                  <CollectionOutline className="text-yellow-500" size="100%" />
-               }
-               title="Total Produk di Etalase"
-               value="250 Produk"
-            />
-         </div>
-         <div className='my-4'>
+
+import { useState, useEffect } from "react";
+
+export default function Index({ products, orders }) {
+    const [product, setProduct] = useState(0);
+    const [pemasukan, setPemasukan] = useState(0);
+
+    useEffect(() => {
+        setProduct(products.length);
+        setPemasukan(() => {
+            return orders.reduce((total, item) => {
+                const sub = item.items.reduce((tot, prod) => {
+                    return tot + prod._product.price * prod.qty;
+                }, 0);
+                return total + sub;
+            }, 0);
+        });
+    }, []);
+
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
+    };
+
+    return (
+        <PenjualanLayout>
+            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4'>
+                <DashboardCard
+                    borderColor='border-green-400'
+                    textColor='text-green-500'
+                    icon={
+                        <SwitchVerticalOutline
+                            className='text-green-500'
+                            size='100%'
+                        />
+                    }
+                    title='Total Pemasukan Penjualan Produk'
+                    value={formatRp(pemasukan)}
+                />
+                <DashboardCard
+                    borderColor='border-yellow-400'
+                    textColor='text-yellow-500'
+                    icon={
+                        <CollectionOutline
+                            className='text-yellow-500'
+                            size='100%'
+                        />
+                    }
+                    title='Total Produk di Etalase'
+                    value={product + " Produk"}
+                />
+            </div>
+            {/* <div className='my-4'>
             <div className="bg-white rounded shadow-md hidden sm:hidden md:hidden lg:block">
                <div className="border-gray-300 border-b p-5">
                   <h1 className="text-gray-800 font-bold">
@@ -80,7 +107,22 @@ export default function Index() {
                   </div>
                </div>
             </div>
-         </div>
-      </PenjualanLayout>
-   );
+         </div> */}
+        </PenjualanLayout>
+    );
+}
+
+export async function getServerSideProps() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/order`);
+    const orders = await res.json();
+
+    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`);
+    const products = await res2.json();
+
+    return {
+        props: {
+            orders,
+            products,
+        },
+    };
 }

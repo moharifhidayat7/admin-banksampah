@@ -11,8 +11,21 @@ const schema = new Schema(
         items: [
             {
                 _product: {
-                    type: Schema.Types.ObjectId,
-                    required: true,
+                    _id: {
+                        type: Schema.Types.ObjectId,
+                        required: true,
+                    },
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    price: {
+                        type: Number,
+                        required: true,
+                    },
+                    description: {
+                        type: String,
+                    },
                 },
                 qty: {
                     type: Number,
@@ -20,15 +33,17 @@ const schema = new Schema(
                 },
             },
         ],
+        payment: {
+            type: Number,
+            required: true,
+        },
         status: {
             type: String,
-            enum: ["Terbayar", "Menunggu Pembayaran", "Dibatalkan"],
+            enum: ["Sudah Dibayar", "Menunggu Pembayaran", "Dibatalkan"],
         },
     },
     { timestamps: true }
 );
-
-schema.plugin(require("mongoose-autopopulate"));
 
 export default mongoose.models[MODEL_NAME] ||
     mongoose.model(MODEL_NAME, schema);
