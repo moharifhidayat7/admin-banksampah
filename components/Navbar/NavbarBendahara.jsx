@@ -37,7 +37,7 @@ export default function NavbarBendahara() {
                 </div>
                 <div className='lg:hidden overflow-y-auto shadow-lg flex w-full bg-white px-4 border-b-2'>
                     <div className='border-l border-r'>
-                        <Link href='/Client/Bendahara/Transaksi'>
+                        <Link href='/Client/Bendahara'>
                             <a
                                 role='button'
                                 className='py-0.5 px-4 focus:outline-none border-b-2 border-transparent  focus:border-pink-500 flex flex-col items-center'
