@@ -1,7 +1,22 @@
 import createHandler from "../../../src/middleware/index";
 import NasabahProfile from "../../../src/models/NasabahProfile";
+import multer from "multer";
 
-const handler = createHandler();
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+// };
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: "./public/uploads/ktp",
+        filename: (req, file, cb) =>
+            cb(null, new Date().getTime() + "-" + file.originalname),
+    }),
+});
+
+const handler = createHandler(upload.single("ktp"));
 
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
@@ -17,6 +32,7 @@ handler.get(async (req, res) => {
     res.status(200).json(result);
 });
 handler.post(async (req, res) => {
+    console.log(req.body);
     try {
         const result = await NasabahProfile.create(req.body);
         return res.status(200).json(result);

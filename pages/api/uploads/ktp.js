@@ -1,7 +1,15 @@
 import createHandler from "../../../src/middleware/index";
 import multer from "multer";
 
-const handler = createHandler();
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: "./public/uploads/ktp",
+        filename: (req, file, cb) =>
+            cb(null, new Date().getTime() + "-" + file.originalname),
+    }),
+});
+
+const handler = createHandler(upload.single("ktp"));
 
 export const config = {
     api: {
@@ -9,28 +17,11 @@ export const config = {
     },
 };
 
-handler.get(async (req, res) => {
-    const limit = parseInt(req.query.limit) || 0;
-    const keyword = req.query.keyword || "";
-    const result = await SampahCategory.find({
-        name: { $regex: ".*" + keyword + ".*", $options: "i" },
-    }).limit(limit);
-
-    res.status(200).json(result);
-});
 handler.post(async (req, res) => {
-    const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, "uploads");
-        },
-        filename: function (req, file, cb) {
-            cb(null, file.fieldname + "-" + Date.now());
-        },
-    });
-
-    const upload = multer({ storage: storage });
     try {
-        upload.single("ktp");
+        res.status(200).json({
+            path: "/uploads/ktp/",
+        });
     } catch (e) {
         console.log(e);
     }

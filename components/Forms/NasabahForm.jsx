@@ -18,7 +18,10 @@ export default function Nasabah({ onSubmit, data, title }) {
 
     return (
         <div className='bg-white rounded shadow m-auto w-full sm:w-10/12 md:w-3/5'>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                encType='multipart/form-data'
+            >
                 <div className='border-b px-4 py-2 flex justify-between	'>
                     <h3 className='font-semibold text-lg'>{title}</h3>
                 </div>

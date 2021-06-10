@@ -11,7 +11,7 @@ export default function tambahNasabah() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: data,
         }).then(async (res) => {
             router.push("/Admin/Bendahara/Nasabah");
         });
