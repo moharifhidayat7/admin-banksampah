@@ -28,7 +28,7 @@ export default function Product({ orders }) {
     return (
         <PenjualanLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'> Pesanan Offline</h1>
+                <h1 className='text-4xl mb-5 inline-block'>Penjualan Produk</h1>
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>

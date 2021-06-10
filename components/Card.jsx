@@ -12,7 +12,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
             const newArr = [];
             for (let i = 0; i < keranjang.length; i++) {
                 if (keranjang[i]._product._id == item._id) {
-                    newArr.push({ ...keranjang[i], qty: qty });
+                    newArr.push({ ...keranjang[i], qty: 1 });
                 } else {
                     newArr.push(keranjang[i]);
                 }
@@ -20,10 +20,10 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
 
             setKeranjang(newArr);
         } else {
-            setKeranjang([...keranjang, { _product: { ...item }, qty: qty }]);
+            setKeranjang([...keranjang, { _product: { ...item }, qty: 1 }]);
         }
     };
-    const [qty, setQty] = useState(0);
+    const [qty, setQty] = useState(1);
 
     return (
         <div className='w-full bg-white overflow-hidden z-0 shadow-xl hover:shadow  transform hover:scale-105'>
@@ -37,7 +37,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
                 </p>
             </div>
 
-            <div className='flex items-center justify-between px-4 pb-2'>
+            {/* <div className='flex items-center justify-between px-4 pb-2'>
                 <button
                     className='px-3 py-1 bg-red-500 text-white'
                     onClick={(e) => {
@@ -68,7 +68,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
                 >
                     +
                 </button>
-            </div>
+            </div> */}
             <div>
                 <button
                     onClick={(e) => {
@@ -77,7 +77,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
                     }}
                     className='px-3 py-1 bg-green-200 hover:bg-gray-200 text-sm text-gray-900 font-semibold w-full'
                 >
-                    Tambahkan
+                    Beli
                 </button>
             </div>
         </div>

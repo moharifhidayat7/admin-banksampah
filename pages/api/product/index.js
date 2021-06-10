@@ -5,7 +5,25 @@ const handler = createHandler();
 
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
-    const result = await Product.find().limit(limit);
+    let result;
+    if(req.query.keyword && req.query.category == ""){
+        result = await Product.find({
+            $or: [
+                { name: { $regex: `.*${req.query.keyword}.*`, $options: "i" } },
+            ],
+        });
+    } else if (req.query.category != "") {
+        result = await Product.find({
+            $or: [
+                { name: { $regex: `.*${req.query.keyword}.*`, $options: "i" } },
+            ],
+            $and: [
+                { _category: req.query.category },
+            ]
+        });
+    } else {
+     result = await Product.find().limit(limit);
+    }
 
     res.status(200).json(result);
 });

@@ -10,7 +10,7 @@ export default function NavbarBendahara() {
                             BENDAHARA
                         </h3>
                         <div className='hidden lg:flex'>
-                            <Link href='/Client/Bendahara/Transaksi'>
+                            <Link href='/Client/Bendahara'>
                                 <a
                                     role='button'
                                     className='font-sans focus:outline-none focus:border-pink-500  text-xl border-b-2 border-transparent mr-10 hover:border-pink-500 transform hover:scale-105 py-1'
@@ -35,6 +35,7 @@ export default function NavbarBendahara() {
                         <p>Logout</p>
                     </div>
                 </div>
+                
                 <div className='lg:hidden overflow-y-auto shadow-lg flex w-full bg-white px-4 border-b-2'>
                     <div className='border-l border-r'>
                         <Link href='/Client/Bendahara'>

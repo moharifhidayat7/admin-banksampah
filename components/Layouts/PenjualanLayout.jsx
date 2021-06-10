@@ -39,13 +39,13 @@ export default function AdminLayout({ children }) {
                         <Item
                             route='/Admin/Penjualan/Pesanan'
                             icon={<Icons.ShoppingCart size='1rem' />}
-                            title='Penjualan Produk Offline'
+                            title='Penjualan Produk'
                         />
-                        <Item
+                        {/* <Item
                             route='/Admin/Penjualan/PesananOnline'
                             icon={<Icons.ShoppingCart size='1rem' />}
                             title='Penjualan Produk Online'
-                        />
+                        /> */}
                     </List>
                 </Sidebar>
                 <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />

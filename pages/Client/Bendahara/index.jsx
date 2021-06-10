@@ -89,7 +89,7 @@ export default function Transaksi() {
             <div className='lg:grid lg:grid-cols-3 '>
                 <div className='bg-white lg:pb-32 shadow-lg col-span-1 p-4 m-4 rounded-sm flex flex-col'>
                     <div className='flex justify-between'>
-                        <h3 className='flex flex-wrap text-gray-800 mb-4'>
+                        <h3 className='flex flex-wrap text-gray-800 mb-4 font-bold'>
                             Transaksi Internal
                         </h3>
                     </div>
@@ -141,9 +141,9 @@ export default function Transaksi() {
                         </div>
                     </form>
                 </div>
-                <div className='bg-white  shadow-lg  col-span-2 p-4 m-4  rounded-sm flex flex-col'>
+                <div className='bg-white shadow-lg  col-span-2 p-4 m-4  rounded-sm flex flex-col'>
                     <div className='flex justify-between'>
-                        <h3 className='flex flex-wrap text-gray-800 mb-4'>
+                        <h3 className='flex flex-wrap text-gray-800 mb-4 font-bold'>
                             Transaksi Tarik & Tabung Nasabah
                         </h3>
                     </div>

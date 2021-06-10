@@ -43,7 +43,7 @@ export default function NavbarGudang() {
                                 className='py-0.5 px-4 focus:outline-none border-b-2 border-transparent  focus:border-pink-500 flex flex-col items-center'
                             >
                                 <Icon.ShoppingCart className='text-gray-700' />
-                                <span className='uppercase font-mono'>Buy</span>
+                                <span className='uppercase font-mono'>Beli</span>
                             </a>
                         </Link>
                     </div>
