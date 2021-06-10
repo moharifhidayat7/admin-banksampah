@@ -30,8 +30,7 @@ export default function AdminLayout({ children }) {
                             route='/Admin/Penjualan/Produk'
                             icon={<Icons.ArrowCircleDown size='1rem' />}
                             title='Produk'
-                        >
-                        </Item>
+                        ></Item>
                         {/* <Item
                             route='/Admin/Penjualan/Etalase'
                             icon={<Icons.Collection size='1rem' />}
@@ -43,6 +42,7 @@ export default function AdminLayout({ children }) {
                             title='Penjualan Produk Offline'
                         />
                         <Item
+                            route='/Admin/Penjualan/PesananOnline'
                             icon={<Icons.ShoppingCart size='1rem' />}
                             title='Penjualan Produk Online'
                         />

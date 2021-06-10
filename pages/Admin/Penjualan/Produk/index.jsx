@@ -51,6 +51,7 @@ export default function Product({ products }) {
                 <Table>
                     <TableHead>
                         <TableCol>Info Produk</TableCol>
+                        <TableCol>Kategori</TableCol>
                         <TableCol>Harga</TableCol>
                         <TableCol>Stok</TableCol>
                         <TableCol>Status</TableCol>
@@ -75,7 +76,11 @@ export default function Product({ products }) {
                                             </p>
                                         </div>
                                     </TableCell>
-
+                                    <TableCol>
+                                        {product._category
+                                            ? product._category.name
+                                            : ""}
+                                    </TableCol>
                                     <TableCell>
                                         {formatRp(product.price)}
                                     </TableCell>

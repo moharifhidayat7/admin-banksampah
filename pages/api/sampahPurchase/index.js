@@ -42,6 +42,7 @@ handler.post(async (req, res) => {
                         _nasabah: res._nasabah._id,
                     });
                 }
+                return await res;
             }
         );
         res.status(200).json(result);

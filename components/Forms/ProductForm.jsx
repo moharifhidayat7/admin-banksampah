@@ -3,10 +3,38 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import * as Icons from "heroicons-react";
 import { useRouter } from "next/router";
+import AsyncCreatableSelect from "react-select/async-creatable";
 
 export default function ProductForm({ onSubmit, data, title }) {
     const { register, handleSubmit, setValue, reset, errors } = useForm();
     const router = useRouter();
+
+    const createCategory = async (name) => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/productCategory`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: name }),
+        }).then(async (res) => {
+            const result = await res.json();
+            setValue("_category", result._id);
+        });
+    };
+
+    const searchCategory = async (keyword) => {
+        const result = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/productCategory?keyword=${keyword}`
+        ).then(async (res) => {
+            return res.json();
+        });
+        return result.map((el) => {
+            return {
+                label: el.name,
+                value: el._id,
+            };
+        });
+    };
 
     return (
         <div className='bg-white rounded shadow m-auto md:w-1/2 sm:w-10/12 w-full'>
@@ -97,24 +125,56 @@ export default function ProductForm({ onSubmit, data, title }) {
                             />
                             {errors.picture && (
                                 <span className='text-xs text-red-500'>
-                                    "* " +{errors.picture.message}
+                                    * {errors.picture.message}
                                 </span>
                             )}
                         </div>
                         <div>
                             <label>
-                                Kategori{" "}
+                                Kategori <span className='text-red-500'>*</span>
+                            </label>
+                            <AsyncCreatableSelect
+                                instanceId='selectCategory'
+                                cacheOptions
+                                defaultOptions
+                                onChange={(e) => {
+                                    if (e.__isNew__) {
+                                        createCategory(e.value);
+                                    } else {
+                                        setValue("_category", e.value);
+                                    }
+                                }}
+                                loadOptions={searchCategory}
+                                className={`${
+                                    errors._category &&
+                                    "border-red-500 border-2"
+                                }`}
+                            />
+                            <input
+                                name='_category'
+                                type='text'
+                                className={`hidden block border w-full px-4 py-1`}
+                                ref={register({ required: true })}
+                            />
+                        </div>
+                        <div>
+                            <label>
+                                Status Produk{" "}
                                 <span className='text-red-500'>*</span>
                             </label>
-                            <select name="status" className={`block border w-full px-4 py-1 ${
+                            <select
+                                name='status'
+                                className={`block border w-full px-4 py-1 ${
                                     errors.status && "border-red-500 border-2"
-                                }`} ref={register({required: "Pilih Salah Satu"})}>
-                                <option value="Offline">Offline</option>
-                                <option value="Online">Online</option>
+                                }`}
+                                ref={register({ required: "Pilih Salah Satu" })}
+                            >
+                                <option value='Offline'>Offline</option>
+                                <option value='Online'>Online</option>
                             </select>
                             {errors.status && (
                                 <span className='text-xs text-red-500'>
-                                    "* " +{errors.status.message}
+                                    * + {errors.status.message}
                                 </span>
                             )}
                         </div>
