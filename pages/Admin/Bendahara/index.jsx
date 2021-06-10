@@ -11,7 +11,7 @@ import {
 
 import { useState, useEffect } from "react";
 
-export default function index({ sampahPurchase }) {
+export default function index({ sampahPurchase, transfer }) {
     const [tunai, setTunai] = useState(0);
     const [tabungan, setTabungan] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
@@ -41,6 +41,13 @@ export default function index({ sampahPurchase }) {
         }, 0);
         setTabungan(total);
     };
+    const getTransfer = () => {
+        const total = transfer.reduce((p, c) => {
+            return p + c.amount;
+        }, 0);
+
+        setPemasukan(total);
+    };
 
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
@@ -52,6 +59,7 @@ export default function index({ sampahPurchase }) {
     useEffect(() => {
         getTunai();
         getTabungan();
+        getTransfer();
     }, []);
     return (
         <BhrLayout>
@@ -80,7 +88,7 @@ export default function index({ sampahPurchase }) {
                     title='Total Saldo Tabungan Nasabah'
                     value={formatRp(tabungan)}
                 />
-                {/* <DashboardCard
+                <DashboardCard
                     borderColor='border-blue-400'
                     icon={
                         <CashOutline
@@ -89,14 +97,14 @@ export default function index({ sampahPurchase }) {
                         />
                     }
                     title='Saldo Gudang'
-                    value={formatRp(pemasukan - tunai - tabungan)}
-                /> */}
+                    value={formatRp(pemasukan - tunai)}
+                />
             </div>
-            <div>
+            {/* <div>
                 <h1 className='text-2xl mt-4'>
                     Transaksi Admin Penjualan Produk
                 </h1>
-            </div>
+            </div> */}
         </BhrLayout>
     );
 }
@@ -107,9 +115,15 @@ export async function getServerSideProps() {
     );
     const sampahPurchase = await res.json();
 
+    const res2 = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/transfer?to=Gudang`
+    );
+    const transfer = await res2.json();
+
     return {
         props: {
             sampahPurchase,
+            transfer,
         },
     };
 }

@@ -33,7 +33,7 @@ export default function Product({ orders }) {
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>
                     <TableHead>
-                        <TableCol className='w-28'>No. Pesanan</TableCol>
+                        <TableCol className='w-28'>Id. Pesanan</TableCol>
                         <TableCol>Tanggal</TableCol>
 
                         <TableCol className='w-96'>Produk</TableCol>

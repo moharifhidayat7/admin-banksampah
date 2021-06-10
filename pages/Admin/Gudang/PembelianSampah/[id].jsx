@@ -103,7 +103,7 @@ export default function index({ sampahPurchase }) {
                                     </label>
                                     <label>
                                         {new Date(
-                                            sampahPurchase.transactionDate
+                                            sampahPurchase.createdAt
                                         ).toLocaleString("id-ID", {
                                             year: "numeric",
                                             month: "long",

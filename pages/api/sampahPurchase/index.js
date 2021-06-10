@@ -37,7 +37,7 @@ handler.post(async (req, res) => {
                     }, 0);
                     await BankTransaction.create({
                         _sampahTransaction: res._id,
-                        transactionType: "Pemasukan",
+                        transactionType: "Tabung",
                         amount: total,
                         _nasabah: res._nasabah._id,
                     });

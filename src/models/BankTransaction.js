@@ -11,7 +11,7 @@ const schema = new Schema(
         },
         transactionType: {
             type: String,
-            enum: ["Pemasukan", "Penarikan"],
+            enum: ["Tabung", "Penarikan"],
             required: true,
         },
         _sampahTransaction: {

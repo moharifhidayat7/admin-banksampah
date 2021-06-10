@@ -42,8 +42,6 @@ export default function PembelianSampah({ sampahSale }) {
                 <h1 className='text-4xl mb-5 inline-block'>
                     Penjualan Sampah Bank Sampah
                 </h1>
-
-                
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>
@@ -60,15 +58,16 @@ export default function PembelianSampah({ sampahSale }) {
                             return (
                                 <TableRow key={trx._id}>
                                     <TableCell>
-                                        {new Date(
-                                            trx.transactionDate
-                                        ).toLocaleString("id-ID", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
+                                        {new Date(trx.createdAt).toLocaleString(
+                                            "id-ID",
+                                            {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            }
+                                        )}
                                     </TableCell>
-                                    <TableCell>PT-BLABLA</TableCell>
+                                    <TableCell>{trx.customer}</TableCell>
                                     <TableCell className='text-red-500'>
                                         {formatRp(
                                             trx.items.reduce((tot, item) => {

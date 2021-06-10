@@ -112,27 +112,21 @@ export default function index({ products }) {
                     </div> */}
                 </div>
                 <div className='top-0 sticky'>
-                    <div className='text-lg mt-4 top-0  sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2'>
+                    {/* <div className='text-lg mt-4 top-0  sticky bg-white font-medium text-gray-500 border-b border-gray-300 p-2'>
                         Pencarian Populer
                     </div>
                     <div className='bg-white p-2'>Pot Bunga</div>
-                    <div className='bg-white p-2'>Buju Recycle</div>
-                </div>
-                {/* Checkout */}
-                <div className='lg:fixed sm:w-80  lg:bottom-4 lg:right-14 lg:mx-0 lg:w-96'>
-                    <div className='text-lg w-full mt-4  bg-white font-medium text-gray-500 border-b border-gray-300 p-2'>
-                        Keranjang
+                    <div className='bg-white p-2'>Buju Recycle</div> */}
+                    <div className='text-lg w-full mt-4 flex justify-between bg-white font-medium text-gray-500 border-b border-gray-300 p-2'>
+                        <div>Keranjang</div>
+                        <button
+                            onClick={() => setKeranjang([])}
+                            className='float-right text-white px-2 py-1 block bg-red-500 hover:bg-red-800 text-xs rounded-lg focus:outline-none'
+                        >
+                            Kosongkan
+                        </button>
                     </div>
                     <div className='bg-white p-2 px-4'>
-                        <p className='font-semibold mb-4'>
-                            Ringkasan belanja
-                            <button
-                                onClick={() => setKeranjang([])}
-                                className='float-right text-white px-2 py-1 block bg-red-500 hover:bg-red-800 text-xs rounded-lg focus:outline-none'
-                            >
-                                Kosongkan
-                            </button>
-                        </p>
                         <div className='h-44 overflow-y-auto'>
                             {keranjang.map((item, index) => {
                                 return (
@@ -182,6 +176,8 @@ export default function index({ products }) {
                         </button>
                     </div>
                 </div>
+                {/* Checkout */}
+                <div className='lg:fixed sm:w-80  lg:bottom-4 lg:right-14 lg:mx-0 lg:w-96'></div>
             </div>
         </div>
     );

@@ -76,26 +76,6 @@ function Penjualan() {
 
                                 <div>
                                     <label>
-                                        Tanggal{" "}
-                                        <span className='text-red-500'>*</span>
-                                    </label>
-                                    <input
-                                        name='transactionDate'
-                                        type='date'
-                                        className={`block border w-full px-4 py-1 ${
-                                            errors.transactionDate &&
-                                            "border-red-500 border-2"
-                                        }`}
-                                        ref={register({ required: true })}
-                                    />
-                                    {errors.transactionDate && (
-                                        <span className='text-xs text-red-500'>
-                                            * Tanggal harus di isi!
-                                        </span>
-                                    )}
-                                </div>
-                                <div>
-                                    <label>
                                         Keterangan{" "}
                                         <span className='text-red-500'>*</span>
                                     </label>

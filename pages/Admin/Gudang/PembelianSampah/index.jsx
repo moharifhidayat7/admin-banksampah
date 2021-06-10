@@ -71,13 +71,14 @@ export default function PembelianSampah({ sampahPurchase }) {
                             return (
                                 <TableRow key={trx._id}>
                                     <TableCell>
-                                        {new Date(
-                                            trx.transactionDate
-                                        ).toLocaleString("id-ID", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
+                                        {new Date(trx.createdAt).toLocaleString(
+                                            "id-ID",
+                                            {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            }
+                                        )}
                                     </TableCell>
                                     <TableCell>
                                         {trx._nasabah._id

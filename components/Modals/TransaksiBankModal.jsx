@@ -9,6 +9,8 @@ export default function TambahNasabahModal({
     modal,
     toggleModal,
     modalTitle,
+    saldo,
+    getTransaction,
 }) {
     const { register, handleSubmit, setValue, reset, errors } = useForm();
 
@@ -27,7 +29,15 @@ export default function TambahNasabahModal({
         }).then(async (res) => {
             reset();
             toggleModal();
+            getTransaction();
         });
+    };
+
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
     };
 
     return (
@@ -62,6 +72,7 @@ export default function TambahNasabahModal({
                                     <br />
                                     <b>Alamat</b> : {modalData.address}
                                     <br />
+                                    <b>Saldo</b> : {formatRp(saldo)}
                                 </p>
                             </div>
                             <hr className='my-2' />

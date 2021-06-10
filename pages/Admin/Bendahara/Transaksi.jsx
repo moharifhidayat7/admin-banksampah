@@ -110,7 +110,7 @@ function Pemasukan() {
                                     </TableCell>
                                     <TableCell
                                         className={`${
-                                            item.transactionType == "Pemasukan"
+                                            item.transactionType == "Tabung"
                                                 ? "text-green-500"
                                                 : "text-red-500"
                                         }`}
@@ -119,13 +119,13 @@ function Pemasukan() {
                                     </TableCell>
                                     <TableCell
                                         className={`${
-                                            item.transactionType == "Pemasukan"
+                                            item.transactionType == "Tabung"
                                                 ? "text-green-500"
                                                 : "text-red-500"
                                         }`}
                                     >
                                         {`${
-                                            item.transactionType == "Pemasukan"
+                                            item.transactionType == "Tabung"
                                                 ? "+ "
                                                 : "- "
                                         }`}

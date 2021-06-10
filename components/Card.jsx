@@ -1,4 +1,3 @@
-import { ItemDescription } from "semantic-ui-react";
 import { useState } from "react";
 
 const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {

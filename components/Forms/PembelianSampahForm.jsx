@@ -133,7 +133,6 @@ export default function PembelianSampahForm({
             setValue("name", data._nasabah.name);
             setValue("address", data._nasabah.address);
             setValue("mobile", data._nasabah.mobile);
-            setValue("transactionDate", data.transactionDate);
             setValue("transactionType", data.transactionType);
             setItems(data.items);
             setDefaultNasabah({
@@ -229,28 +228,7 @@ export default function PembelianSampahForm({
                                 </span>
                             )}
                         </div>
-                        <div>
-                            <label>
-                                Tanggal <span className='text-red-500'>*</span>
-                            </label>
-                            <input
-                                name='transactionDate'
-                                type='date'
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.transactionDate
-                                        ? "border-red-500 border-2"
-                                        : ""
-                                }`}
-                                ref={register({
-                                    required: "Tanggal harus di isi!",
-                                })}
-                            />
-                            {errors.transactionDate && (
-                                <span className='text-xs text-red-500'>
-                                    * {errors.transactionDate.message}
-                                </span>
-                            )}
-                        </div>
+
                         <div>
                             <label>No. HP</label>
                             <input

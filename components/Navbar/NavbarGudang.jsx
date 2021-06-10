@@ -10,7 +10,7 @@ export default function NavbarGudang() {
                             GUDANG
                         </h3>
                         <div className='hidden lg:flex'>
-                            <Link href='/Client/Gudang/Pembelian'>
+                            <Link href='/Client/Gudang'>
                                 <a
                                     role='button'
                                     className='font-sans focus:outline-none focus:border-pink-500  text-xl border-b-2 border-transparent mr-10 hover:border-pink-500 transform hover:scale-105 py-1'

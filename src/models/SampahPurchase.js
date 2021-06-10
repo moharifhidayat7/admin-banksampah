@@ -31,10 +31,6 @@ const schema = new Schema(
         note: {
             type: String,
         },
-        transactionDate: {
-            type: String,
-            required: true,
-        },
         items: [
             {
                 _sampahType: {

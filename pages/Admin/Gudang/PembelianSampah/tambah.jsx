@@ -11,7 +11,6 @@ export default function tambahJenisSampah({ sampahType }) {
         if (nasabah._id) {
             dataToPost = {
                 _nasabah: nasabah,
-                transactionDate: data.transactionDate,
                 transactionType: data.transactionType,
                 items: [...items],
             };
@@ -22,7 +21,6 @@ export default function tambahJenisSampah({ sampahType }) {
                     address: data.address,
                     mobile: data.mobile,
                 },
-                transactionDate: data.transactionDate,
                 transactionType: data.transactionType,
                 items: [...items],
             };

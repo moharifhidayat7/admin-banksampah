@@ -20,15 +20,12 @@ export default function PembelianSampah({ sampahPurchase }) {
     };
 
     const delTransaction = async (id) => {
-      await fetch(
-          `${process.env.NEXT_PUBLIC_API_HOST}/api/transfer/${id}`,
-          {
-              method: "DELETE",
-          }
-      ).then((res) => {
-          refreshData();
-      });
-  };
+        await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/transfer/${id}`, {
+            method: "DELETE",
+        }).then((res) => {
+            refreshData();
+        });
+    };
 
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
@@ -69,25 +66,22 @@ export default function PembelianSampah({ sampahPurchase }) {
                             return (
                                 <TableRow key={trx._id}>
                                     <TableCell>
-                                        {new Date(
-                                            trx.transferDate
-                                        ).toLocaleString("id-ID", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
+                                        {new Date(trx.createdAt).toLocaleString(
+                                            "id-ID",
+                                            {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            }
+                                        )}
                                     </TableCell>
-                                    <TableCell>
-                                        {trx.to}
-                                    </TableCell>
+                                    <TableCell>{trx.to}</TableCell>
                                     <TableCell className='text-red-500'>
-                                    {formatRp(trx.amount)}
+                                        {formatRp(trx.amount)}
                                     </TableCell>
-                                    <TableCell>
-                                    {trx.note}
-                                    </TableCell>
+                                    <TableCell>{trx.note}</TableCell>
                                     <TableCell className='float-right'>
-                                    <button
+                                        <button
                                             className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
                                             onClick={() =>
                                                 delTransaction(trx._id)
@@ -107,9 +101,7 @@ export default function PembelianSampah({ sampahPurchase }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/transfer`
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/transfer`);
     const sampahPurchase = await res.json();
     return {
         props: {

@@ -14,6 +14,7 @@ export default function TambahNasabahModal({
     const { register, handleSubmit, setValue, reset, errors } = useForm();
 
     const [selected, setSelected] = useState([]);
+    const [saldo, setSaldo] = useState(0);
 
     const [detail, setDetail] = useState([]);
 
@@ -83,6 +84,36 @@ export default function TambahNasabahModal({
         });
     };
 
+    const getSaldo = async (id) => {
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction?nasabah=${id}`
+        );
+        const transaction = await res.json();
+
+        const tabung = transaction.filter(
+            (trx) => trx.transactionType == "Tabung"
+        );
+        const penarikan = transaction.filter(
+            (trx) => trx.transactionType == "Penarikan"
+        );
+
+        const tabungan = tabung.reduce((total, item) => {
+            return total + item.amount;
+        }, 0);
+        const tarik = penarikan.reduce((total, item) => {
+            return total + item.amount;
+        }, 0);
+
+        setSaldo(tabungan - tarik);
+    };
+
+    const formatRp = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(number);
+    };
+
     return (
         <div
             className={`modal absolute z-40 h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-70 ${
@@ -118,6 +149,8 @@ export default function TambahNasabahModal({
                                     <br />
                                     <b>Alamat</b> : {detail.address}
                                     <br />
+                                    <b>Saldo</b> : {formatRp(saldo)}
+                                    <br />
                                 </p>
                             </div>
                             <hr className='mb-2' />
@@ -134,6 +167,7 @@ export default function TambahNasabahModal({
                                         setValue("name", e.value);
                                         setSelected(e);
                                         setDetail(e);
+                                        getSaldo(e._id);
                                     }}
                                     loadOptions={searchNasabah}
                                     className={`${
@@ -160,10 +194,10 @@ export default function TambahNasabahModal({
                                         "border-red-500 border-2"
                                     }`}
                                     ref={register({ required: true })}
-                                    defaultValue='personal'
+                                    defaultValue='Penarikan'
                                 >
-                                    <option value='Pemasukan'>Pemasukan</option>
                                     <option value='Penarikan'>Penarikan</option>
+                                    <option value='Tabung'>Tabung</option>
                                 </select>
                                 {errors.transactionType && (
                                     <span className='text-xs text-red-500'>

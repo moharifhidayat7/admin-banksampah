@@ -52,7 +52,7 @@ function Nasabah({ nasabah }) {
 
             setSaldo(
                 result.reduce((total, item) => {
-                    if (item.transactionType == "Pemasukan") {
+                    if (item.transactionType == "Tabung") {
                         return total + item.amount;
                     } else {
                         return total - item.amount;
@@ -85,7 +85,9 @@ function Nasabah({ nasabah }) {
                 modal={modal}
                 toggleModal={toggleModal}
                 modalData={modalData}
+                saldo={saldo}
                 modalTitle={modalTitle}
+                getTransaction={getTransaction}
             />
             <div className='flex justify-between'>
                 <h1 className='text-2xl mb-5 inline-block'>
@@ -189,7 +191,7 @@ function Nasabah({ nasabah }) {
                             <button
                                 onClick={() => {
                                     setModalData(nasabah);
-                                    setmodalTitle("Pemasukan");
+                                    setmodalTitle("Tabung");
                                     toggleModal();
                                 }}
                                 className='bg-green-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
@@ -198,7 +200,7 @@ function Nasabah({ nasabah }) {
                                     <Icons.Plus />
                                 </div>
                                 <span className='inline-block align-middle'>
-                                    Pemasukan
+                                    Tabung
                                 </span>
                             </button>
                         </div>
@@ -230,8 +232,7 @@ function Nasabah({ nasabah }) {
                                         </TableCell>
                                         <TableCell
                                             className={`${
-                                                item.transactionType ==
-                                                "Pemasukan"
+                                                item.transactionType == "Tabung"
                                                     ? "text-green-500"
                                                     : "text-red-500"
                                             }`}
@@ -240,8 +241,7 @@ function Nasabah({ nasabah }) {
                                         </TableCell>
                                         <TableCell
                                             className={`${
-                                                item.transactionType ==
-                                                "Pemasukan"
+                                                item.transactionType == "Tabung"
                                                     ? "text-green-500"
                                                     : "text-red-500"
                                             }`}

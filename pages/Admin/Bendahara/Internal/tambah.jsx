@@ -27,9 +27,7 @@ function Penjualan() {
                 <div className='bg-white rounded shadow-lg m-auto md:w-2/5 sm:w-10/12 w-full'>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='border-b px-4 py-2 flex justify-between	'>
-                            <h3 className='font-semibold text-lg'>
-                                Transfer
-                            </h3>
+                            <h3 className='font-semibold text-lg'>Transfer</h3>
                         </div>
                         <div className='p-5'>
                             <div className='grid gap-4'>
@@ -38,16 +36,18 @@ function Penjualan() {
                                         Transfer ke{" "}
                                         <span className='text-red-500'>*</span>
                                     </label>
-                                    <select name="to" ref={register({required: true})} className={`block border w-full px-4 py-1 ${
+                                    <select
+                                        name='to'
+                                        ref={register({ required: true })}
+                                        className={`block border w-full px-4 py-1 ${
                                             errors.to &&
                                             "border-red-500 border-2"
-                                        }`}>
-                                      <option value="Gudang">
-                                        Gudang
-                                      </option>
-                                      <option value="Rumah Kreatif">
-                                        Rumah Kreatif
-                                      </option>
+                                        }`}
+                                    >
+                                        <option value='Gudang'>Gudang</option>
+                                        <option value='Rumah Kreatif'>
+                                            Rumah Kreatif
+                                        </option>
                                     </select>
                                     {errors.to && (
                                         <span className='text-xs text-red-500'>
@@ -76,26 +76,6 @@ function Penjualan() {
                                     )}
                                 </div>
 
-                                <div>
-                                    <label>
-                                        Tanggal{" "}
-                                        <span className='text-red-500'>*</span>
-                                    </label>
-                                    <input
-                                        name='transferDate'
-                                        type='date'
-                                        className={`block border w-full px-4 py-1 ${
-                                            errors.transferDate &&
-                                            "border-red-500 border-2"
-                                        }`}
-                                        ref={register({ required: true })}
-                                    />
-                                    {errors.transferDate && (
-                                        <span className='text-xs text-red-500'>
-                                            * Tanggal harus di isi!
-                                        </span>
-                                    )}
-                                </div>
                                 <div>
                                     <label>
                                         Keterangan{" "}
