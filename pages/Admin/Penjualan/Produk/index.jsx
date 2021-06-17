@@ -64,7 +64,7 @@ export default function Product({ products }) {
                                     <TableCell className='py-2'>
                                         <div className='inline-block align-middle'>
                                             <img
-                                                src='/3541851566.jpg'
+                                                src={product.picture}
                                                 alt='item'
                                                 className='w-20'
                                             />

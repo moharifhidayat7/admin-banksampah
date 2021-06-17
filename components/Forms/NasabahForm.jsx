@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-export default function Nasabah({ onSubmit, data, title }) {
+export default function Nasabah({ onSubmit, data, handleChange, title, edit }) {
     const { register, handleSubmit, errors } = useForm();
 
     const router = useRouter();
@@ -210,22 +210,19 @@ export default function Nasabah({ onSubmit, data, title }) {
                     </div>
                     <div>
                         <label>
-                            Scan KTP <span className='text-red-500'>*</span>
+                            Scan KTP{" "}
+                            <span className='text-red-500'>
+                                {edit ? "" : "*"}
+                            </span>
                         </label>
                         <input
-                            name='ktp'
                             type='file'
                             accept='image/*'
+                            onChange={handleChange}
                             className={`block border w-full px-4 py-1 ${
                                 errors.ktp && "border-red-500 border-2"
                             }`}
-                            ref={register({ required: "Upload KTP!" })}
                         />
-                        {errors.ktp && (
-                            <span className='text-xs text-red-500'>
-                                "* " +{errors.ktp.message}
-                            </span>
-                        )}
                     </div>
                 </div>
                 <div className='flex justify-end w-full border-t p-2'>

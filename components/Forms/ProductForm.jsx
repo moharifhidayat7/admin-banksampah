@@ -5,7 +5,7 @@ import * as Icons from "heroicons-react";
 import { useRouter } from "next/router";
 import AsyncCreatableSelect from "react-select/async-creatable";
 
-export default function ProductForm({ onSubmit, data, title }) {
+export default function ProductForm({ onSubmit, data, title, handleChange }) {
     const { register, handleSubmit, setValue, reset, errors } = useForm();
     const router = useRouter();
 
@@ -113,21 +113,11 @@ export default function ProductForm({ onSubmit, data, title }) {
                                 <span className='text-red-500'>*</span>
                             </label>
                             <input
-                                name='picture'
                                 type='file'
                                 accept='image/*'
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.picture && "border-red-500 border-2"
-                                }`}
-                                ref={register({
-                                    required: "Upload Foto Produk!",
-                                })}
+                                className={`block border w-full px-4 py-1`}
+                                onChange={handleChange}
                             />
-                            {errors.picture && (
-                                <span className='text-xs text-red-500'>
-                                    * {errors.picture.message}
-                                </span>
-                            )}
                         </div>
                         <div>
                             <label>
