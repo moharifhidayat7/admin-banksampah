@@ -1,5 +1,4 @@
-import * as Icon from "heroicons-react";
-import * as Smooth from "react-scroll";
+
 import Link from "next/link";
 export default function NavbarProduk({ productCategory }) {
    return (
@@ -15,7 +14,7 @@ export default function NavbarProduk({ productCategory }) {
                   </div>
                </div>
                <div className="lg:flex hidden lg:text-black space-x-10">
-                  <Link href="/Admin/Gudang/">
+                  <Link href="/Admin/Penjualan/">
                      <a role="button">Admin</a>
                   </Link>
                   <p>Logout</p>

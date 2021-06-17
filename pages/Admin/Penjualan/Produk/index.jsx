@@ -116,8 +116,9 @@ export default function Product({ products }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product?keyword&category=`);
     const products = await res.json();
+    console.log(products)
     return {
         props: {
             products,

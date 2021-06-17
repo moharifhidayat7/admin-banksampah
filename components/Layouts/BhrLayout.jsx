@@ -34,13 +34,18 @@ export default function AdminLayout({ children }) {
                         <Item
                         route="/Admin/Bendahara/Internal"
                             icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Internal'
+                            title='Detail Internal'
                         >
                         </Item>
                         <Item
                             route='/Admin/Bendahara/Transaksi'
                             icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Tabungan Nasabah'
+                            title='Detail Tabungan Nasabah'
+                        ></Item>
+                        <Item
+                            route='/Client/Bendahara'
+                            icon={<Icons.Cash size='1rem' />}
+                            title='Lakukan Transaksi'
                         ></Item>
                         {/* <Item
                             route='/Admin/Bendahara/PembelianSampah'

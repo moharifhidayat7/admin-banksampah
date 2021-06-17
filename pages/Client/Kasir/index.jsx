@@ -4,6 +4,7 @@ import NavbarProduk from "../../../components/Navbar/NavbarProduk";
 import * as Smooth from "react-scroll";
 import * as Icon from "heroicons-react";
 import BayarModal from "../../../components/Modals/BayarModal";
+import { set } from "mongoose";
 
 const ItemKeranjang = ({ item, formatRp, keranjang, setKeranjang }) => {
    const [qty, setQty] = useState(1);
@@ -49,11 +50,15 @@ const ItemKeranjang = ({ item, formatRp, keranjang, setKeranjang }) => {
                   placeholder="0"
                   type="number"
                   min="0"
+                
+                  max={item._product.stock}
                   value={qty}
                   onChange={(e) => {
                      if (e.target.value > item._product.stock) {
                         setQty(item._product.stock);
-                     } else {
+                    
+                     }
+                     else {
                         setQty(parseInt(e.target.value));
                      }
                   }}
@@ -72,7 +77,7 @@ const ItemKeranjang = ({ item, formatRp, keranjang, setKeranjang }) => {
             </div>
          </div>
          <div className="place-self-center">
-            {formatRp(item._product.price * qty)}
+            {formatRp(qty * item._product.price)}
          </div>
       </div>
    );
@@ -81,9 +86,9 @@ const ItemKeranjang = ({ item, formatRp, keranjang, setKeranjang }) => {
 export default function index({ productCategory }) {
    const [keranjang, setKeranjang] = useState([]);
    const [modal, setModal] = useState(false);
-   const [searchKeyword, setSearchKeyword] = useState("")
-    const [products, setProducts] = useState([])
-    const [category, setCategory] = useState("")
+   const [searchKeyword, setSearchKeyword] = useState("");
+   const [products, setProducts] = useState([]);
+   const [category, setCategory] = useState("");
 
    const formatRp = (number) => {
       return new Intl.NumberFormat("id-ID", {
@@ -107,15 +112,17 @@ export default function index({ productCategory }) {
    };
 
    const getProduct = async (keyword = "", category = "") => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product?keyword=${keyword}&category=${category}`);
-    const products = await res.json();
+      const res = await fetch(
+         `${process.env.NEXT_PUBLIC_API_HOST}/api/product?keyword=${keyword}&category=${category}`
+      );
+      const products = await res.json();
 
-    setProducts(products)
-   }
+      setProducts(products);
+   };
 
-   useEffect(()=>{
-       getProduct()
-   }, [])
+   useEffect(() => {
+      getProduct();
+   }, []);
 
    return (
       <div>
@@ -143,13 +150,12 @@ export default function index({ productCategory }) {
                   </div>
                   <div className="flex lg:w-1/2 justify-between space-x-2">
                      <input
-                   
                         placeholder="Cari Produk"
                         type="search"
                         value={searchKeyword}
-                        onChange={(e)=>{
-                            setSearchKeyword(e.target.value)
-                            getProduct(e.target.value, category)
+                        onChange={(e) => {
+                           setSearchKeyword(e.target.value);
+                           getProduct(e.target.value, category);
                         }}
                         className="border hidden lg:block p-1 w-4/5 focus:outline-none"
                      />
@@ -157,34 +163,35 @@ export default function index({ productCategory }) {
                         name="kategori"
                         className="lg:p-1 lg:px-4 border focus:outline-none"
                         defaultValue=""
-                        onChange={(e)=>{
-                            setCategory(e.target.value)
-                            getProduct(searchKeyword, e.target.value)
+                        onChange={(e) => {
+                           setCategory(e.target.value);
+                           getProduct(searchKeyword, e.target.value);
                         }}
                      >
-                         <option value="">Semua Produk</option>
-                         {productCategory.map((category)=>{
-                             return (
-                                <option key={category._id} value={category._id}>{category.name}</option>
-                             )
-                         })}
+                        <option value="">Semua Produk</option>
+                        {productCategory.map((category) => {
+                           return (
+                              <option key={category._id} value={category._id}>
+                                 {category.name}
+                              </option>
+                           );
+                        })}
                      </select>
                   </div>
                </div>
                <div className="grid lg:grid-cols-4 gap-2">
-                  {products
-                     .map((product) => {
-                        return (
-                           <Card
-                              key={product._id}
-                              img="/3541851566.jpg"
-                              data={product}
-                              keranjang={keranjang}
-                              setKeranjang={setKeranjang}
-                              formatRp={formatRp}
-                           />
-                        );
-                     })}
+                  {products.map((product) => {
+                     return (
+                        <Card
+                           key={product._id}
+                           img={product.picture}
+                           data={product}
+                           keranjang={keranjang}
+                           setKeranjang={setKeranjang}
+                           formatRp={formatRp}
+                        />
+                     );
+                  })}
                </div>
             </div>
          </div>
@@ -245,7 +252,6 @@ export default function index({ productCategory }) {
 }
 
 export async function getServerSideProps() {
-
    const res2 = await fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/productCategory`
    );

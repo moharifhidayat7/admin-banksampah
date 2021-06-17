@@ -29,6 +29,11 @@ export default function Menu() {
                 icon={<Icons.CurrencyDollar size='1rem' />}
                 title='Data Harga Sampah'
             ></Item>
+             <Item
+                route='/Client/Gudang'
+                icon={<Icons.Truck size='1rem' />}
+                title='Lakukan Transaksi'
+            ></Item>
             {/* <Item
                 route='#'
                 icon={<Icons.DocumentReport size='1rem' />}

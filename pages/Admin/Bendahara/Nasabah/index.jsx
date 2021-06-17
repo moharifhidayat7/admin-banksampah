@@ -33,16 +33,7 @@ export default function Nasabah({ nasabahProfile }) {
         <BhrLayout>
             <div className='border-b px-4 py-2 flex justify-between	'>
                 <h1 className='text-4xl'>Data Nasabah</h1>
-                <div className='float-right'>
-                    <Link href='/Admin/Bendahara/Nasabah/tambah'>
-                        <a
-                            role='button'
-                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
-                        >
-                            Tambah Nasabah
-                        </a>
-                    </Link>
-                </div>
+               
             </div>
             <div className='mt-5'>
                 <div className='overflow-x-auto'>
