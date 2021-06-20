@@ -120,7 +120,7 @@ function Nasabah({ nasabah }) {
             <div className='grid grid-cols-1 md:grid-cols-7 gap-0 md:gap-4'>
                 <div className='grid grid-cols-1 gap-4 col-span-2'>
                     <img
-                        src='https://via.placeholder.com/150'
+                        src={nasabah.ktp}
                         className='w-full border'
                         alt='place'
                     />

@@ -1,4 +1,6 @@
-import Index from './Client/index'
+import Login from './login'
 export default function index() {
-   return <Index />;
+   return <div>
+       <Login />
+   </div>;
 }

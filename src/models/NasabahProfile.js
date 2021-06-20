@@ -46,6 +46,9 @@ const schema = new Schema(
             enum: ["Umum", "Kelompok"],
             required: true,
         },
+        ktp: {
+            type: String,
+        },
     },
     { timestamps: true }
 );

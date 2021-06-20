@@ -67,13 +67,13 @@ function Pemasukan() {
                     Transaksi Tabungan Nasabah
                 </h1>
 
-                <button
+                {/* <button
                     type='button'
                     className='px-4 inline-block align-top float-right focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
                     onClick={toggleModal}
                 >
                     Tabung/Tarik Tunai
-                </button>
+                </button> */}
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>

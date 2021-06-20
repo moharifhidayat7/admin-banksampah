@@ -14,12 +14,15 @@ handler.patch(async (req, res) => {
         runValidators: true,
     };
 
-    const result = await NasabahProfile.findByIdAndUpdate(
-        req.query.id,
-        data,
-        options
-    );
-    res.status(200).json(result);
+    try {
+        await NasabahProfile.findByIdAndUpdate(req.query.id, data, options);
+    } catch (error) {
+        console.log(error);
+    }
+
+    // const result =
+
+    // res.status(200).json(result);
 });
 
 handler.delete(async (req, res) => {

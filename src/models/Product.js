@@ -13,6 +13,9 @@ const schema = new Schema(
             type: Number,
             required: true,
         },
+        picture: {
+            type: String,
+        },
         _category: {
             type: Schema.Types.ObjectId,
             ref: "ProductCategory",
@@ -27,7 +30,7 @@ const schema = new Schema(
         },
         status: {
             type: String,
-            enum: ['Offline','Online']
+            enum: ["Offline", "Online"],
         },
     },
     { timestamps: true }

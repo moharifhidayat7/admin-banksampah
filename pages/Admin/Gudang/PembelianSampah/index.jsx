@@ -43,7 +43,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                     Pembelian Sampah Nasabah
                 </h1>
 
-                <div className='float-right'>
+                {/* <div className='float-right'>
                     <Link href='/Admin/Gudang/PembelianSampah/tambah'>
                         <a
                             role='button'
@@ -52,7 +52,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                             Beli Sampah
                         </a>
                     </Link>
-                </div>
+                </div> */}
             </div>
             <div className='w-full overflow-x-auto'>
                 <Table>

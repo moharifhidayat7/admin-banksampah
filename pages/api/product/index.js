@@ -6,7 +6,7 @@ const handler = createHandler();
 handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
     let result;
-    if(req.query.keyword && req.query.category == ""){
+    if(req.query.keyword != "" && req.query.category == ""){
         result = await Product.find({
             $or: [
                 { name: { $regex: `.*${req.query.keyword}.*`, $options: "i" } },
