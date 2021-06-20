@@ -75,7 +75,7 @@ const Card = ({ img, data, keranjang, setKeranjang, formatRp }) => {
                         e.preventDefault();
                         addKeranjang(data);
                     }}
-                    className='px-3 py-1 bg-green-200 hover:bg-gray-200 text-sm text-gray-900 font-semibold w-full'
+                    className='px-3 py-1 bg-green-500 hover:bg-gray-200 text-sm text-gray-900 font-semibold w-full'
                 >
                     Beli
                 </button>

@@ -40,7 +40,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                 <h1 className='text-4xl mb-5 inline-block'>
                     Transaksi Internal
                 </h1>
-                <div className='float-right'>
+                {/* <div className='float-right'>
                     <Link href='/Admin/Bendahara/Internal/tambah'>
                         <a
                             role='button'
@@ -49,7 +49,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                             Transfer
                         </a>
                     </Link>
-                </div>
+                </div> */}
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>

@@ -36,6 +36,7 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Internal'
                         ></Item>
+
                         <Item
                             route='/Admin/Bendahara/Transaksi'
                             icon={<Icons.Cash size='1rem' />}
