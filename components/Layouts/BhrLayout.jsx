@@ -32,11 +32,10 @@ export default function AdminLayout({ children }) {
                             title='Data Nasabah'
                         ></Item>
                         <Item
-                        route="/Admin/Bendahara/Internal"
+                            route='/Admin/Bendahara/Internal'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Internal'
-                        >
-                        </Item>
+                        ></Item>
                         <Item
                             route='/Admin/Bendahara/Transaksi'
                             icon={<Icons.Cash size='1rem' />}
@@ -52,11 +51,11 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Penjualan Sampah'
                         ></Item> */}
-                        {/* <Item
+                        <Item
                             route='/Admin/Bendahara/User'
                             icon={<Icons.User size='1rem' />}
                             title='User'
-                        /> */}
+                        />
                     </List>
                 </Sidebar>
                 <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
