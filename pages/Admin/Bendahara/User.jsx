@@ -23,13 +23,13 @@ function User() {
     };
 
     const getItems = async () => {
-        const res = await fetch("http://localhost:3000/api/user");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/user`);
         const json = await res.json();
         setItems(json);
     };
 
     const delItems = async (id) => {
-        await fetch("http://localhost:3000/api/user/" + id, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/user/${id}`, {
             method: "DELETE",
         }).then((res) => getItems());
     };

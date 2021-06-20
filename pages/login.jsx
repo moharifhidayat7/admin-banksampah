@@ -1,6 +1,13 @@
 import Head from "next/head";
+import { signIn, useSession } from "next-auth/client";
+import { useState } from "react";
+import { getSession } from "next-auth/client";
 
-export default function login() {
+export default function login({ csrfToken }) {
+    const [session, loading] = useSession();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
     return (
         <section className='h-screen'>
             <Head>
@@ -18,53 +25,60 @@ export default function login() {
                     </div>
                     <div className='mt-12 w-full px-2 sm:px-6'>
                         <div className='flex flex-col mt-5'>
-                            <label
-                                for='email'
-                                className='text-lg font-semibold leading-tight'
-                            >
+                            <label className='text-lg font-semibold leading-tight'>
                                 Username
                             </label>
                             <input
                                 required
                                 id='username'
                                 name='username'
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 className='h-10 px-2 w-full rounded border mt-2 focus:outline-none'
                                 type='text'
                             />
                         </div>
                         <div className='flex flex-col mt-5'>
-                            <label
-                                for='password'
-                                className='text-lg font-semibold fleading-tight'
-                            >
+                            <label className='text-lg font-semibold fleading-tight'>
                                 Password
                             </label>
                             <input
                                 required
                                 id='password'
                                 name='password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className='h-10 px-2 w-full rounded border mt-2 focus:outline-none'
                                 type='password'
                             />
                         </div>
                     </div>
-                    <div className='pt-6 w-full flex justify-between px-2 sm:px-6'>
+                    {/* <div className='pt-6 w-full flex justify-between px-2 sm:px-6'>
                         <div className='flex items-center'>
                             <input
                                 id='rememberme'
                                 className='w-3 h-3 mr-2'
                                 type='checkbox'
                             />
-                            <label for='rememberme' className='text-xs'>
+                            <label className='text-xs'>
                                 Ingat Saya
                             </label>
                         </div>
                         <a className='text-xs' href='#'>
                             Lupa Password?
                         </a>
-                    </div>
+                    </div> */}
                     <div className='px-2 sm:px-6'>
-                        <button className='focus:outline-none w-full bg-green-600 transition duration-150 ease-in-out hover:bg-green-700 rounded text-white px-8 py-3 text-sm mt-6'>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                signIn("credentials", {
+                                    username: username,
+                                    password: password,
+                                });
+                            }}
+                            className='focus:outline-none w-full bg-green-600 transition duration-150 ease-in-out hover:bg-green-700 rounded text-white px-8 py-3 text-sm mt-6'
+                        >
                             Login
                         </button>
                         <p className='mt-16 text-xs text-center hidden'>
@@ -78,4 +92,12 @@ export default function login() {
             </div>
         </section>
     );
+}
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    console.log(session);
+    return {
+        props: { session },
+    };
 }

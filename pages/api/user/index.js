@@ -1,39 +1,25 @@
-import { useDatabase } from "../../../database/init";
-import { User } from "../../../database/models/User";
 import bcrypt from "bcrypt";
+import createHandler from "../../../src/middleware/index";
+import User from "../../../src/models/User";
 
-useDatabase();
+const handler = createHandler();
 
-async function getHandler(req, res) {
+handler.get(async (req, res) => {
     const limit = parseInt(req.query.limit) || 0;
     const user_list = await User.find().limit(limit);
 
     res.status(200).json(user_list);
-}
-async function postHandler(req, res) {
+});
+handler.post(async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
-    const user_list = await User.create({ ...req.body, password: hash });
+    const user_list = await User.create({
+        ...req.body,
+        password: hash,
+    });
 
     res.status(200).json(user_list);
-}
+});
 
-export default async (req, res) => {
-    const { method } = req;
-
-    res.setHeader("Content-Type", "application/json");
-
-    switch (method) {
-        case "GET":
-            await getHandler(req, res);
-            break;
-        case "POST":
-            await postHandler(req, res);
-            break;
-        default:
-            res.setHeader("Allow", ["GET", "POST"]);
-            res.status(405).json({ error: `Method ${method} Not Allowed` });
-            break;
-    }
-};
+export default handler;

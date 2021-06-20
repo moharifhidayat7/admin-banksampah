@@ -26,7 +26,7 @@ export default function TambahUserModal({
     };
 
     const editUser = async (data, id) => {
-        await fetch("http://localhost:3000/api/user/" + id, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/user/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export default function TambahUserModal({
     };
 
     const addUser = async (data) => {
-        await fetch("http://localhost:3000/api/user", {
+        await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
