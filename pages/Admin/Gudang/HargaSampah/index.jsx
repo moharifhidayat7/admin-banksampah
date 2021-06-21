@@ -9,12 +9,12 @@ import {
 } from "../../../../components/Table";
 import * as Icons from "heroicons-react";
 import Link from "next/link";
-
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 export default function index({ sampahType }) {
     const router = useRouter();
-
     const refreshData = () => {
         router.replace(router.asPath);
     };
@@ -36,7 +36,6 @@ export default function index({ sampahType }) {
             currency: "IDR",
         }).format(number);
     };
-
     return (
         <AdminLayout>
             <div>
@@ -106,7 +105,15 @@ export default function index({ sampahType }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType`
     );

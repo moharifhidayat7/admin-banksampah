@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import ProductForm from "../../../../components/Forms/ProductForm";
 import { useState } from "react";
 import { storage } from "../../../../src/firebase";
-
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
 export default function TambahProduk() {
     const router = useRouter();
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
-
     const handleChange = (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -64,4 +64,14 @@ export default function TambahProduk() {
             </div>
         </AdminLayout>
     );
+}
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
 }

@@ -1,10 +1,8 @@
 import Head from "next/head";
-import { signIn, useSession } from "next-auth/client";
+import { signIn, getSession, useSession } from "next-auth/client";
 import { useState } from "react";
-import { getSession } from "next-auth/client";
 
-export default function login({ csrfToken }) {
-    const [session, loading] = useSession();
+export default function login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -96,7 +94,20 @@ export default function login({ csrfToken }) {
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
-    console.log(session);
+
+    if (session) {
+        if (session.user.role == "gudang") {
+            context.res.writeHead(302, { Location: "/Admin/Gudang" });
+            return context.res.end();
+        } else if (session.user.role == "bendahara") {
+            context.res.writeHead(302, { Location: "/Admin/Bendahara" });
+            return context.res.end();
+        } else if (session.user.role == "gudang") {
+            context.res.writeHead(302, { Location: "/Admin/Penjualan" });
+            return context.res.end();
+        }
+    }
+
     return {
         props: { session },
     };

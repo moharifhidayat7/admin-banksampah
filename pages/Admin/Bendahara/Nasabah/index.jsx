@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BhrLayout from "../../../../components/Layouts/BhrLayout";
 import Link from "next/link";
-
+import { getSession } from "next-auth/client";
 import {
     Table,
     TableHead,
@@ -33,7 +33,6 @@ export default function Nasabah({ nasabahProfile }) {
         <BhrLayout>
             <div className='border-b px-4 py-2 flex justify-between	'>
                 <h1 className='text-4xl'>Data Nasabah</h1>
-               
             </div>
             <div className='mt-5'>
                 <div className='overflow-x-auto'>
@@ -101,7 +100,15 @@ export default function Nasabah({ nasabahProfile }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile`
     );

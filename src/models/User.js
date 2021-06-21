@@ -15,10 +15,6 @@ const schema = new Schema({
         type: String,
         required: true,
     },
-    salt: {
-        type: String,
-        required: true,
-    },
     role: {
         type: String,
         enum: ["gudang", "bendahara"],

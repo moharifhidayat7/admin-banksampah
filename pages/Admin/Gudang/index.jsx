@@ -17,12 +17,11 @@ import {
     TableCol,
 } from "../../../components/Table";
 import { useEffect, useState } from "react";
-
+import { getSession } from "next-auth/client";
 export default function Index({ sampahPurchase, transfer }) {
     const [tunai, setTunai] = useState(0);
     const [tabungan, setTabungan] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
-
     const getTunai = () => {
         const filter = sampahPurchase.filter(
             (trx) => trx.transactionType == "CASH"
@@ -62,7 +61,6 @@ export default function Index({ sampahPurchase, transfer }) {
             currency: "IDR",
         }).format(number);
     };
-
     useEffect(() => {
         getTunai();
         getTabungan();
@@ -215,7 +213,15 @@ export default function Index({ sampahPurchase, transfer }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase`
     );

@@ -1,8 +1,9 @@
 import { useState } from "react";
-
+import { signOut, useSession, getSession } from "next-auth/client";
 import { UserOutline, LogoutOutline } from "heroicons-react";
 
 export default function LoggedIn() {
+    const [session, loading] = useSession();
     const [dropdown, setDropdown] = useState(false);
 
     const toggleDropdown = () => {
@@ -20,13 +21,18 @@ export default function LoggedIn() {
                         dropdown ? "" : "hidden"
                     }`}
                 >
-                    <li className='flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center'>
+                    {/* <li className='flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center'>
                         <div className='flex items-center'>
                             <UserOutline size='1rem' />
                             <span className='text-sm ml-2'>My Profile</span>
                         </div>
-                    </li>
-                    <li className='flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center mt-2'>
+                    </li> */}
+                    <li
+                        onClick={() => {
+                            signOut({ callbackUrl: "/login" });
+                        }}
+                        className='flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center mt-2'
+                    >
                         <div className='flex items-center'>
                             <LogoutOutline size='1rem' />
                             <span className='text-sm ml-2'>Sign out</span>
@@ -42,7 +48,9 @@ export default function LoggedIn() {
                     <div className='w-2 h-2 rounded-full bg-green-400 border border-white absolute inset-0 mb-0 mr-0 m-auto'></div>
                 </div> */}
             </div>
-            <p className='text-gray-800 text-sm mx-3'>Jane Doe</p>
+            <p className='text-gray-800 text-sm mx-3'>
+                {session ? session.user.name : ""}
+            </p>
             <div className='cursor-pointer text-gray-600'>
                 <svg
                     aria-haspopup='true'

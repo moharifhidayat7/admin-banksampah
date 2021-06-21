@@ -7,13 +7,13 @@ import {
     CollectionOutline,
     CashOutline,
 } from "heroicons-react";
-
+import { getSession } from "next-auth/client";
 import { useState, useEffect } from "react";
-
+import { useRouter } from "next/router";
 export default function Index({ products, orders }) {
     const [product, setProduct] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
-
+    const router = useRouter();
     useEffect(() => {
         setProduct(products.length);
         setPemasukan(() => {
@@ -112,7 +112,15 @@ export default function Index({ products, orders }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/order`);
     const orders = await res.json();
 

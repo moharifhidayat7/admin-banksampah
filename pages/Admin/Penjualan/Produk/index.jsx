@@ -10,7 +10,8 @@ import {
 import * as Icons from "heroicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
 export default function Product({ products }) {
     const router = useRouter();
     const refreshData = () => {
@@ -115,10 +116,20 @@ export default function Product({ products }) {
     );
 }
 
-export async function getServerSideProps() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product?keyword&category=`);
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/product?keyword&category=`
+    );
     const products = await res.json();
-    console.log(products)
+    console.log(products);
     return {
         props: {
             products,

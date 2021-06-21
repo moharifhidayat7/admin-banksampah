@@ -1,10 +1,10 @@
 import AdminLayout from "../../../../../components/Layouts/PenjualanLayout";
 import { useRouter } from "next/router";
 import ProductForm from "../../../../../components/Forms/ProductForm";
-
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
 export default function TambahProduk({ product }) {
     const router = useRouter();
-
     const onSubmit = async (data) => {
         await fetch(
             `${process.env.NEXT_PUBLIC_API_HOST}/api/product/${product._id}`,
@@ -32,9 +32,17 @@ export default function TambahProduk({ product }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/product/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/product/${context.params.id}`
     );
     const product = await res.json();
     return {

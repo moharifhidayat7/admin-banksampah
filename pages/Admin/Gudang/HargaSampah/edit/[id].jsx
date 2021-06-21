@@ -3,10 +3,10 @@ import HargaSampahForm from "../../../../../components/Forms/HargaSampahForm";
 import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
-
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
 export default function tambahJenisSampah({ sampahType }) {
     const router = useRouter();
-
     const onSubmit = async (data) => {
         await fetch(
             `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${sampahType._id}`,
@@ -21,7 +21,6 @@ export default function tambahJenisSampah({ sampahType }) {
             router.push("/Admin/Gudang/HargaSampah");
         });
     };
-
     return (
         <AdminLayout>
             <div>
@@ -35,9 +34,17 @@ export default function tambahJenisSampah({ sampahType }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${context.params.id}`
     );
     const sampahType = await res.json();
     return {

@@ -10,8 +10,10 @@ import {
     TableCol,
 } from "../../../components/Table";
 import * as Icons from "heroicons-react";
-
+import { useRouter } from "next/router";
+import { getSession } from "next-auth/client";
 export default function Nasabah({ nasabahProfile }) {
+    const router = useRouter();
     return (
         <AdminLayout>
             <h1 className='text-4xl mb-5'>Data Nasabah</h1>
@@ -48,7 +50,15 @@ export default function Nasabah({ nasabahProfile }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile`
     );

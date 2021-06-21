@@ -20,7 +20,6 @@ const options = {
                 const user = await User.find({
                     username: credentials.username,
                 });
-
                 if (user.length > 0) {
                     const result = bcrypt.compareSync(
                         credentials.password,
@@ -49,6 +48,10 @@ const options = {
             session.user.role = userdata.role;
 
             return Promise.resolve(session);
+        },
+
+        redirect: async (url, baseUrl) => {
+            return url.startsWith(baseUrl) ? url : baseUrl;
         },
     },
     pages: {

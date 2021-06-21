@@ -11,13 +11,12 @@ import * as Icons from "heroicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-
+import { getSession } from "next-auth/client";
 export default function Product({ orders }) {
     const router = useRouter();
     const refreshData = () => {
         router.replace(router.asPath);
     };
-
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
             style: "currency",
@@ -131,7 +130,15 @@ export default function Product({ orders }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/order`);
     const orders = await res.json();
     return {

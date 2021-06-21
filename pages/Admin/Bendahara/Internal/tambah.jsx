@@ -4,11 +4,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useForm, useFieldArray } from "react-hook-form";
-
+import { getSession } from "next-auth/client";
 function Penjualan() {
     const router = useRouter();
     const { register, handleSubmit, setValue, reset, errors } = useForm();
-
     const onSubmit = async (data) => {
         await fetch("http://localhost:3000/api/transfer", {
             method: "POST",
@@ -133,3 +132,13 @@ function Penjualan() {
 }
 
 export default Penjualan;
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
+}

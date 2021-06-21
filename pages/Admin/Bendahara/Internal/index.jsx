@@ -11,10 +11,9 @@ import {
     TableCell,
     TableCol,
 } from "../../../../components/Table";
-
+import { getSession } from "next-auth/client";
 export default function PembelianSampah({ sampahPurchase }) {
     const router = useRouter();
-
     const refreshData = () => {
         router.replace(router.asPath);
     };
@@ -26,7 +25,6 @@ export default function PembelianSampah({ sampahPurchase }) {
             refreshData();
         });
     };
-
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
             style: "currency",
@@ -100,7 +98,15 @@ export default function PembelianSampah({ sampahPurchase }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/transfer`);
     const sampahPurchase = await res.json();
     return {

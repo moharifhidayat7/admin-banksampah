@@ -14,10 +14,9 @@ import {
 import Link from "next/link";
 import * as Icons from "heroicons-react";
 import { useRouter } from "next/router";
-
+import { getSession } from "next-auth/client";
 function Nasabah({ nasabah }) {
     const router = useRouter();
-
     const [modalData, setModalData] = useState([]);
     const [modal, setModal] = useState(false);
 
@@ -61,7 +60,6 @@ function Nasabah({ nasabah }) {
             );
         });
     };
-
     useEffect(() => getTransaction(), []);
 
     const formatRp = (number) => {
@@ -269,9 +267,18 @@ function Nasabah({ nasabah }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
-        "http://localhost:3000/api/nasabahProfile/" + params.id
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile` +
+            context.params.id
     );
     const nasabah = await res.json();
     return {

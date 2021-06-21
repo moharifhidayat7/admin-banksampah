@@ -3,10 +3,9 @@ import NasabahForm from "../../../../../components/Forms/NasabahForm";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { storage } from "../../../../../src/firebase";
-
+import { getSession } from "next-auth/client";
 export default function editNasabah({ nasabahProfile }) {
     const router = useRouter();
-
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
@@ -68,7 +67,6 @@ export default function editNasabah({ nasabahProfile }) {
             });
         }
     };
-
     return (
         <BhrLayout>
             <div className='pb-24'>
@@ -84,9 +82,17 @@ export default function editNasabah({ nasabahProfile }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${context.params.id}`
     );
     const nasabahProfile = await res.json();
     return {

@@ -97,8 +97,9 @@ export default function TambahUserModal({
                                 ref={register({ required: true })}
                                 defaultValue='personal'
                             >
-                                <option value='admin'>Admin</option>
+                                <option value='gudang'>Admin</option>
                                 <option value='bendahara'>Bendahara</option>
+                                <option value='penjualan'>Bendahara</option>
                             </select>
                             {errors.role && (
                                 <span className='text-xs text-red-500'>

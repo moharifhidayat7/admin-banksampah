@@ -11,10 +11,9 @@ import {
     TableCell,
     TableCol,
 } from "../../../../components/Table";
-
+import { getSession } from "next-auth/client";
 export default function PembelianSampah({ sampahSale }) {
     const router = useRouter();
-
     const refreshData = () => {
         router.replace(router.asPath);
     };
@@ -35,7 +34,6 @@ export default function PembelianSampah({ sampahSale }) {
             currency: "IDR",
         }).format(number);
     };
-
     return (
         <AdminLayout>
             <div>
@@ -129,7 +127,15 @@ export default function PembelianSampah({ sampahSale }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahSale`
     );

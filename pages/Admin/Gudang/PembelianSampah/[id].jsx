@@ -8,13 +8,13 @@ import {
     TableRow,
 } from "../../../../components/Table";
 import Link from "next/link";
-
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
 import AdminLayout from "../../../../components/Layouts/AdminLayout";
 import * as Icons from "heroicons-react";
 
 export default function index({ sampahPurchase }) {
     const router = useRouter();
-
     const total = sampahPurchase.items.reduce((tot, item) => {
         return tot + item._sampahType.price * item.qty;
     }, 0);
@@ -28,7 +28,6 @@ export default function index({ sampahPurchase }) {
             });
         }
     };
-
     const delTransaction = async (id) => {
         await fetch(
             `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase/${id}`,
@@ -187,9 +186,17 @@ export default function index({ sampahPurchase }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase/${context.params.id}`
     );
     const sampahPurchase = await res.json();
     return {

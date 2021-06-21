@@ -1,15 +1,15 @@
 import BhrLayout from "../../../../components/Layouts/BhrLayout";
 import NasabahForm from "../../../../components/Forms/NasabahForm";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { storage } from "../../../../src/firebase";
+import { getSession } from "next-auth/client";
 
 export default function tambahNasabah() {
     const router = useRouter();
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
-
     const handleChange = (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -64,4 +64,14 @@ export default function tambahNasabah() {
             </div>
         </BhrLayout>
     );
+}
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
 }

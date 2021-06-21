@@ -5,11 +5,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useForm, useFieldArray } from "react-hook-form";
 import PenjualanSampahForm from "../../../../components/Forms/PenjualanSampahForm";
-
+import { getSession } from "next-auth/client";
 function Penjualan({ sampahType }) {
     const router = useRouter();
     const { register, handleSubmit, setValue, reset, errors } = useForm();
-
     const onSubmit = async (data, items) => {
         const postData = {
             ...data,
@@ -41,7 +40,15 @@ function Penjualan({ sampahType }) {
 
 export default Penjualan;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType`
     );

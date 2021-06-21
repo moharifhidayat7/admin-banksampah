@@ -1,4 +1,5 @@
 import BhrLayout from "../../../components/Layouts/BhrLayout";
+import { getSession } from "next-auth/client";
 
 import DashboardCard from "../../../components/DashboardCard";
 import {
@@ -10,12 +11,13 @@ import {
 } from "heroicons-react";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function index({ sampahPurchase, transfer }) {
     const [tunai, setTunai] = useState(0);
     const [tabungan, setTabungan] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
-
+    const router = useRouter();
     const getTunai = () => {
         const filter = sampahPurchase.filter(
             (trx) => trx.transactionType == "CASH"
@@ -109,7 +111,15 @@ export default function index({ sampahPurchase, transfer }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase`
     );
