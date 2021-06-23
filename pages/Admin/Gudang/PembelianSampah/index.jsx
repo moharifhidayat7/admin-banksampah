@@ -42,7 +42,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                     Pembelian Sampah Nasabah
                 </h1>
 
-                {/* <div className='float-right'>
+                <div className='float-right'>
                     <Link href='/Admin/Gudang/PembelianSampah/tambah'>
                         <a
                             role='button'
@@ -51,11 +51,12 @@ export default function PembelianSampah({ sampahPurchase }) {
                             Beli Sampah
                         </a>
                     </Link>
-                </div> */}
+                </div>
             </div>
             <div className='w-full overflow-x-auto'>
                 <Table>
                     <TableHead>
+                        <TableCol>Id</TableCol>
                         <TableCol className='w-32'>Tanggal</TableCol>
                         <TableCol>NIK</TableCol>
                         <TableCol>Nama</TableCol>
@@ -69,15 +70,15 @@ export default function PembelianSampah({ sampahPurchase }) {
                         {sampahPurchase.map((trx, index) => {
                             return (
                                 <TableRow key={trx._id}>
+                                    <TableCell>{trx._id}</TableCell>
                                     <TableCell>
-                                        {new Date(trx.createdAt).toLocaleString(
-                                            "id-ID",
-                                            {
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                            }
-                                        )}
+                                        {new Date(
+                                            trx.transactionDate
+                                        ).toLocaleString("id-ID", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
                                     </TableCell>
                                     <TableCell>
                                         {trx._nasabah._id
@@ -88,8 +89,22 @@ export default function PembelianSampah({ sampahPurchase }) {
                                     <TableCell className='truncate'>
                                         {trx._nasabah.address}
                                     </TableCell>
-                                    <TableCell>{trx.transactionType}</TableCell>
-                                    <TableCell>
+                                    <TableCell
+                                        className={
+                                            trx.transactionType == "TABUNG"
+                                                ? "text-green-500"
+                                                : "text-red-500"
+                                        }
+                                    >
+                                        {trx.transactionType}
+                                    </TableCell>
+                                    <TableCell
+                                        className={
+                                            trx.transactionType == "TABUNG"
+                                                ? "text-green-500"
+                                                : "text-red-500"
+                                        }
+                                    >
                                         {formatRp(
                                             trx.items.reduce((tot, item) => {
                                                 return (

@@ -5,23 +5,46 @@ import SampahType from "../../src/models/SampahType";
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const result = await SampahPurchase.find();
-    const types = await SampahType.find();
-    const arr = [];
+    const month = req.query.month || "";
+    const result = await SampahPurchase.find({
+        transactionDate: {
+            $regex: month,
+        },
+    });
+    const cashResult = result.filter((c) => c.transactionType == "CASH");
+    const tabungResult = result.filter((t) => t.transactionType == "TABUNG");
 
-    for (let i = 0; i < result.length; i++) {
-        arr.push(...result[i].items);
+    const types = await SampahType.find();
+    const cash = [];
+    const tabung = [];
+
+    for (let i = 0; i < cashResult.length; i++) {
+        cash.push(...cashResult[i].items);
+    }
+    for (let i = 0; i < tabungResult.length; i++) {
+        tabung.push(...tabungResult[i].items);
     }
 
     const group = types.map((type) => {
-        const e = arr.filter((a) => a._sampahType._id == type._id);
+        const rekapCash = cash.filter((a) => a._sampahType._id == type._id);
 
-        const sum = e.reduce((tot, item) => {
+        const cashSum = rekapCash.reduce((tot, item) => {
             const subTotal = item._sampahType.price * item.qty;
             return tot + subTotal;
         }, 0);
 
-        const sumQty = e.reduce((tot, item) => {
+        const cashQty = rekapCash.reduce((tot, item) => {
+            return tot + item.qty;
+        }, 0);
+
+        const rekapTabung = tabung.filter((a) => a._sampahType._id == type._id);
+
+        const tabungSum = rekapTabung.reduce((tot, item) => {
+            const subTotal = item._sampahType.price * item.qty;
+            return tot + subTotal;
+        }, 0);
+
+        const tabungQty = rekapTabung.reduce((tot, item) => {
             return tot + item.qty;
         }, 0);
 
@@ -30,12 +53,14 @@ handler.get(async (req, res) => {
             category: type.category,
             type: type.name,
             denom: type.denom,
-            qty: sumQty,
-            price: sum,
+            cashQty: cashQty,
+            cashPrice: cashSum,
+            tabungQty: tabungQty,
+            tabungPrice: tabungSum,
         };
     });
 
-    res.status(200).json(group.filter((q) => q.qty > 0));
+    res.status(200).json(group.filter((q) => q.cashQty > 0 || q.tabungQty > 0));
 });
 
 export default handler;

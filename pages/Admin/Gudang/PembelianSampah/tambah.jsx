@@ -12,6 +12,7 @@ export default function tambahJenisSampah({ sampahType }) {
             dataToPost = {
                 _nasabah: nasabah,
                 transactionType: data.transactionType,
+                transactionDate: data.transactionDate,
                 items: [...items],
             };
         } else {
@@ -22,6 +23,7 @@ export default function tambahJenisSampah({ sampahType }) {
                     mobile: data.mobile,
                 },
                 transactionType: data.transactionType,
+                transactionDate: data.transactionDate,
                 items: [...items],
             };
         }

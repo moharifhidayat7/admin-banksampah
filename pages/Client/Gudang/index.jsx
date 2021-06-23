@@ -153,6 +153,19 @@ export default function Pembelian({ sampahType }) {
                                     </select>
                                 </div>
                             </div>
+                            <div className='p-2'>
+                                <div className='flex justify-between items-center'>
+                                    <label>Tanggal</label>
+                                    <input
+                                        type='date'
+                                        name='transactionDate'
+                                        ref={register({
+                                            required: "Masukkan Tanggal!",
+                                        })}
+                                        className='py-0.5 focus:outline-none border w-1/2 px-0.5'
+                                    />
+                                </div>
+                            </div>
                         </CardGudang>
                         <CardGudang title='Informasi Penjual/Nasabah'>
                             <div className='p-2'>
@@ -232,7 +245,7 @@ export default function Pembelian({ sampahType }) {
                     </div>
                     <div className='flex flex-col  lg:col-span-2 space-y-5'>
                         <div className='lg:flex hidden lg:justify-between'>
-                            <h3 className='flex text-gray-800'>
+                            <h3 className='flex text-gray-800 font-bold'>
                                 Pembelian Sampah
                             </h3>
                         </div>

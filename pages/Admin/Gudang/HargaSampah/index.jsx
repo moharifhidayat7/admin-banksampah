@@ -36,14 +36,23 @@ export default function index({ sampahType }) {
             currency: "IDR",
         }).format(number);
     };
+
+    const printHarga = () => {};
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>
-                    Data Harga Sampah
-                </h1>
+                <h1 className='text-4xl inline-block'>Data Harga Sampah</h1>
 
                 <div className='float-right'>
+                    <Link href='/api/export/hargaSampah'>
+                        <a
+                            role='button'
+                            target='_blank'
+                            className='px-4 mr-2 inline-block align-top focus:outline-none shadow-md bg-blue-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-blue-500 hover:bg-white hover:text-blue-500 focus:ring-blue-500 focus:bg-white focus:text-blue-500 '
+                        >
+                            Export
+                        </a>
+                    </Link>
                     <Link href='/Admin/Gudang/HargaSampah/tambah'>
                         <a
                             role='button'

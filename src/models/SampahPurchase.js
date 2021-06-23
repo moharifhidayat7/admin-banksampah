@@ -10,6 +10,10 @@ const schema = new Schema(
             enum: ["TABUNG", "CASH"],
             required: true,
         },
+        transactionDate: {
+            type: String,
+            required: true,
+        },
         _nasabah: {
             _id: {
                 type: Schema.Types.ObjectId,

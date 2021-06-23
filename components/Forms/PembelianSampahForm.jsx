@@ -18,16 +18,11 @@ export default function PembelianSampahForm({
     onSubmit,
     data,
     title,
-    cancel,
 }) {
     const { register, handleSubmit, setValue, unregister, reset, errors } =
         useForm();
     const router = useRouter();
     const handleCancel = (formData) => {
-        if (cancel != "") {
-            cancel();
-            return;
-        }
         if (formData != "") {
             router.back();
         } else {
@@ -134,6 +129,7 @@ export default function PembelianSampahForm({
             setValue("address", data._nasabah.address);
             setValue("mobile", data._nasabah.mobile);
             setValue("transactionType", data.transactionType);
+            setValue("transactionDate", data.transactionDate);
             setItems(data.items);
             setDefaultNasabah({
                 label: data._nasabah.name,
@@ -151,7 +147,7 @@ export default function PembelianSampahForm({
     }, [items]);
 
     return (
-        <div className='bg-white rounded shadow m-auto w-full'>
+        <div className='bg-white rounded shadow m-auto w-10/12'>
             <form onSubmit={handleSubmit(send)}>
                 <div className='border-b px-4 py-2 flex justify-between	'>
                     <h3 className='font-semibold text-lg'>{title}</h3>
@@ -266,6 +262,24 @@ export default function PembelianSampahForm({
                             {errors.transactionType && (
                                 <span className='text-xs text-red-500'>
                                     * {errors.transactionType.message}
+                                </span>
+                            )}
+                        </div>
+                        <div>
+                            <label>
+                                Tanggal <span className='text-red-500'>*</span>
+                            </label>
+                            <input
+                                name='transactionDate'
+                                type='date'
+                                className='block border w-full px-4 py-1'
+                                ref={register({
+                                    required: "Masukkan Tanggal!",
+                                })}
+                            />
+                            {errors.transactionDate && (
+                                <span className='text-xs text-red-500'>
+                                    * {errors.transactionDate.message}
                                 </span>
                             )}
                         </div>
