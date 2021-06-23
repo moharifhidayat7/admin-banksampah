@@ -10,17 +10,22 @@ export default function Menu() {
                 title='Dashboard'
             />
             <Item
+                route='/Admin/Gudang/Kas'
+                icon={<Icons.Cash size='1rem' />}
+                title='Kas Gudang'
+            />
+            <Item
                 route='/Admin/Gudang/Nasabah'
                 icon={<Icons.UserGroup size='1rem' />}
                 title='Nasabah'
             />
             <Item
-                icon={<Icons.Cash size='1rem' />}
+                icon={<Icons.TrendingDown size='1rem' />}
                 route='/Admin/Gudang/PembelianSampah'
                 title='Pembelian Sampah'
             ></Item>
             <Item
-                icon={<Icons.Cash size='1rem' />}
+                icon={<Icons.TrendingUp size='1rem' />}
                 route='/Admin/Gudang/PenjualanSampah'
                 title='Penjualan Sampah'
             ></Item>

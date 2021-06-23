@@ -24,7 +24,6 @@ export default function Transaksi() {
         });
     };
     const onSubmit2 = async (data) => {
-        console.log(data);
         await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction`, {
             method: "POST",
             headers: {

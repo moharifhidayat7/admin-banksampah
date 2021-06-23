@@ -38,9 +38,7 @@ export default function PembelianSampah({ sampahPurchase }) {
     return (
         <AdminLayout>
             <div>
-                <h1 className='text-4xl mb-5 inline-block'>
-                    Pembelian Sampah Nasabah
-                </h1>
+                <h1 className='text-4xl mb-5 inline-block'>Pembelian Sampah</h1>
 
                 <div className='float-right'>
                     <Link href='/Admin/Gudang/PembelianSampah/tambah'>

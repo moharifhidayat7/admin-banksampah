@@ -3,7 +3,11 @@ import {
     UserAddOutline,
     SwitchVerticalOutline,
     PlusOutline,
+    TrendingDown,
+    TrendingUp,
     CashOutline,
+    ShoppingCart,
+    Save,
 } from "heroicons-react";
 
 import AdminLayout from "../../../components/Layouts/AdminLayout";
@@ -69,29 +73,23 @@ export default function Index({ sampahPurchase, transfer }) {
 
     return (
         <AdminLayout>
+            <h1 className='text-4xl mb-5'>Dashboard</h1>
             <h1 className='text-2xl mb-4'>Transaksi Admin Gudang</h1>
             <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
                 <DashboardCard
                     borderColor='border-red-400'
                     textColor='text-red-500'
-                    icon={
-                        <SwitchVerticalOutline
-                            className='text-red-500'
-                            size='100%'
-                        />
-                    }
-                    title='Total Pembelian Tunai Sampah'
+                    icon={<ShoppingCart className='text-red-500' size='100%' />}
+                    title='Total Pembelian Tunai'
                     value={formatRp(tunai)}
                 />
                 <DashboardCard
                     borderColor='border-green-400'
+                    textColor='text-green-500'
                     icon={
-                        <CashOutline
-                            className='text-green-500 text-5xl'
-                            size='100%'
-                        />
+                        <Save className='text-green-500 text-5xl' size='100%' />
                     }
-                    title='Total Saldo Tabungan Nasabah'
+                    title='Total Transaksi Tabungan'
                     value={formatRp(tabungan)}
                 />
                 <DashboardCard
