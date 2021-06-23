@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import BhrLayout from "../../../components/Layouts/BhrLayout";
+import BhrLayout from "../../../components/Layouts/ManagerLayout";
 import Link from "next/link";
 import TambahUserModal from "../../../components/Modals/TambahUserModal";
-
+import { getSession } from "next-auth/client";
 import {
     Table,
     TableHead,
@@ -103,3 +103,19 @@ function User() {
     );
 }
 export default User;
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/login",
+            },
+        };
+    }
+    return {
+        props: {
+            session
+        },
+    };
+  }

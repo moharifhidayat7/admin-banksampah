@@ -22,36 +22,15 @@ export default function AdminLayout({ children }) {
                 <Sidebar>
                     <List>
                         <Item
-                            route='/Admin/Bendahara'
+                            route='/Admin/Manager'
                             icon={<Icons.HomeOutline size='1rem' />}
                             title='Dashboard'
                         />
                         <Item
-                            route='/Admin/Bendahara/Nasabah'
-                            icon={<Icons.UserGroup size='1rem' />}
-                            title='Data Nasabah'
-                        ></Item>
-                        <Item
-                            route='/Admin/Bendahara/Internal'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Internal'
-                        ></Item>
-
-                        <Item
-                            route='/Admin/Bendahara/Transaksi'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Tabungan Nasabah'
-                        ></Item>
-                        {/* <Item
-                            route='/Admin/Bendahara/PembelianSampah'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Pembelian Sampah'
-                        ></Item>
-                        <Item
-                            route='/Admin/Bendahara/PenjualanSampah'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Penjualan Sampah'
-                        ></Item> */}
+                            route='/Admin/Manager/User'
+                            icon={<Icons.User size='1rem' />}
+                            title='User'
+                        />
                     </List>
                 </Sidebar>
                 <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />

@@ -17,7 +17,7 @@ const schema = new Schema({
     },
     role: {
         type: String,
-        enum: ["gudang", "bendahara"],
+        enum: ["manager", "gudang", "bendahara","penjualan"],
         required: true,
     },
 });
