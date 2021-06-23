@@ -105,6 +105,9 @@ export async function getServerSideProps(context) {
         } else if (session.user.role == "gudang") {
             context.res.writeHead(302, { Location: "/Admin/Penjualan" });
             return context.res.end();
+        } else if (session.user.role == "manager") {
+            context.res.writeHead(302, { Location: "/Admin/Manager" });
+            return context.res.end();
         }
     }
 

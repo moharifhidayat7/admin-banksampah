@@ -266,6 +266,7 @@ function Nasabah({ nasabah }) {
         </BhrLayout>
     );
 }
+export default Nasabah;
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
@@ -277,15 +278,15 @@ export async function getServerSideProps(context) {
         };
     }
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile` +
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/` +
             context.params.id
     );
     const nasabah = await res.json();
     return {
         props: {
             nasabah,
+            session
         },
     };
 }
 
-export default Nasabah;
