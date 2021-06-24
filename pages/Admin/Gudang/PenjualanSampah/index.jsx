@@ -38,7 +38,7 @@ export default function PembelianSampah({ sampahSale }) {
         <AdminLayout>
             <div>
                 <h1 className='text-4xl mb-5 inline-block'>
-                    Penjualan Sampah Bank Sampah
+                    Penjualan Sampah
                 </h1>
 
                 <div className='float-right'>

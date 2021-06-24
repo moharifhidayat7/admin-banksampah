@@ -2,6 +2,7 @@ import SearchBox from "./SearchBox";
 import LoggedIn from "./LoggedIn";
 import Notification from "./Notification";
 import Link from "next/link";
+import * as Icons from 'heroicons-react'
 
 export default function Navbar({ toggleSidebar, clientLink }) {
     return (
@@ -14,8 +15,8 @@ export default function Navbar({ toggleSidebar, clientLink }) {
                     <div className='w-full flex items-center pl-8 justify-end'>
                         <div className='mx-2'>
                             <Link href={clientLink}>
-                                <a className='bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'>
-                                    Halaman Client
+                                <a className='text-sm px-2 border-gray rounded-md border-2 hover:border-gray-500 hover:text-gray-800 focus:outline-none p-1 text-gray-500'>
+                                    <Icons.ExternalLink size="1rem" className="inline-block"/><div className="align-middle inline-block">Halaman Client</div>
                                 </a>
                             </Link>
                         </div>

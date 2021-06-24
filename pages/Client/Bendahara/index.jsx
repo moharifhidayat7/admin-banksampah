@@ -6,7 +6,9 @@ import AsyncSelect from "react-select/async";
 import { useState, useEffect } from "react";
 
 export default function Transaksi() {
-    const { register, handleSubmit, setValue, reset, errors } = useForm();
+    const { register, handleSubmit, reset } = useForm();
+    const { register: register2, handleSubmit: handleSubmit2, setValue: setValue2, reset: reset2, errors: errors2 } = useForm();
+
 
     const [nasabah, setNasabah] = useState([]);
     const [saldo, setSaldo] = useState(0);
@@ -32,7 +34,7 @@ export default function Transaksi() {
             body: JSON.stringify(data),
         }).then(async (res) => {
             alert("Transaksi Berhasil");
-            reset();
+            reset2();
         });
     };
 
@@ -173,7 +175,7 @@ export default function Transaksi() {
                         </CardGudang>
 
                         <form
-                            onSubmit={handleSubmit(onSubmit2)}
+                            onSubmit={handleSubmit2(onSubmit2)}
                             className='space-y-3 mt-4 lg:mt-0 lg:col-span-2'
                         >
                             <div className='grid grid-cols-2'>
@@ -186,7 +188,7 @@ export default function Transaksi() {
                                     cacheOptions
                                     defaultOptions
                                     onChange={(e) => {
-                                        setValue("_nasabah", e._id);
+                                        setValue2("_nasabah", e._id);
                                         setNasabah(e);
                                         getSaldo(e._id);
                                     }}
@@ -201,7 +203,7 @@ export default function Transaksi() {
                                 </label>
                                 <select
                                     name='transactionType'
-                                    ref={register({ required: true })}
+                                    ref={register2({ required: true })}
                                     className='p-1 focus:outline-none w-1/2 border'
                                 >
                                     <option value='Penarikan'>
@@ -214,7 +216,7 @@ export default function Transaksi() {
                                 <input
                                     type='text'
                                     name='_nasabah'
-                                    ref={register({ required: true })}
+                                    ref={register2({ required: true })}
                                     className='focus:outline-none w-1/2 p-1 border'
                                 />
                             </div>
@@ -226,7 +228,7 @@ export default function Transaksi() {
                                 <input
                                     type='number'
                                     name='amount'
-                                    ref={register({ required: true })}
+                                    ref={register2({ required: true })}
                                     className='focus:outline-none w-1/2 p-1 border'
                                 />
                             </div>
@@ -234,7 +236,7 @@ export default function Transaksi() {
                                 <label htmlFor=''>Keterangan</label>
                                 <textarea
                                     name='note'
-                                    ref={register()}
+                                    ref={register2()}
                                     placeholder='Jika ada'
                                     className='border w-1/2 focus:outline-none p-1'
                                 ></textarea>
