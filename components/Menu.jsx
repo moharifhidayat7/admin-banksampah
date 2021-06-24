@@ -37,7 +37,7 @@ export default function Menu() {
             <Item
                 route='/Admin/Gudang/Rekap/SampahMasuk'
                 icon={<Icons.DocumentReport size='1rem' />}
-                title='Rekap Sampah Masuk'
+                title='Rekap Pembelian Sampah'
             ></Item>
         </List>
     );
