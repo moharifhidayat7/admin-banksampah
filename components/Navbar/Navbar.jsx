@@ -1,8 +1,9 @@
 import SearchBox from "./SearchBox";
 import LoggedIn from "./LoggedIn";
 import Notification from "./Notification";
+import Link from "next/link";
 
-export default function Navbar({ toggleSidebar }) {
+export default function Navbar({ toggleSidebar, clientLink }) {
     return (
         <nav className='h-16 flex items-center lg:items-stretch justify-end lg:justify-between bg-white shadow z-10 pl-64 w-full fixed'>
             <div className='hidden lg:flex pr-6 w-full'>
@@ -11,6 +12,13 @@ export default function Navbar({ toggleSidebar }) {
                 </div>
                 <div className='w-1/2 hidden lg:flex'>
                     <div className='w-full flex items-center pl-8 justify-end'>
+                        <div className='mx-2'>
+                            <Link href={clientLink}>
+                                <a className='bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'>
+                                    Halaman Client
+                                </a>
+                            </Link>
+                        </div>
                         <Notification />
                         <LoggedIn />
                     </div>

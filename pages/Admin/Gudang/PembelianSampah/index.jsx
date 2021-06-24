@@ -40,7 +40,16 @@ export default function PembelianSampah({ sampahPurchase }) {
             <div>
                 <h1 className='text-4xl mb-5 inline-block'>Pembelian Sampah</h1>
 
-                <div className='float-right'>
+                <div className='float-right flex space-x-2'>
+                    <Link href={`/api/export/sampahMasuk`}>
+                        <a
+                            role='button'
+                            target='_blank'
+                            className='px-4 inline-block align-top focus:outline-none shadow-md bg-blue-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-blue-500 hover:bg-white hover:text-blue-500 focus:ring-blue-500 focus:bg-white focus:text-blue-500 '
+                        >
+                            Export
+                        </a>
+                    </Link>
                     <Link href='/Admin/Gudang/PembelianSampah/tambah'>
                         <a
                             role='button'
@@ -54,13 +63,12 @@ export default function PembelianSampah({ sampahPurchase }) {
             <div className='w-full overflow-x-auto'>
                 <Table>
                     <TableHead>
-                        <TableCol>Id</TableCol>
+                        <TableCol className='w-32'>Id</TableCol>
                         <TableCol className='w-32'>Tanggal</TableCol>
-                        <TableCol>NIK</TableCol>
-                        <TableCol>Nama</TableCol>
-                        <TableCol className='w-80'>Alamat</TableCol>
-                        <TableCol>Tipe Transaksi</TableCol>
-                        <TableCol>Jumlah</TableCol>
+                        <TableCol>Nasabah</TableCol>
+                        <TableCol>Item</TableCol>
+                        <TableCol className='w-32'>Tipe Transaksi</TableCol>
+                        <TableCol className='w-32'>Jumlah</TableCol>
                         <TableCol></TableCol>
                     </TableHead>
 
@@ -79,13 +87,28 @@ export default function PembelianSampah({ sampahPurchase }) {
                                         })}
                                     </TableCell>
                                     <TableCell>
-                                        {trx._nasabah._id
-                                            ? trx._nasabah._id.nik
-                                            : "-"}
+                                        {/* {trx._nasabah._id ? (
+                                            <div className='py-1'>
+                                                {trx._nasabah._id.nik}
+                                            </div>
+                                        ) : (
+                                            "-"
+                                        )} */}
+                                        <div className='pb-1'>
+                                            {trx._nasabah.name}
+                                        </div>
+                                        <div>{trx._nasabah.address}</div>
                                     </TableCell>
-                                    <TableCell>{trx._nasabah.name}</TableCell>
-                                    <TableCell className='truncate'>
-                                        {trx._nasabah.address}
+                                    <TableCell>
+                                        {trx.items.map((item) => {
+                                            return (
+                                                <span>
+                                                    {item.qty} x{" "}
+                                                    {item._sampahType.name}{" "}
+                                                    <br />
+                                                </span>
+                                            );
+                                        })}
                                     </TableCell>
                                     <TableCell
                                         className={

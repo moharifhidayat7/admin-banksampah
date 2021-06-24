@@ -41,7 +41,7 @@ export default function PembelianSampah({ sampahSale }) {
                     Penjualan Sampah Bank Sampah
                 </h1>
 
-                {/* <div className='float-right'>
+                <div className='float-right'>
                     <Link href='/Admin/Gudang/PenjualanSampah/tambah'>
                         <a
                             role='button'
@@ -50,15 +50,16 @@ export default function PembelianSampah({ sampahSale }) {
                             Jual Sampah
                         </a>
                     </Link>
-                </div> */}
+                </div>
             </div>
             <div className='w-full overflow-x-scroll xl:overflow-x-hidden'>
                 <Table>
                     <TableHead>
+                        <TableCol className='w-32'>Id</TableCol>
                         <TableCol className='w-32'>Tanggal</TableCol>
                         <TableCol>Pembeli</TableCol>
                         <TableCol>Item</TableCol>
-                        <TableCol>Harga Jual</TableCol>
+                        <TableCol className='w-32'>Harga Jual</TableCol>
                         <TableCol></TableCol>
                     </TableHead>
 
@@ -66,6 +67,7 @@ export default function PembelianSampah({ sampahSale }) {
                         {sampahSale.map((trx, index) => {
                             return (
                                 <TableRow key={trx._id}>
+                                    <TableCell>{trx._id}</TableCell>
                                     <TableCell>
                                         {new Date(trx.createdAt).toLocaleString(
                                             "id-ID",
@@ -88,7 +90,7 @@ export default function PembelianSampah({ sampahSale }) {
                                             );
                                         })}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell className='text-green-500'>
                                         {formatRp(
                                             trx.items.reduce((tot, item) => {
                                                 return tot + item.price;

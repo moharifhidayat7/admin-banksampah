@@ -35,11 +35,6 @@ export default function Menu() {
                 title='Harga Sampah'
             ></Item>
             <Item
-                route='#'
-                icon={<Icons.Truck size='1rem' />}
-                title='Lakukan Transaksi'
-            ></Item>
-            <Item
                 route='/Admin/Gudang/Rekap/SampahMasuk'
                 icon={<Icons.DocumentReport size='1rem' />}
                 title='Rekap Sampah Masuk'

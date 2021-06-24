@@ -55,10 +55,10 @@ export default function index() {
                 <div className='overflow-x-auto'>
                     <Table>
                         <TableHead>
-                            <TableCol>Tanggal</TableCol>
+                            <TableCol className='w-32'>Tanggal</TableCol>
                             <TableCol>Keterangan</TableCol>
-                            <TableCol>Nominal</TableCol>
-                            <TableCol>Total</TableCol>
+                            <TableCol className='w-36'>Nominal</TableCol>
+                            <TableCol className='w-32'>Total</TableCol>
                         </TableHead>
                         <TableBody>
                             {items.map((stok, index) => {

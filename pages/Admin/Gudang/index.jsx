@@ -26,6 +26,7 @@ export default function Index({ sampahPurchase, transfer }) {
     const [tunai, setTunai] = useState(0);
     const [tabungan, setTabungan] = useState(0);
     const [pemasukan, setPemasukan] = useState(0);
+    const [stok, setStok] = useState([]);
     const getTunai = () => {
         const filter = sampahPurchase.filter(
             (trx) => trx.transactionType == "CASH"
@@ -59,6 +60,13 @@ export default function Index({ sampahPurchase, transfer }) {
         setPemasukan(total);
     };
 
+    const getStok = async () => {
+        const result = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/stok`
+        );
+        setStok(await result.json());
+    };
+
     const formatRp = (number) => {
         return new Intl.NumberFormat("id-ID", {
             style: "currency",
@@ -66,6 +74,7 @@ export default function Index({ sampahPurchase, transfer }) {
         }).format(number);
     };
     useEffect(() => {
+        getStok();
         getTunai();
         getTabungan();
         getTransfer();
@@ -74,35 +83,76 @@ export default function Index({ sampahPurchase, transfer }) {
     return (
         <AdminLayout>
             <h1 className='text-4xl mb-5'>Dashboard</h1>
-            <h1 className='text-2xl mb-4'>Transaksi Admin Gudang</h1>
-            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
-                <DashboardCard
-                    borderColor='border-red-400'
-                    textColor='text-red-500'
-                    icon={<ShoppingCart className='text-red-500' size='100%' />}
-                    title='Total Pembelian Tunai'
-                    value={formatRp(tunai)}
-                />
-                <DashboardCard
-                    borderColor='border-green-400'
-                    textColor='text-green-500'
-                    icon={
-                        <Save className='text-green-500 text-5xl' size='100%' />
-                    }
-                    title='Total Transaksi Tabungan'
-                    value={formatRp(tabungan)}
-                />
-                <DashboardCard
-                    borderColor='border-blue-400'
-                    icon={
-                        <CashOutline
-                            className='text-blue-500 text-5xl'
-                            size='100%'
+            <div className='grid grid-cols-3 gap-4 w-full'>
+                <div className='col-span-2'>
+                    <h1 className='text-2xl mb-4'>Transaksi Admin Gudang</h1>
+                    <div className='grid grid-cols-2 gap-4'>
+                        <DashboardCard
+                            borderColor='border-red-400'
+                            textColor='text-red-500'
+                            icon={
+                                <ShoppingCart
+                                    className='text-red-500'
+                                    size='100%'
+                                />
+                            }
+                            title='Total Pembelian Tunai'
+                            value={formatRp(tunai)}
                         />
-                    }
-                    title='Saldo Gudang'
-                    value={formatRp(pemasukan - tunai)}
-                />
+                        <DashboardCard
+                            borderColor='border-green-400'
+                            textColor='text-green-500'
+                            icon={
+                                <Save
+                                    className='text-green-500 text-5xl'
+                                    size='100%'
+                                />
+                            }
+                            title='Total Transaksi Tabungan'
+                            value={formatRp(tabungan)}
+                        />
+                        {/* <DashboardCard
+                            borderColor='border-blue-400'
+                            icon={
+                                <CashOutline
+                                    className='text-blue-500 text-5xl'
+                                    size='100%'
+                                />
+                            }
+                            title='Saldo Gudang'
+                            value={formatRp(pemasukan - tunai)}
+                        /> */}
+                    </div>
+                </div>
+                <div>
+                    <h1 className='text-2xl mb-4'>Stok Sampah Gudang</h1>
+                    <div>
+                        <Table>
+                            <TableHead>
+                                <TableCol>Jenis Sampah</TableCol>
+                                <TableCol>Qty</TableCol>
+                            </TableHead>
+
+                            <TableBody>
+                                {stok.length > 0 &&
+                                    stok.map((item) => {
+                                        return (
+                                            <TableRow key={item._id}>
+                                                <TableCell>
+                                                    {item.type}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {item.cashQty +
+                                                        item.tabungQty}{" "}
+                                                    {item.denom}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </div>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 hidden'>
                 <div className='md:col-span-2'>
