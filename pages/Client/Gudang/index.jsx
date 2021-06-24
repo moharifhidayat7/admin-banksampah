@@ -110,8 +110,8 @@ export default function Pembelian({ sampahType }) {
         <div>
             <NavbarGudang />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='bg-white shadow-md m-4 lg:grid lg:grid-cols-3 lg:gap-4  rounded-sm p-2 space-y-4'>
-                    <div className='space-y-4 lg:col-span-1'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-36 mx-4 mt-4'>
+                    <div className='bg-white'>
                         <div className='flex lg:hidden flex-col space-y-2 md:flex-row md:space-y-0  justify-between'>
                             <h3 className='flex text-gray-800'>
                                 <Icon.ShoppingCart /> Gudang{" "}
@@ -243,180 +243,182 @@ export default function Pembelian({ sampahType }) {
                             </div>
                         </CardGudang>
                     </div>
-                    <div className='flex flex-col  lg:col-span-2 space-y-5'>
-                        <div className='lg:flex hidden lg:justify-between'>
-                            <h3 className='flex text-gray-800 font-bold'>
-                                Pembelian Sampah
-                            </h3>
-                        </div>
-
-                        <div className='flex flex-col md:items-center md:flex-row'>
-                            <div className='flex  lg:w-1/2 lg:flex-row md:items-center'>
-                                <label>Pilih Item:</label>
-                                <select
-                                    className='focus:outline-none mx-3 py-0.5 w-1/2 md:w-3/5 border px-0.5'
-                                    defaultValue='0'
-                                    onChange={handleSelect}
-                                >
-                                    <option value='0' disabled>
-                                        Pilih Jenis Sampah
-                                    </option>
-                                    {sampahType.map((list) => {
-                                        return (
-                                            <option
-                                                key={list._id}
-                                                value={list._id}
-                                            >
-                                                {list.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                    <div className='md:col-span-2'>
+                        <div className="bg-white p-4 grid grid-col-1 gap-4">
+                            <div className='lg:flex hidden lg:justify-between'>
+                                <h3 className='flex text-gray-800 font-bold'>
+                                    Pembelian Sampah
+                                </h3>
                             </div>
-                            <div className='flex  lg:flex-nowrap md:items-center'>
-                                <label>Qty:</label>
-                                <input
-                                    value={qty}
-                                    onChange={(e) =>
-                                        setQty(parseInt(e.target.value))
-                                    }
-                                    type='number'
-                                    className='focus:outline-none mx-3 py-0.5 w-1/3 mt-2 md:mt-0 md:w-3/5 border px-0.5'
-                                />
-                            </div>
-                            <button
-                                onClick={handleAdd}
-                                type='button'
-                                className='py-1 mt-2 md:mt-0 px-4 bg-gray-300 font-medium'
-                            >
-                                Tambahkan
-                            </button>
-                        </div>
-                        <div className=''>
-                            <Table>
-                                <TableHead>
-                                    <TableCol>Jenis Sampah</TableCol>
-                                    <TableCol>Harga</TableCol>
-                                    <TableCol>Qty.</TableCol>
-                                    <TableCol>Jumlah</TableCol>
-                                    <TableCol></TableCol>
-                                </TableHead>
-
-                                <TableBody className='h-6'>
-                                    {items.map((item) => {
-                                        return (
-                                            <TableRow
-                                                key={item._sampahType._id}
-                                            >
-                                                <TableCell>
-                                                    <label>
-                                                        {item._sampahType.name}
-                                                    </label>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <label>
-                                                        {formatRp(
-                                                            item._sampahType
-                                                                .price
-                                                        )}
-                                                        /
-                                                        {item._sampahType.denom}
-                                                    </label>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <label>{item.qty}</label>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <label>
-                                                        {formatRp(
-                                                            item._sampahType
-                                                                .price *
-                                                                item.qty
-                                                        )}
-                                                    </label>
-                                                </TableCell>
-                                                <TableCell className='float-right'>
-                                                    <button
-                                                        type='button'
-                                                        className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            handleDelete(
-                                                                item._sampahType
-                                                                    ._id
-                                                            );
-                                                        }}
-                                                    >
-                                                        <Icons.X />
-                                                    </button>
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                </TableBody>
-                            </Table>
-                        </div>
-                        <div>
-                            <div className='flex justify-end mt-4 font-medium bg-blue-200 p-2 text-xl items-center'>
-                                Total :{" "}
-                                <p className='ml-4 mr-4'>
-                                    {formatRp(
-                                        items.reduce((tot, item) => {
+                            <div className='flex flex-col md:items-center md:flex-row'>
+                                <div className='flex  lg:w-1/2 lg:flex-row md:items-center'>
+                                    <label>Pilih Item:</label>
+                                    <select
+                                        className='focus:outline-none mx-3 py-0.5 w-1/2 md:w-3/5 border px-0.5'
+                                        defaultValue='0'
+                                        onChange={handleSelect}
+                                    >
+                                        <option value='0' disabled>
+                                            Pilih Jenis Sampah
+                                        </option>
+                                        {sampahType.map((list) => {
                                             return (
-                                                tot +
-                                                item._sampahType.price *
-                                                    item.qty
+                                                <option
+                                                    key={list._id}
+                                                    value={list._id}
+                                                >
+                                                    {list.name}
+                                                </option>
                                             );
-                                        }, 0)
-                                    )}
-                                </p>
+                                        })}
+                                    </select>
+                                </div>
+                                <div className='flex  lg:flex-nowrap md:items-center'>
+                                    <label>Qty:</label>
+                                    <input
+                                        value={qty}
+                                        onChange={(e) =>
+                                            setQty(parseInt(e.target.value))
+                                        }
+                                        type='number'
+                                        className='focus:outline-none mx-3 py-0.5 w-1/3 mt-2 md:mt-0 md:w-3/5 border px-0.5'
+                                    />
+                                </div>
+                                <button
+                                    onClick={handleAdd}
+                                    type='button'
+                                    className='py-1 mt-2 md:mt-0 px-4 bg-gray-300 font-medium'
+                                >
+                                    Tambahkan
+                                </button>
                             </div>
-                            <div className='flex flex-col items-end'></div>
-                            {success ? (
-                                <div className='flex justify-end mt-2 space-x-10'>
-                                    <button
-                                        onClick={(e) => {
-                                            setItems([]);
-                                            reset();
-                                            setSuccess(false);
-                                        }}
-                                        className='py-1 px-10 bg-red-700 text-white ring ring-transparent hover:ring-red-700 focus:outline-none hover:bg-white hover:text-red-700'
-                                    >
-                                        Transaksi baru
-                                    </button>
-                                    <Link
-                                        href={`/Client/Gudang/Pembelian/${trx}`}
-                                    >
-                                        <a
-                                            target='_blank'
-                                            className='py-1 px-10 bg-blue-800 text-white ring ring-transparent hover:ring-blue-800 focus:outline-none hover:bg-white hover:text-blue-800'
-                                        >
-                                            Print
-                                        </a>
-                                    </Link>
-                                </div>
-                            ) : (
-                                <div className='flex justify-end mt-2 space-x-10'>
-                                    <button
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            setItems([]);
-                                            reset();
-                                        }}
-                                        className='py-1 px-10 bg-red-700 text-white ring ring-transparent hover:ring-red-700 focus:outline-none hover:bg-white hover:text-red-700'
-                                    >
-                                        Reset
-                                    </button>
-                                    <button
-                                        type='submit'
-                                        className='py-1 px-10 bg-blue-800 text-white ring ring-transparent hover:ring-blue-800 focus:outline-none hover:bg-white hover:text-blue-800'
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            )}
+                            <div className=''>
+                                <Table>
+                                    <TableHead>
+                                        <TableCol>Jenis Sampah</TableCol>
+                                        <TableCol>Harga</TableCol>
+                                        <TableCol>Qty.</TableCol>
+                                        <TableCol>Jumlah</TableCol>
+                                        <TableCol></TableCol>
+                                    </TableHead>
+                                    <TableBody className='h-6'>
+                                        {items.map((item) => {
+                                            return (
+                                                <TableRow
+                                                    key={item._sampahType._id}
+                                                >
+                                                    <TableCell>
+                                                        <label>
+                                                            {item._sampahType.name}
+                                                        </label>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <label>
+                                                            {formatRp(
+                                                                item._sampahType
+                                                                    .price
+                                                            )}
+                                                            /
+                                                            {item._sampahType.denom}
+                                                        </label>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <label>{item.qty}</label>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <label>
+                                                            {formatRp(
+                                                                item._sampahType
+                                                                    .price *
+                                                                    item.qty
+                                                            )}
+                                                        </label>
+                                                    </TableCell>
+                                                    <TableCell className='float-right'>
+                                                        <button
+                                                            type='button'
+                                                            className='bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                handleDelete(
+                                                                    item._sampahType
+                                                                        ._id
+                                                                );
+                                                            }}
+                                                        >
+                                                            <Icons.X />
+                                                        </button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div className="fixed bottom-0 left-0 w-full shadow border-t-2 border-blue-500">
+                <div className='flex py-4 justify-end font-medium bg-blue-200 text-xl items-center'>
+                                    Total :{" "}
+                                    <p className='ml-4 mr-4'>
+                                        {formatRp(
+                                            items.reduce((tot, item) => {
+                                                return (
+                                                    tot +
+                                                    item._sampahType.price *
+                                                        item.qty
+                                                );
+                                            }, 0)
+                                        )}
+                                    </p>
+                                </div>
+                <div className="bg-white p-4">
+                    
+                    {success ? (
+                                    <div className='flex justify-end space-x-10'>
+                                        <button
+                                            onClick={(e) => {
+                                                setItems([]);
+                                                reset();
+                                                setSuccess(false);
+                                            }}
+                                            className='py-1 px-10 bg-red-700 text-white ring ring-transparent hover:ring-red-700 focus:outline-none hover:bg-white hover:text-red-700'
+                                        >
+                                            Transaksi baru
+                                        </button>
+                                        <Link
+                                            href={`/Client/Gudang/Pembelian/${trx}`}
+                                        >
+                                            <a
+                                                target='_blank'
+                                                className='py-1 px-10 bg-blue-800 text-white ring ring-transparent hover:ring-blue-800 focus:outline-none hover:bg-white hover:text-blue-800'
+                                            >
+                                                Print
+                                            </a>
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <div className='flex justify-end space-x-10'>
+                                        <button
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setItems([]);
+                                                reset();
+                                            }}
+                                            className='py-1 px-10 bg-red-700 text-white ring ring-transparent hover:ring-red-700 focus:outline-none hover:bg-white hover:text-red-700'
+                                        >
+                                            Reset
+                                        </button>
+                                        <button
+                                            type='submit'
+                                            className='py-1 px-10 bg-blue-800 text-white ring ring-transparent hover:ring-blue-800 focus:outline-none hover:bg-white hover:text-blue-800'
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                )}
+                </div>
                 </div>
             </form>
         </div>
