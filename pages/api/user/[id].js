@@ -4,7 +4,7 @@ import User from "../../../src/models/User";
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const sampah_type = await User.findById(req.query.id);
+    const sampah_type = await User.findById(req.query.id).select("-password");
     res.status(200).json(sampah_type);
 });
 handler.patch(async (req, res) => {

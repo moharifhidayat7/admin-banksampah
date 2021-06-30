@@ -102,7 +102,7 @@ export default function PembelianSampah({ sampahPurchase }) {
                                     <TableCell>
                                         {trx.items.map((item) => {
                                             return (
-                                                <span>
+                                                <span key={item._id}>
                                                     {item.qty} x{" "}
                                                     {item._sampahType.name}{" "}
                                                     <br />

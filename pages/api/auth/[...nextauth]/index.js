@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-import User from "../../../../src/models/User";
-import bcrypt from "bcrypt";
 
 const options = {
     providers: [
@@ -17,43 +15,40 @@ const options = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials, req) {
-                const user = await User.find({
-                    username: credentials.username,
-                });
-                if (user.length > 0) {
-                    const result = bcrypt.compareSync(
-                        credentials.password,
-                        user[0].password
-                    );
-                    if (result) {
-                        return user[0];
-                    }
-                } else {
-                    throw "/login";
-                    // If you return null or false then the credentials will be rejected
-                    return null;
-                    // You can also Reject this callback with an Error or with a URL:
-                    // throw new Error('error message') // Redirect to error page
-                    // throw '/path/to/redirect'        // Redirect to a URL
+                const result = await fetch(`http://localhost:3000/api/user/check`, {
+                    method: 'POST',
+                    body: JSON.stringify(credentials)
+                })
+                const user = await result.json()
+                
+                if(result.status == 200 && user){
+                    return user
                 }
+
+                return null
             },
         }),
     ],
-    callbacks: {
-        session: async (session, user) => {
-            const userdata = await User.findById(user.sub);
-            session.user.id = userdata._id;
-            session.user.name = userdata.name;
-            session.user.username = userdata.username;
-            session.user.role = userdata.role;
-
-            return Promise.resolve(session);
-        },
-
-        redirect: async (url, baseUrl) => {
-            return url.startsWith(baseUrl) ? url : baseUrl;
-        },
+    session: {
+        jwt: true,
     },
+    callbacks: {
+        async jwt(token, user) {
+            if (user) {
+              token.user = user
+            }
+        
+            return token
+          },
+        
+          async session(session, token) {
+            session.user = token.user
+            return session
+          }
+    },
+    pages: {
+        signin: '/login',
+    }
 };
 
 export default function (req, res) {

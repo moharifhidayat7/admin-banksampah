@@ -116,19 +116,20 @@ handler.get(async (req, res) => {
                 for (let l = 0; l < trx.items.length; l++) {
                     const trxItems = trx.items[l];
                     if (trxItems._sampahType._id == item._id) {
-                        itemRowStart.getCell(4+k).value = trxItems.qty
+                        itemRowStart.getCell(5+k).value = trxItems.qty
                         qtyTotal += trxItems.qty
                         totalPrice += trxItems.qty * trxItems._sampahType.price
                     }
                 }
                 
             }
-            itemRowStart.getCell(19).value = {
+            itemRowStart.getCell(4).value = totalPrice / qtyTotal
+            itemRowStart.getCell(20).value = {
                 formula: `SUM(D${rowStart + 1}:R${rowStart + 1})`,
                 result: qtyTotal,
             };
-            itemRowStart.getCell(20).value = {
-                formula: `S${rowStart + 1}*C${rowStart + 1}`,
+            itemRowStart.getCell(21).value = {
+                formula: `T${rowStart + 1}*C${rowStart + 1}`,
                 result: totalPrice,
             };
             
