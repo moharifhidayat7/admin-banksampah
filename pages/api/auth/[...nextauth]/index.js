@@ -54,9 +54,6 @@ const options = {
             return url.startsWith(baseUrl) ? url : baseUrl;
         },
     },
-    pages: {
-        signIn: "/login",
-    },
 };
 
 export default function (req, res) {
