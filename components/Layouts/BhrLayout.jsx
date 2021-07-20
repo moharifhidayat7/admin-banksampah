@@ -7,42 +7,42 @@ import { List, Item, SubItem } from "../List";
 import * as Icons from "heroicons-react";
 
 export default function AdminLayout({ children }) {
-    const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
-    const toggleSidebar = () => {
-        setSidebar(!sidebar);
-    };
+  const toggleSidebar = () => {
+    setSidebar(!sidebar);
+  };
 
-    return (
-        <div className='w-full h-full'>
-            <Head>
-                <title>Bank Sampah</title>
-            </Head>
-            <div className='flex flex-no-wrap'>
-                <Sidebar>
-                    <List>
-                        <Item
-                            route='/Admin/Bendahara'
-                            icon={<Icons.HomeOutline size='1rem' />}
-                            title='Dashboard'
-                        />
-                        <Item
-                            route='/Admin/Bendahara/Nasabah'
-                            icon={<Icons.UserGroup size='1rem' />}
-                            title='Data Nasabah'
-                        ></Item>
-                        <Item
-                            route='/Admin/Bendahara/Internal'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Internal'
-                        ></Item>
+  return (
+    <div className='w-full h-full'>
+      <Head>
+        <title>Bank Sampah</title>
+      </Head>
+      <div className='flex flex-no-wrap'>
+        <Sidebar>
+          <List>
+            <Item
+              route='/Admin/Bendahara'
+              icon={<Icons.HomeOutline size='1rem' />}
+              title='Dashboard'
+            />
+            <Item
+              route='/Admin/Bendahara/Nasabah'
+              icon={<Icons.UserGroup size='1rem' />}
+              title='Data Nasabah'
+            ></Item>
+            <Item
+              route='/Admin/Bendahara/Internal'
+              icon={<Icons.Cash size='1rem' />}
+              title='Transaksi Internal'
+            ></Item>
 
-                        <Item
-                            route='/Admin/Bendahara/Transaksi'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Tabungan Nasabah'
-                        ></Item>
-                        {/* <Item
+            <Item
+              route='/Admin/Bendahara/Transaksi'
+              icon={<Icons.Cash size='1rem' />}
+              title='Transaksi Tabungan Nasabah'
+            ></Item>
+            {/* <Item
                             route='/Admin/Bendahara/PembelianSampah'
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Pembelian Sampah'
@@ -52,19 +52,19 @@ export default function AdminLayout({ children }) {
                             icon={<Icons.Cash size='1rem' />}
                             title='Transaksi Penjualan Sampah'
                         ></Item> */}
-                    </List>
-                </Sidebar>
-                <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
-                <div className='w-full'>
-                    <Navbar
-                        toggleSidebar={toggleSidebar}
-                        clientLink='/Client/Bendahara'
-                    ></Navbar>
-                    <div className='ml-5 sm:ml-5 md:ml-5 lg:ml-72 mr-5 py-24 h-64'>
-                        <div className='w-full h-full rounded'>{children}</div>
-                    </div>
-                </div>
-            </div>
+          </List>
+        </Sidebar>
+        <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
+        <div className='w-full'>
+          <Navbar
+            toggleSidebar={toggleSidebar}
+            clientLink='/Client/Bendahara'
+          ></Navbar>
+          <div className='mx-5 sm:ml-5 md:ml-5 lg:ml-72 mt-24'>
+            <div className='pb-10 flex flex-col space-y-2'>{children}</div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

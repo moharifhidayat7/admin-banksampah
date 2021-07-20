@@ -6,12 +6,18 @@ import ExcelJS from "exceljs";
 const handler = createHandler();
 
 handler.get(async (req, res) => {
+    const queryTipe = req.query.tipe || "tabung"
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.readFile(
         "./src/export/export-rekap-sampah-harian.xlsx"
     );
     const sheet = workbook.worksheets[0];
     sheet.getRow(1).getCell(1).value = "BULAN MARET 2021";
+    if(queryTipe == "tabung"){
+        sheet.getRow(3).getCell(19).value = "TABUNGAN";
+    } else if (queryTipe == 'cash'){
+        sheet.getRow(3).getCell(19).value = "CASH";
+    }
     const month = req.query.month || "";
     const result = await SampahPurchase.find({
         transactionDate: {
@@ -111,8 +117,14 @@ handler.get(async (req, res) => {
             
             let qtyTotal = 0;
             let totalPrice = 0;
-            for (let k = 0; k < result.length; k++) {
-                const trx = result[k];
+            let getResult;
+            if(queryTipe == "tabung"){
+                getResult = tabungResult
+            } else if (queryTipe == 'cash'){
+                getResult = cashResult
+            }
+            for (let k = 0; k < getResult.length; k++) {
+                const trx = getResult[k];
                 for (let l = 0; l < trx.items.length; l++) {
                     const trxItems = trx.items[l];
                     if (trxItems._sampahType._id == item._id) {
@@ -148,7 +160,7 @@ handler.get(async (req, res) => {
     );
     res.setHeader(
         "Content-Disposition",
-        "attachment; filename=" + `export-rekap-sampah-masuk-${filedate}.xlsx`
+        "attachment; filename=" + `export-rekap-sampah-masuk-${queryTipe}-${filedate}.xlsx`
     );
 
     return workbook.xlsx.write(res).then(function () {

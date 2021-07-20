@@ -1,54 +1,91 @@
-import createHandler from "../../../src/middleware/index";
-import SampahPurchase from "../../../src/models/SampahPurchase";
-import BankTransaction from "../../../src/models/BankTransaction";
+import createHandler from "@middleware/index";
+import SampahPurchase from "@models/SampahPurchase";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const limit = parseInt(req.query.limit) || 0;
-    let result;
-    if (req.query.newest) {
-        result = await SampahPurchase.find()
-            .sort({ createdAt: -1 })
-            .limit(limit);
-    } else {
-        result = await SampahPurchase.find().limit(limit);
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 0;
+  const sort = req.query.sort || "_id";
+  const keyword = req.query.keyword || "";
+
+  const skipIndex = (page - 1) * limit;
+
+  const filter = [];
+
+  for (const [key, value] of Object.entries(req.query)) {
+    if (
+      key != "page" &&
+      key != "limit" &&
+      key != "sort" &&
+      key != "keyword" &&
+      key != "range" &&
+      key != "jumlah" &&
+      value != ""
+    ) {
+      filter.push({ [key]: value });
     }
-
-    const cash = result.filter((trx) => trx.transactionType == "CASH");
-    const tabung = result.filter((trx) => trx.transactionType == "TABUNG");
-
-    if (req.query.client == "") {
-        res.status(200).json({
-            cash: cash,
-            tabung: tabung,
+    if (key == "keyword" && value != "") {
+      filter.push({
+        $or: [
+          { _nasabah: { $regex: `.*${value}.*`, $options: "i" } },
+          { _id: { $regex: `.*${value}.*`, $options: "i" } },
+          { "customer.name": { $regex: `.*${value}.*`, $options: "i" } },
+        ],
+      });
+    }
+    if (key == "range" && value != "") {
+      const splitDate = value.split("s");
+      const startDate = new Date(splitDate[0]);
+      const endDate = new Date(splitDate[1]);
+      if (!isNaN(startDate.getYear()) && !isNaN(endDate.getYear())) {
+        filter.push({
+          transactionDate: {
+            $gte: startDate,
+            $lte: endDate,
+          },
         });
-    } else {
-        res.status(200).json(result);
+      }
     }
+  }
+
+  if (filter.length == 0) {
+    filter.push({});
+  }
+
+  const dbQuery = {
+    $and: filter,
+  };
+
+  try {
+    const results = await SampahPurchase.find(dbQuery)
+      .limit(limit)
+      .skip(skipIndex)
+      .sort(sort);
+    const total = await SampahPurchase.countDocuments(dbQuery);
+    const maxPage = Math.ceil(total / limit);
+
+    res.status(200).json({
+      page: page,
+      maxPage: limit > 0 ? maxPage : 1,
+      perPage: results.length,
+      start: skipIndex + 1,
+      end: skipIndex + results.length,
+      total: total,
+      rows: results,
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 handler.post(async (req, res) => {
-    try {
-        const result = await SampahPurchase.create(req.body).then(
-            async (res) => {
-                if (req.body.transactionType == "TABUNG") {
-                    const total = res.items.reduce((tot, item) => {
-                        return tot + item._sampahType.price * item.qty;
-                    }, 0);
-                    await BankTransaction.create({
-                        _sampahTransaction: res._id,
-                        transactionType: "Tabung",
-                        amount: total,
-                        _nasabah: res._nasabah._id,
-                    });
-                }
-                return await res;
-            }
-        );
-        res.status(200).json(result);
-    } catch (e) {
-        console.log(e);
-    }
+  const data = req.body;
+  try {
+    const result = await SampahPurchase.create(data);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 export default handler;

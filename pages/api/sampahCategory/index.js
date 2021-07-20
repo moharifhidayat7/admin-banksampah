@@ -1,22 +1,24 @@
-import createHandler from "../../../src/middleware/index";
-import SampahCategory from "../../../src/models/SampahCategory";
+import createHandler from "@middleware/index";
+import SampahCategory from "@models/SampahCategory";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-    const limit = parseInt(req.query.limit) || 0;
-    const keyword = req.query.keyword || "";
-    const result = await SampahCategory.find({
-        name: { $regex: ".*" + keyword + ".*", $options: "i" },
-    }).limit(limit);
-
-    res.status(200).json(result);
+  try {
+    const results = await SampahCategory.find();
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 handler.post(async (req, res) => {
-    const data = req.body;
+  const data = req.body;
+  try {
     const result = await SampahCategory.create(data);
-
     res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 export default handler;

@@ -1,158 +1,125 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import SelectMenu from "@components/Input/SelectMenu";
 
-export default function HargaSampahForm({ onSubmit, data, title }) {
-    const { register, handleSubmit, errors } = useForm();
+export default function HargaSampahForm({
+  onSubmit,
+  data = "",
+  title,
+  sampahCategory,
+}) {
+  const { register, handleSubmit, setValue, errors } = useForm();
+  const [selected, setSelected] = useState("");
 
-    const router = useRouter();
-    const handleCancel = (data) => {
-        if (data != "") {
-            router.back();
-        } else {
-            router.push("/Admin/Gudang/HargaSampah", undefined, {
-                shallow: true,
-            });
+  const options = sampahCategory.map((e) => {
+    return { label: e.name, value: e._id };
+  });
+
+  const router = useRouter();
+  const handleCancel = (data) => {
+    if (data != "") {
+      router.back();
+    } else {
+      router.push(
+        router.pathname.split("/").slice(0, -1).join("/"),
+        undefined,
+        {
+          shallow: true,
         }
-    };
+      );
+    }
+  };
 
-    return (
-        <div className='bg-white rounded shadow m-auto w-full sm:w-10/12 md:w-1/2'>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='border-b px-4 py-2 flex justify-between	'>
-                    <h3 className='font-semibold text-lg'>{title}</h3>
-                </div>
-                <div className='p-5'>
-                    <div className='grid gap-4'>
-                        <div>
-                            <label>
-                                Jenis Sampah{" "}
-                                <span className='text-red-500'>*</span>
-                            </label>
-                            <input
-                                name='name'
-                                type='text'
-                                defaultValue={data.name}
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.name ? "border-red-500 border-2" : ""
-                                }`}
-                                ref={register({
-                                    required: "Nama harus di isi!",
-                                })}
-                            />
-                            {errors.name && (
-                                <span className='text-xs text-red-500'>
-                                    "* " +{errors.name.message}
-                                </span>
-                            )}
-                        </div>
-                        <div>
-                            <label>
-                                Kategori <span className='text-red-500'>*</span>
-                            </label>
-                            <select
-                                name='category'
-                                defaultValue={data.category}
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.category
-                                        ? "border-red-500 border-2"
-                                        : ""
-                                }`}
-                                ref={register({
-                                    required: "Pilih kategori sampah!",
-                                })}
-                            >
-                                <option value='Kertasan'>Kertasan</option>
-                                <option value='Emberan'>Emberan</option>
-                                <option value='Botol'>Botol</option>
-                                <option value='Logam/Besi'>Logam/Besi</option>
-                                <option value='Kresek/Plastik'>
-                                    Kresek/Plastik
-                                </option>
-                                <option value='Lain - Lain'>Lain - Lain</option>
-                            </select>
+  useEffect(() => {
+    if (data != "") {
+      setValue("name", data.name);
+      setSelected({ label: data._category.name, value: data._category._id });
+      setValue("_category", data._category._id);
+      setValue("price", data.price);
+      setValue("denom", data.denom);
+    }
+  }, []);
 
-                            {errors.category && (
-                                <span className='text-xs text-red-500'>
-                                    "* " +{errors.category.message}
-                                </span>
-                            )}
-                        </div>
-                        <div>
-                            <label>
-                                Satuan <span className='text-red-500'>*</span>
-                            </label>
-                            <input
-                                name='denom'
-                                type='text'
-                                defaultValue={data.denom}
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.denom
-                                        ? "border-red-500 border-2"
-                                        : ""
-                                }`}
-                                ref={register({
-                                    required: "Satuan harus di isi!",
-                                })}
-                            />
-                            {errors.denom && (
-                                <span className='text-xs text-red-500'>
-                                    "* " +{errors.denom.message}
-                                </span>
-                            )}
-                        </div>
-                        <div>
-                            <label>
-                                Harga Satuan{" "}
-                                <span className='text-red-500'>*</span>
-                            </label>
-                            <input
-                                name='price'
-                                type='number'
-                                defaultValue={data.price}
-                                className={`block border w-full px-4 py-1 ${
-                                    errors.price
-                                        ? "border-red-500 border-2"
-                                        : ""
-                                }`}
-                                ref={register({
-                                    required: "Harga harus di isi!",
-                                })}
-                            />
-                            {errors.price && (
-                                <span className='text-xs text-red-500'>
-                                    "* " +{errors.price.message}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className='flex justify-end w-full border-t p-2'>
-                    <div>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleCancel(data);
-                            }}
-                            type='button'
-                            className='px-3 bg-red-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            type='submit'
-                            className='px-3 bg-blue-500 hover:bg-white shadow-md border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
-                        >
-                            Submit
-                        </button>
-                    </div>
-                </div>
-            </form>
+  return (
+    <div className='bg-white py-2 px-4 rounded-md shadow-md border-gray-300 m-auto w-full sm:w-10/12 md:w-1/2'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <h3 className='text-lg font-medium'>{title}</h3>
         </div>
-    );
-}
+        <div>
+          <div>
+            <div className='text-sm font-medium text-gray-700 py-2 '>
+              Jenis Sampah
+            </div>
+            <input
+              name='name'
+              ref={register({ required: true })}
+              type='text'
+              className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
+            />
+          </div>
+          <div>
+            <div className='text-sm font-medium text-gray-700 py-2 '>
+              Kategori
+            </div>
+            <input
+              type='text'
+              name='_category'
+              ref={register({ required: true })}
+              hidden
+            />
+            <SelectMenu
+              onChange={(op) => {
+                setSelected(op);
+                setValue("_category", op.value);
+              }}
+              options={options}
+              label='Kategori ...'
+              selected={selected}
+              defaultValue={selected}
+            />
+          </div>
+          <div>
+            <div className='text-sm font-medium text-gray-700 py-2 '>
+              Satuan
+            </div>
+            <input
+              name='denom'
+              ref={register({ required: true })}
+              type='text'
+              className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
+            />
+          </div>
+          <div>
+            <div className='text-sm font-medium text-gray-700 py-2 '>Harga</div>
+            <input
+              name='price'
+              ref={register({ required: true })}
+              type='text'
+              className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
+            />
+          </div>
+        </div>
 
-HargaSampahForm.defaultProps = {
-    data: "",
-};
+        <div className='flex justify-end w-full py-2'>
+          <div>
+            <button
+              type='submit'
+              className='font-medium px-3 bg-blue-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
+            >
+              Submit
+            </button>
+            <button
+              onClick={handleCancel}
+              type='button'
+              className='font-medium px-3 bg-gray-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-gray-500 hover:text-gray-500 focus:outline-none p-1 text-white'
+            >
+              Batal
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
