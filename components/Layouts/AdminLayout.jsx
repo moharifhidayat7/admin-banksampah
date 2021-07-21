@@ -27,7 +27,7 @@ export default function AdminLayout({ children }) {
             toggleSidebar={toggleSidebar}
             clientLink='/Client/Gudang'
           ></Navbar>
-          <div className='mx-5 sm:ml-5 md:ml-5 lg:ml-72 mt-24'>
+          <div className='mx-5 sm:ml-5 md:ml-5 lg:ml-72 mt-20'>
             <div className='pb-10 flex flex-col space-y-2'>{children}</div>
           </div>
         </div>

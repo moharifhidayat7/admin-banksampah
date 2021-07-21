@@ -11,15 +11,15 @@ handler.get(async (req, res) => {
   for (let i = 0; i < parseInt(req.query.rows); i++) {
     const index = faker.datatype.number(sampahCategory.length - 1);
     data.push({
-      name: faker.name.findName(),
-      denom: faker.music.genre(),
-      price: faker.datatype.number(9999999),
+      name: faker.lorem.word(),
+      unit: faker.lorem.word(),
+      price: faker.datatype.number(50000),
       _category: sampahCategory[index]._id,
     });
   }
 
   try {
-    const result = await SampahType.create(data, { runValidators: true });
+    const result = await SampahType.create(data);
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);

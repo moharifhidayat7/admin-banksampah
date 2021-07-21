@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { SampahTypeSchema } from "./SampahType";
 import "./NasabahProfile";
 
 const MODEL_NAME = "SampahPurchase";
@@ -27,52 +28,12 @@ const schema = new Schema(
       },
     },
     customer: {
-      name: {
-        type: String,
-      },
-      address: {
-        type: String,
-      },
-      mobile: {
-        type: String,
-      },
+      type: String,
     },
     note: {
       type: String,
     },
-    items: [
-      {
-        _id: {
-          type: String,
-          required: true,
-        },
-        _category: {
-          _id: {
-            type: String,
-          },
-          name: {
-            type: String,
-            required: true,
-          },
-        },
-        price: {
-          type: Number,
-          required: true,
-        },
-        name: {
-          type: String,
-          required: true,
-        },
-        denom: {
-          type: String,
-          required: true,
-        },
-        qty: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
+    items: [SampahTypeSchema],
   },
   { timestamps: true }
 );

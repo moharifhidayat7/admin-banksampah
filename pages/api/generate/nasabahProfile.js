@@ -10,7 +10,7 @@ handler.get(async (req, res) => {
   const accountType = await AccountType.find();
 
   for (let i = 0; i < parseInt(req.query.rows); i++) {
-    const index = faker.datatype.number(accountType.length);
+    const index = faker.datatype.number(accountType.length - 1);
     data.push({
       nik: faker.datatype.number(99999999),
       name: faker.name.findName(),

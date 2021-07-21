@@ -13,7 +13,7 @@ const TambahItemModal = ({
   setShow,
 }) => {
   const router = useRouter();
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState("");
   const [selected, setSelected] = useState("");
 
   const toggleShow = () => {
@@ -43,7 +43,7 @@ const TambahItemModal = ({
     } else {
       setItems([...items, { ...selected, qty: qty }]);
     }
-    setQty(0);
+    setQty("");
     setSelected("");
     toggleShow();
   };
@@ -71,7 +71,7 @@ const TambahItemModal = ({
           <div className='text-sm font-medium text-gray-700 py-2 '>Qty</div>
           <input
             value={qty}
-            onChange={(e) => setQty(parseInt(e.target.value))}
+            onChange={(e) => setQty(e.target.value)}
             type='number'
             className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
           />

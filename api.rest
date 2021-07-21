@@ -1,32 +1,11 @@
-POST http://localhost:3000/api/sampahCategory HTTP/1.1
-content-type: application/json
-
-{
-    "name": "Arif Hidayat"
-}
-###
-GET http://localhost:3000/api/sampahPurchase
-###
-GET http://localhost:3000/api/nasabahProfile?limit=2
-###
-GET http://localhost:3000/api/generate/accountType?rows=100
-###
-POST http://localhost:3000/api/accountType HTTP/1.1
+POST http://localhost:3000/api/accountType
 content-type: application/json
 
 {
     "code": "12",
     "name": "Kusuma Tbk 232"
 }
+###Fix
+GET http://localhost:3000/api/generate/sampahCategory?rows=10
 ###
-DELETE http://localhost:3000/api/accountType/60f2c57cd3d78a356449e710 HTTP/1.1
-###
-GET http://localhost:3000/api/generate/sampahType?rows=30 HTTP/1.1
-###
-GET http://localhost:3000/api/generate/sampahPurchase?rows=50 HTTP/1.1
-###
-POST http://localhost:3000/api/sampahCategory HTTP/1.1
-Content-Type: application/json
-{
-    name: "arif"
-}
+GET http://localhost:3000/api/generate/sampahType?rows=30

@@ -9,7 +9,7 @@ handler.get(async (req, res) => {
 
   for (let i = 0; i < parseInt(req.query.rows); i++) {
     data.push({
-      name: faker.name.findName(),
+      name: faker.lorem.word(),
     });
   }
 

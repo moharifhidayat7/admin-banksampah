@@ -137,42 +137,46 @@ export default function PembelianSampahForm({
                   loadOptions={searchNasabah}
                 />
               </div>
-              <div className='flex space-x-2 flex-row items-center'>
-                <div className='w-full'>
-                  <div className='text-sm font-medium text-gray-700 py-2 '>
-                    Tipe Transaksi
-                  </div>
-                  <select
-                    required={true}
-                    value={transactionType}
-                    onChange={(e) => {
-                      setTransactionType(e.target.value);
-                    }}
-                    className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
-                  >
-                    <option value='TABUNG' disabled={tabung ? "disabled" : ""}>
-                      TABUNG
-                    </option>
-                    <option value='CASH'>CASH</option>
-                  </select>
+              <div>
+                <div className='text-sm font-medium text-gray-700 py-2 '>
+                  Tipe Transaksi
                 </div>
-                <div className='w-full'>
-                  <div className='text-sm font-medium text-gray-700 py-2 '>
-                    Tanggal Transaksi
-                  </div>
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={(date) => {
-                      setSelectedDate(date);
-                    }}
-                    startDate={new Date("0000")}
-                    endDate={new Date("9999")}
-                    selectsStart
-                    nextMonthButtonLabel='>'
-                    previousMonthButtonLabel='<'
-                  />
+                <div>
+                  <label class='inline-flex items-center'>
+                    <input
+                      type='radio'
+                      class='form-radio'
+                      name='transactionType'
+                      value='TABUNG'
+                    />
+                    <span class='ml-2'>TABUNG</span>
+                  </label>
+                  <label class='inline-flex items-center ml-6'>
+                    <input
+                      type='radio'
+                      class='form-radio'
+                      name='transactionType'
+                      value='CASH'
+                    />
+                    <span class='ml-2'>CASH</span>
+                  </label>
                 </div>
               </div>
+              <div className='w-full'>
+                <div className='text-sm font-medium text-gray-700 py-2 '>
+                  Tanggal Transaksi
+                </div>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                  }}
+                  selectsRang
+                  nextMonthButtonLabel='>'
+                  previousMonthButtonLabel='<'
+                />
+              </div>
+
               <div>
                 <div className='text-sm font-medium text-gray-700 py-2 '>
                   Keterangan

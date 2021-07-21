@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import AccountType from "@models/AccountType";
+import "./AccountType";
 
 const MODEL_NAME = "NasabahProfile";
 
@@ -28,11 +28,10 @@ const schema = new Schema(
     },
     birthdate: {
       type: String,
-      required: true,
     },
     gender: {
       type: String,
-      enum: ["Laki-Laki", "Perempuan"],
+      enum: ["L", "P"],
       required: true,
     },
     _accountType: {
@@ -45,29 +44,35 @@ const schema = new Schema(
       type: String,
     },
     ktp: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "File",
     },
   },
   { timestamps: true }
 );
 
 schema.pre("save", async function (next) {
-  const type = await AccountType.findOne({ _id: this._accountType });
+  const accountType = await mongoose
+    .model("AccountType")
+    .findOne({ _id: this._accountType });
 
   this.rekening =
-    type.code.toString().padStart(2, 0) +
-    type.counter.toString().padStart(4, 0);
+    accountType.code.toString().padStart(2, 0) +
+    accountType.counter.toString().padStart(4, 0);
   next();
 });
 schema.post("save", async function (doc, next) {
-  await AccountType.updateOne(
-    { _id: this._accountType },
-    { $inc: { counter: 1 } },
-    { strict: false }
-  );
+  await mongoose
+    .model("AccountType")
+    .updateOne(
+      { _id: this._accountType },
+      { $inc: { counter: 1 } },
+      { strict: false }
+    );
   next();
 });
 
 schema.plugin(require("mongoose-autopopulate"));
+
 export default mongoose.models[MODEL_NAME] ||
   mongoose.model(MODEL_NAME, schema);

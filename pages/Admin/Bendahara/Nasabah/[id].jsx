@@ -134,7 +134,7 @@ function Nasabah({ nasabah }) {
               size='1rem'
               className='inline-block align-middle mr-2'
             />
-            <span className='align-middle'>Hapus Nasabah</span>
+            <span className='align-middle'>Hapus</span>
           </button>
         </div>
       </div>
