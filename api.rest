@@ -5,7 +5,17 @@ content-type: application/json
     "code": "12",
     "name": "Kusuma Tbk 232"
 }
-###Fix
+### Fix
 GET http://localhost:3000/api/generate/sampahCategory?rows=10
-###
+### Fix
 GET http://localhost:3000/api/generate/sampahType?rows=30
+### Fix
+GET http://localhost:3000/api/generate/accountType?rows=10
+### Fix
+GET http://localhost:3000/api/generate/nasabahProfile?rows=60
+### Fix
+GET http://localhost:3000/api/generate/sampahPurchase?rows=10
+### Fix
+GET http://localhost:3000/api/generate/sampahSale?rows=50
+###
+DELETE http://localhost:3000/api/accountType/60f7dcf90bdb7636b0c9a34b

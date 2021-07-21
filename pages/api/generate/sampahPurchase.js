@@ -12,19 +12,14 @@ handler.get(async (req, res) => {
   const nasabahProfile = await NasabahProfile.find();
 
   for (let i = 0; i < parseInt(req.query.rows); i++) {
-    const index = faker.datatype.number(sampahType.length - 1);
+    const index = faker.datatype.number(sampahType.length);
     const nasabahIndex = faker.datatype.number(nasabahProfile.length - 1);
     const items = [];
 
     for (let j = 0; j < index; j++) {
-      const curItem = sampahType[faker.datatype.number(sampahType.length - 1)];
       items.push({
-        _id: curItem._id,
-        denom: curItem.denom,
-        _category: curItem._category,
-        name: curItem.name,
-        price: curItem.price,
-        qty: faker.datatype.number(10),
+        _sampahType: sampahType[j],
+        qty: faker.datatype.number(100),
       });
     }
 
@@ -38,11 +33,7 @@ handler.get(async (req, res) => {
     } else {
       data.push({
         transactionType: "CASH",
-        customer: {
-          name: faker.name.findName(),
-          address: faker.address.streetAddress(),
-          mobile: faker.phone.phoneNumber(),
-        },
+        customer: faker.name.findName(),
         note: faker.lorem.sentence(),
         items: items,
       });
@@ -50,7 +41,7 @@ handler.get(async (req, res) => {
   }
 
   try {
-    const result = await SampahPurchase.create(data, { runValidators: true });
+    const result = await SampahPurchase.create(data);
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);

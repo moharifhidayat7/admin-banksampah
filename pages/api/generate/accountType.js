@@ -10,11 +10,12 @@ handler.get(async (req, res) => {
   for (let i = 0; i < parseInt(req.query.rows); i++) {
     const code = faker.datatype.number(20);
     const name = faker.company.companyName();
-
-    data.push({
-      code: code.toString().padStart(2, 0),
-      name: name,
-    });
+    if (code != 0) {
+      data.push({
+        code: code.toString().padStart(2, 0),
+        name: name,
+      });
+    }
   }
 
   try {

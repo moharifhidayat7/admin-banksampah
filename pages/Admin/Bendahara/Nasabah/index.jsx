@@ -8,6 +8,7 @@ import Link from "next/link";
 import DateRangeFilter from "@components/DateRangeFilter";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
 import { getSession } from "next-auth/client";
+
 import {
   Table,
   TableHead,
@@ -124,7 +125,6 @@ export default function Nasabah({ data, accountType }) {
         <div className='overflow-x-auto rounded-md'>
           <Table>
             <TableHead>
-              <TableCol>Tanggal Pendaftaran</TableCol>
               <TableCol>No. Rekening</TableCol>
               <TableCol>NIK</TableCol>
               <TableCol>Nama</TableCol>
@@ -132,6 +132,7 @@ export default function Nasabah({ data, accountType }) {
               <TableCol>L/P</TableCol>
               <TableCol>No. HP</TableCol>
               <TableCol>Tipe Akun</TableCol>
+              <TableCol>Tanggal Pendaftaran</TableCol>
               <TableCol></TableCol>
             </TableHead>
             <TableBody>
@@ -145,13 +146,6 @@ export default function Nasabah({ data, accountType }) {
                       }}
                       className='cursor-pointer'
                     >
-                      <TableCell>
-                        {new Date(item.createdAt).toLocaleString("id-ID", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </TableCell>
                       <TableCell>{item.rekening}</TableCell>
                       <TableCell>{item.nik}</TableCell>
                       <TableCell>{item.name}</TableCell>
@@ -159,6 +153,13 @@ export default function Nasabah({ data, accountType }) {
                       <TableCell>{item.gender}</TableCell>
                       <TableCell>{item.mobile}</TableCell>
                       <TableCell>{item._accountType.name}</TableCell>
+                      <TableCell>
+                        {new Date(item.createdAt).toLocaleString("id-ID", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </TableCell>
                       <TableCell className='text-right'>
                         <Link href={`${router.pathname}/${item._id}`}>
                           <a

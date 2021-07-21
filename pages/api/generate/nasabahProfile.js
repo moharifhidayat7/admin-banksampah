@@ -12,16 +12,14 @@ handler.get(async (req, res) => {
   for (let i = 0; i < parseInt(req.query.rows); i++) {
     const index = faker.datatype.number(accountType.length - 1);
     data.push({
-      nik: faker.datatype.number(99999999),
+      nik: faker.datatype.number(9999999999),
       name: faker.name.findName(),
       email: faker.internet.email(),
       address: faker.address.streetAddress(),
       mobile: faker.phone.phoneNumber(),
-      gender: Math.round(Math.random()) ? "Laki-Laki" : "Perempuan",
+      gender: Math.round(Math.random()) ? "L" : "P",
       birthdate: faker.date.past().toISOString().split("T")[0],
       _accountType: accountType[index]._id,
-      ktp: "",
-      rekening: "",
     });
   }
 

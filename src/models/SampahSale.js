@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { SampahTypeSchema } from "./SampahType";
 
 const MODEL_NAME = "SampahSale";
 
@@ -9,51 +10,23 @@ const schema = new Schema(
     },
     customer: {
       type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-    },
-    mobile: {
-      type: String,
     },
     transactionDate: {
       type: Date,
       default: new Date(),
-      required: true,
     },
     items: [
       {
-        _id: {
-          type: String,
-        },
-        _category: {
-          _id: {
-            type: String,
-          },
-          name: {
-            type: String,
-            required: true,
-          },
-        },
-        price: {
-          type: Number,
-          required: true,
-        },
-        buyerPrice: {
-          type: Number,
-        },
-        name: {
-          type: String,
-          required: true,
-        },
-        denom: {
-          type: String,
+        _sampahType: {
+          type: SampahTypeSchema,
           required: true,
         },
         qty: {
           type: Number,
           required: true,
+        },
+        buyerPrice: {
+          type: Number,
         },
       },
     ],

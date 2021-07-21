@@ -1,5 +1,6 @@
 import createHandler from "@middleware/index";
 import AccountType from "@models/AccountType";
+import NasabahProfile from "@models/NasabahProfile";
 
 const handler = createHandler();
 
@@ -31,25 +32,12 @@ handler.patch(async (req, res) => {
 
 handler.delete(async (req, res) => {
   try {
-    await AccountType.findByIdAndDelete(
-      req.query.id,
-      { rawResult: true },
-      (error, result) => {
-        if (error) {
-          res.status(500).json({ message: "Terjadi Kesalahan" });
-        }
-        if (result.value == null) {
-          return res.status(400).json({
-            message: "Data Tidak Ditemukan",
-          });
-        }
-        return res.status(200).json({
-          message: "Berhasil Menghapus Data",
-        });
-      }
-    );
+    const result = await AccountType.findByIdAndDelete(req.query.id);
+    await NasabahProfile.deleteMany({ _accountType: result._id });
+
+    res.status(200).json(result);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(400).json(error);
   }
 });
 

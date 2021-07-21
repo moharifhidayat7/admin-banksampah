@@ -14,23 +14,16 @@ handler.get(async (req, res) => {
     const items = [];
 
     for (let j = 0; j < index; j++) {
-      const curItem = sampahType[faker.datatype.number(sampahType.length - 1)];
       items.push({
-        _id: curItem._id,
-        denom: curItem.denom,
-        _category: curItem._category,
-        name: curItem.name,
-        price: curItem.price,
-        buyerPrice: faker.datatype.number(20000),
+        _sampahType: sampahType[j],
         qty: faker.datatype.number(50),
+        buyerPrice: faker.datatype.number(8000),
       });
     }
 
     data.push({
       note: faker.lorem.sentence(),
       customer: faker.name.findName(),
-      address: faker.address.streetAddress(),
-      mobile: faker.phone.phoneNumber(),
       items: items,
     });
   }

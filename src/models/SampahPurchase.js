@@ -1,6 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, SchemaTypes } from "mongoose";
+
 import { SampahTypeSchema } from "./SampahType";
 import "./NasabahProfile";
+import "./BankTransaction";
 
 const MODEL_NAME = "SampahPurchase";
 
@@ -14,14 +16,13 @@ const schema = new Schema(
     transactionDate: {
       type: Date,
       default: new Date(),
-      required: true,
     },
     _nasabah: {
       type: Schema.Types.ObjectId,
       ref: "NasabahProfile",
       autopopulate: true,
       required: function () {
-        if (this.transactionType == "TABUNG" && !this.customer) {
+        if (this.transactionType == "TABUNG") {
           return true;
         }
         return false;
@@ -33,12 +34,45 @@ const schema = new Schema(
     note: {
       type: String,
     },
-    items: [SampahTypeSchema],
+    items: [
+      {
+        _sampahType: { type: SampahTypeSchema, required: true },
+        qty: { type: Number, required: true },
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
+
+schema.post("save", async function (doc) {
+  if (doc.transactionType == "TABUNG") {
+    await mongoose.model("BankTransaction").create({
+      transactionType: "DEBIT",
+      amount: doc.total,
+      _sampahTransaction: doc._id,
+      _nasabah: doc._nasabah,
+    });
+  }
+});
+
+schema.virtual("total").get(function () {
+  const total = this.items.reduce((acc, cur) => {
+    const subTotal = cur._sampahType.price * cur.qty;
+    return acc + subTotal;
+  }, 0);
+  return total;
+});
+
+schema.virtual("invoice_id").get(function () {
+  return "BSB" + this.transactionNo.toString().padStart(6, 0);
+});
 
 schema.plugin(require("mongoose-autopopulate"));
 
 export default mongoose.models[MODEL_NAME] ||
-  mongoose.model(MODEL_NAME, schema);
+  mongoose.model(
+    MODEL_NAME,
+    schema.plugin(require("mongoose-sequence")(mongoose), {
+      inc_field: "transactionNo",
+    })
+  );

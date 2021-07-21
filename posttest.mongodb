@@ -6,6 +6,5 @@
 // Select the database to use.
 use('banksampah');
 
-
-db.sampahtypes.remove({_id:ObjectId("60f6d2941eeec726142d9fa4")})
+db.sampahpurchases.deleteOne({_id:ObjectId("60f7f8119ecc2533e4142cbd")})
 // Insert a few documents into the sales collection.

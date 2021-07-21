@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import "@models/SampahCategory";
+import "./SampahCategory";
 
 const MODEL_NAME = "SampahType";
 
@@ -19,7 +19,7 @@ const schema = new Schema(
       type: Number,
       required: true,
     },
-    denom: {
+    unit: {
       type: String,
       required: true,
     },
@@ -28,6 +28,8 @@ const schema = new Schema(
 );
 
 schema.plugin(require("mongoose-autopopulate"));
+
+export { schema as SampahTypeSchema };
 
 export default mongoose.models[MODEL_NAME] ||
   mongoose.model(MODEL_NAME, schema);

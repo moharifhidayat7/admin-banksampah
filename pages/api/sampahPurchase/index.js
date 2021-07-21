@@ -28,9 +28,9 @@ handler.get(async (req, res) => {
     if (key == "keyword" && value != "") {
       filter.push({
         $or: [
-          { _nasabah: { $regex: `.*${value}.*`, $options: "i" } },
+          { "_nasabah.name": { $regex: `.*${value}.*`, $options: "i" } },
           { _id: { $regex: `.*${value}.*`, $options: "i" } },
-          { "customer.name": { $regex: `.*${value}.*`, $options: "i" } },
+          { customer: { $regex: `.*${value}.*`, $options: "i" } },
         ],
       });
     }
