@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+
+import Link from "next/link";
+import Head from "next/head";
+
+import * as Icons from "heroicons-react";
+
 import Layout from "@components/Layouts/BhrLayout";
 import Pagination from "@components/Pagination";
 import SearchFilter from "@components/SearchFilter";
 import Sort from "@components/Sort";
-import Filter from "@components/Filter";
-import Link from "next/link";
 import DateRangeFilter from "@components/DateRangeFilter";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
-import { getSession } from "next-auth/client";
-
+import TableFilter from "@components/TableFilter";
 import {
   Table,
   TableHead,
@@ -17,17 +21,22 @@ import {
   TableCell,
   TableCol,
 } from "@components/Table";
-import * as Icons from "heroicons-react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import TambahTipeAkunModal from "@components/Modals/TambahTipeAkunModal";
+import DetailNasabahModal from "@components/Modals/DetailNasabahModal";
+
+import { getSession } from "next-auth/client";
+
 export default function Nasabah({ data, accountType }) {
   const router = useRouter();
   const [deleteRowModal, setDeleteRowModal] = useState(false);
-  const [tambahTipeAkunModal, setTambahTipeAkunModal] = useState(false);
+  const [detailNasabahModal, setDetailNasabahModal] = useState(false);
   const [row, setRow] = useState({});
 
-  const accountTypeOption = accountType.map((type) => {
+  const [startDate, setStartDate] = useState(new Date().setDate(1));
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)
+  );
+
+  const accountTypeOption = accountType.rows.map((type) => {
     return { label: type.code + " - " + type.name, value: type._id };
   });
 
@@ -52,11 +61,12 @@ export default function Nasabah({ data, accountType }) {
         setShow={setDeleteRowModal}
         onDelete={deleteHandler}
       />
-      <TambahTipeAkunModal
+      <DetailNasabahModal
         data={row}
-        title='Tambah Tipe Akun'
-        show={tambahTipeAkunModal}
-        setShow={setTambahTipeAkunModal}
+        title='Detail Nasabah'
+        show={detailNasabahModal}
+        setShow={setDetailNasabahModal}
+        onDelete={() => setDeleteRowModal(!deleteRowModal)}
       />
       <Head>
         <title>Nasabah - Bank Sampah Banyuwangi</title>
@@ -64,16 +74,6 @@ export default function Nasabah({ data, accountType }) {
       <div className='border-b border-gray-400 pb-2 flex justify-between'>
         <h1 className='text-4xl'>Nasabah</h1>
         <div className='float-right flex space-x-2'>
-          <button
-            onClick={() => {
-              setTambahTipeAkunModal(!tambahTipeAkunModal);
-            }}
-            type='button'
-            className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
-          >
-            <Icons.Plus className='inline-block align-middle mr-2' />
-            <span className='align-middle'>Tambah Tipe Akun</span>
-          </button>
           <Link href={router.pathname + "/tambah"}>
             <a
               role='button'
@@ -95,31 +95,39 @@ export default function Nasabah({ data, accountType }) {
               { label: "Tanggal Registrasi", value: "createdAt" },
             ]}
           />
-          <Filter
-            className='md:col-span-2'
+          <TableFilter
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
             filterField={[
               {
-                selectLabel: "Jenis Kelamin ...",
+                selectLabel: "Jenis Kelamin",
                 field: "gender",
                 options: [
                   {
                     label: "Laki-Laki",
-                    value: "Laki-Laki",
+                    value: "L",
                   },
                   {
                     label: "Perempuan",
-                    value: "Perempuan",
+                    value: "P",
                   },
                 ],
               },
               {
-                selectLabel: "Tipe Akun ...",
+                selectLabel: "Golongan",
                 field: "_accountType",
                 options: accountTypeOption,
               },
             ]}
-          />
-          <DateRangeFilter title='Tanggal Pendaftaran' />
+          >
+            <DateRangeFilter
+              label='Tanggal Pendaftaran'
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />
+          </TableFilter>
           <SearchFilter />
         </div>
         <div className='overflow-x-auto rounded-md'>
@@ -131,7 +139,7 @@ export default function Nasabah({ data, accountType }) {
               <TableCol>Alamat</TableCol>
               <TableCol>L/P</TableCol>
               <TableCol>No. HP</TableCol>
-              <TableCol>Tipe Akun</TableCol>
+              <TableCol>Golongan</TableCol>
               <TableCol>Tanggal Pendaftaran</TableCol>
               <TableCol></TableCol>
             </TableHead>
@@ -142,7 +150,8 @@ export default function Nasabah({ data, accountType }) {
                     <TableRow
                       key={item._id}
                       onClick={() => {
-                        router.push(`${router.pathname}/${item._id}`);
+                        setRow(item);
+                        setDetailNasabahModal(!detailNasabahModal);
                       }}
                       className='cursor-pointer'
                     >
@@ -161,17 +170,16 @@ export default function Nasabah({ data, accountType }) {
                         })}
                       </TableCell>
                       <TableCell className='text-right'>
-                        <Link href={`${router.pathname}/${item._id}`}>
-                          <a
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            role='button'
-                            className={`inline-block align-middle bg-green-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white`}
-                          >
-                            <Icons.Eye />
-                          </a>
-                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRow(item);
+                            setDetailNasabahModal(!detailNasabahModal);
+                          }}
+                          className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                        >
+                          <Icons.Eye />
+                        </button>
                         <Link href={`${router.pathname}/edit/${item._id}`}>
                           <a
                             onClick={(e) => {
@@ -220,11 +228,6 @@ export default function Nasabah({ data, accountType }) {
     </Layout>
   );
 }
-
-export async function getInitialProps(ctx) {
-  return flash.get(ctx) || {};
-}
-
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   if (!session) {

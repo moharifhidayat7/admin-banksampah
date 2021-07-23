@@ -1,15 +1,24 @@
 import Modal from "@components/Modal";
 
-const DeleteRowModal = ({ title, data, show, setShow, onDelete }) => {
+const DeleteRowModal = ({ title, data, message, show, setShow, onDelete }) => {
   const toggleShow = () => {
     setShow(!show);
   };
 
   return (
-    <Modal title={title} show={show} toggleShow={toggleShow}>
+    <Modal
+      title={title}
+      show={show}
+      toggleShow={toggleShow}
+      className='sm:w-1/2 md:w-96'
+      zClass='z-50'
+    >
       <Modal.Content>
-        Anda yakin ingin menghapus{" "}
-        <span className='font-bold'>{data.name}</span>?
+        <div>{message}</div>
+        <div>
+          Anda yakin ingin menghapus{" "}
+          <span className='font-bold'>{data.name}</span>?
+        </div>
       </Modal.Content>
       <Modal.Footer>
         <button

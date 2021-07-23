@@ -24,7 +24,6 @@ const schema = new Schema(
     },
     mobile: {
       type: String,
-      required: true,
     },
     birthdate: {
       type: String,
@@ -56,9 +55,10 @@ schema.pre("save", async function (next) {
     .model("AccountType")
     .findOne({ _id: this._accountType });
 
+  const code = accountType.code;
+  const counter = accountType.counter;
   this.rekening =
-    accountType.code.toString().padStart(2, 0) +
-    accountType.counter.toString().padStart(4, 0);
+    code.toString().padStart(2, 0) + counter.toString().padStart(4, 0);
   next();
 });
 schema.post("save", async function (doc, next) {

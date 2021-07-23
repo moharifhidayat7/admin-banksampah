@@ -1,7 +1,6 @@
 import * as Icons from "heroicons-react";
 import { useState } from "react";
-const SearchText = ({ onSubmit }) => {
-  const [keyword, setKeyword] = useState("");
+const SearchText = ({ keyword, setKeyword, onSubmit }) => {
   const handleChange = (e) => {
     setKeyword(e.target.value);
   };
@@ -19,6 +18,7 @@ const SearchText = ({ onSubmit }) => {
     <div className='relative w-full flex space-x-2'>
       <div className='flex-grow'>
         <input
+          value={keyword}
           onChange={handleChange}
           onKeyPress={handleKeypress}
           className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'

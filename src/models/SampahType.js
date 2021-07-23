@@ -14,6 +14,14 @@ const schema = new Schema(
       ref: "SampahCategory",
       required: true,
       autopopulate: true,
+      get: function (v) {
+        if (this.name) {
+          return this._category.name;
+        }
+        if (this.unit) {
+          return "ada unit";
+        }
+      },
     },
     price: {
       type: Number,
@@ -23,8 +31,13 @@ const schema = new Schema(
       type: String,
       required: true,
     },
+    stock: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { getters: true } }
 );
 
 schema.plugin(require("mongoose-autopopulate"));

@@ -1,12 +1,13 @@
 import { useState } from "react";
-import Layout from "@components/Layouts/AdminLayout";
+import Layout from "@components/Layouts/BhrLayout";
 import Pagination from "@components/Pagination";
 import SearchFilter from "@components/SearchFilter";
 import Sort from "@components/Sort";
 import Link from "next/link";
+import DateRangeFilter from "@components/DateRangeFilter";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
-import TableFilter from "@components/TableFilter";
 import { getSession } from "next-auth/client";
+import TableFilter from "@components/TableFilter";
 import {
   Table,
   TableHead,
@@ -18,94 +19,69 @@ import {
 import * as Icons from "heroicons-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-export default function HargaSampah({ data, sampahCategory }) {
+import TambahGolonganModal from "@components/Modals/TambahGolonganModal";
+
+export default function Golongan({ data, accountType }) {
   const router = useRouter();
   const [deleteRowModal, setDeleteRowModal] = useState(false);
+  const [tambahGolonganModal, setTambahGolonganModal] = useState(false);
   const [row, setRow] = useState({});
-
-  const sampahCategoryOption = sampahCategory.map((type) => {
-    return { label: type.name, value: type._id };
-  });
 
   const deleteHandler = async () => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${row._id}`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType/${row._id}`,
       {
         method: "DELETE",
       }
-    ).then(async (res) => {
-      setDeleteRowModal(!deleteRowModal);
-      router.replace(router.asPath);
+    ).then((res) => {
+      if (res.status == 200) {
+        setDeleteRowModal(!deleteRowModal);
+        router.replace(router.asPath);
+      }
     });
-  };
-
-  const formatRp = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(number);
   };
 
   return (
     <Layout>
       <DeleteRowModal
         data={row}
-        title='Hapus Jenis Sampah'
+        title='Hapus Golongan'
+        message='Data Nasabah juga akan ikut terhapus!'
         show={deleteRowModal}
         setShow={setDeleteRowModal}
         onDelete={deleteHandler}
       />
-
+      <TambahGolonganModal
+        data={row}
+        title='Tambah Golongan'
+        show={tambahGolonganModal}
+        setShow={setTambahGolonganModal}
+      />
       <Head>
-        <title>Harga Sampah - Bank Sampah Banyuwangi</title>
+        <title>Golongan - Bank Sampah Banyuwangi</title>
       </Head>
       <div className='border-b border-gray-400 pb-2 flex justify-between'>
-        <h1 className='text-4xl'>Harga Sampah</h1>
+        <h1 className='text-4xl'>Golongan</h1>
         <div className='float-right flex space-x-2'>
-          <Link href={router.pathname + "/tambah"}>
-            <a
-              role='button'
-              className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
-            >
-              <Icons.Plus className='inline-block align-middle mr-2' />
-              <span className='align-middle'>Tambah Jenis Sampah</span>
-            </a>
-          </Link>
+          <button
+            onClick={() => {
+              setRow({});
+              setTambahGolonganModal(!tambahGolonganModal);
+            }}
+            type='button'
+            className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
+          >
+            <Icons.Plus className='inline-block align-middle mr-2' />
+            <span className='align-middle'>Tambah Golongan</span>
+          </button>
         </div>
       </div>
       <div>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2'>
-          <Sort
-            options={[
-              { label: "Jenis Sampah", value: "name" },
-              { label: "Harga", value: "price" },
-              { label: "Stok", value: "stock" },
-            ]}
-          />
-          <TableFilter
-            filterField={[
-              {
-                selectLabel: "Kategori",
-                field: "_category",
-                options: sampahCategory.map((category) => {
-                  return {
-                    label: category.name,
-                    value: category._id,
-                  };
-                }),
-              },
-            ]}
-          ></TableFilter>
-          <SearchFilter />
-        </div>
         <div className='overflow-x-auto rounded-md'>
           <Table>
             <TableHead>
-              <TableCol>Jenis Sampah</TableCol>
-              <TableCol>Kategory</TableCol>
-              <TableCol>Satuan</TableCol>
-              <TableCol>Harga</TableCol>
-              <TableCol>Stok</TableCol>
+              <TableCol className='w-32'>Kode</TableCol>
+              <TableCol>Nama Golongan</TableCol>
               <TableCol></TableCol>
             </TableHead>
             <TableBody>
@@ -115,26 +91,24 @@ export default function HargaSampah({ data, sampahCategory }) {
                     <TableRow
                       key={item._id}
                       onClick={() => {
-                        router.push(`${router.pathname}/edit/${item._id}`);
+                        setRow(item);
+                        setTambahGolonganModal(!tambahGolonganModal);
                       }}
                       className='hover:bg-blue-100 cursor-pointer'
                     >
+                      <TableCell>{item.code}</TableCell>
                       <TableCell>{item.name}</TableCell>
-                      <TableCell>{item._category.name}</TableCell>
-                      <TableCell>{item.unit}</TableCell>
-                      <TableCell>{formatRp(item.price)}</TableCell>
-                      <TableCell>{item.stock}</TableCell>
                       <TableCell className='text-right'>
-                        <Link href={`${router.pathname}/edit/${item._id}`}>
-                          <a
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            className={`inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}
-                          >
-                            <Icons.Pencil />
-                          </a>
-                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRow(item);
+                            setTambahGolonganModal(!tambahGolonganModal);
+                          }}
+                          className='inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
+                        >
+                          <Icons.Pencil />
+                        </button>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -173,11 +147,6 @@ export default function HargaSampah({ data, sampahCategory }) {
     </Layout>
   );
 }
-
-export async function getInitialProps(ctx) {
-  return flash.get(ctx) || {};
-}
-
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   if (!session) {
@@ -192,7 +161,7 @@ export async function getServerSideProps(context) {
 
   const queryString = Object.keys(context.query)
     .map((key) => {
-      if (key == "limit") {
+      if (key == "limit" || key == "sort") {
         return;
       }
       return `${encodeURIComponent(key)}=${encodeURIComponent(
@@ -202,19 +171,13 @@ export async function getServerSideProps(context) {
     .join("&");
 
   const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType?limit=${limit}&${queryString}`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType?limit=${limit}&sort=code&${queryString}`
   );
   const data = await fetch1.json();
-
-  const fetch2 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory`
-  );
-  const sampahCategory = await fetch2.json();
 
   return {
     props: {
       data,
-      sampahCategory,
     },
   };
 }

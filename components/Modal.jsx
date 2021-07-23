@@ -1,14 +1,21 @@
-const Modal = ({ children, title, show, toggleShow }) => {
+const Modal = ({
+  children,
+  title,
+  show,
+  toggleShow,
+  className = "",
+  zClass = "z-40",
+}) => {
   return (
     <div className='relative'>
       <div
-        className={`modal z-40 h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-70 ${
+        className={`modal ${zClass} h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-70 ${
           show ? "" : "hidden"
         }`}
         onMouseDown={toggleShow}
       >
         <div
-          className='w-full sm:w-1/2 md:w-96 m-5'
+          className={`w-full ${className}`}
           onMouseDown={(e) => {
             e.stopPropagation();
           }}

@@ -29,7 +29,6 @@ handler.get(async (req, res) => {
       filter.push({
         $or: [
           { customer: { $regex: `.*${value}.*`, $options: "i" } },
-          { address: { $regex: `.*${value}.*`, $options: "i" } },
           { note: { $regex: `.*${value}.*`, $options: "i" } },
         ],
       });

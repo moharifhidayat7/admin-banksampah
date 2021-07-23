@@ -28,7 +28,7 @@ const Pagination = ({ page, maxPage, start, end, pageRange }) => {
           <Link href={page > 1 ? newQuery(page - 1) : "#"}>
             <a
               className={
-                "px-3 py-1 rounded-md bg-gray-700 border border-2 border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
+                "px-3 py-1 rounded-md bg-gray-700 border border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
               }
             >
               Sebelumnya
@@ -39,7 +39,7 @@ const Pagination = ({ page, maxPage, start, end, pageRange }) => {
           <Link href={newQuery(1)}>
             <a
               className={
-                "px-3 py-1 rounded-md bg-gray-700 border border-2 border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
+                "px-3 py-1 rounded-md bg-gray-700 border border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
               }
             >
               {1}
@@ -50,7 +50,7 @@ const Pagination = ({ page, maxPage, start, end, pageRange }) => {
           <Link href={pageStart - 1 ? newQuery(pageStart - 1) : "#"}>
             <a
               className={
-                "px-3 py-1 rounded-md bg-gray-700 border border-2 border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
+                "px-3 py-1 rounded-md bg-gray-700 border border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
               }
             >
               ...
@@ -87,7 +87,7 @@ const Pagination = ({ page, maxPage, start, end, pageRange }) => {
           >
             <a
               className={
-                "px-3 py-1 rounded-md bg-gray-700 border border-2 border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
+                "px-3 py-1 rounded-md bg-gray-700 border border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
               }
             >
               ...
@@ -99,7 +99,7 @@ const Pagination = ({ page, maxPage, start, end, pageRange }) => {
           <Link href={newQuery(maxPage)}>
             <a
               className={
-                "px-3 py-1 rounded-md bg-gray-700 border border-2 border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
+                "px-3 py-1 rounded-md bg-gray-700 border border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
               }
             >
               {maxPage}
@@ -111,7 +111,7 @@ const Pagination = ({ page, maxPage, start, end, pageRange }) => {
           <Link href={page > 1 ? newQuery(page + 1) : "#"}>
             <a
               className={
-                "px-3 py-1 rounded-md bg-gray-700 border border-2 border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
+                "px-3 py-1 rounded-md bg-gray-700 border border-white text-white hover:border-gray-700 hover:text-gray-700 hover:bg-white"
               }
             >
               Selanjutnya

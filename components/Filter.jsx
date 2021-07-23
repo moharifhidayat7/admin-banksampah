@@ -1,28 +1,15 @@
-import SelectMenu from "@components/Input/SelectMenu";
-import * as Icons from "heroicons-react";
-import { useEffect, useState } from "react";
-import FilterCard from "@components/FilterCard";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import Select from "react-select";
 
-const Filter = ({ filterField, className = "" }) => {
+const Filter = ({ children, filterField, setRefs, className = "" }) => {
   const router = useRouter();
 
-  const [selected, setSelected] = useState([]);
-
-  const filterSelected = (op) => {
-    const arr = [];
-    for (let i = 0; i < filterField.length; i++) {
-      if (op == filterField[i]) {
-        selected[i] = op;
-      } else {
-        selected[i] = "";
-      }
-    }
-    setSelected(arr);
-  };
+  const selectsRef = useRef(new Array());
 
   const handleSelect = (op, select) => {
     delete router.query.page;
+
     if (op.value == "") {
       delete router.query[select.field];
     } else {
@@ -33,48 +20,47 @@ const Filter = ({ filterField, className = "" }) => {
       query: router.query,
     });
   };
-
-  const handleReset = () => {
-    delete router.query.page;
-    for (let i = 0; i < filterField.length; i++) {
-      const element = filterField[i];
-      delete router.query[element.field];
-    }
-
-    filterSelected({});
-
-    router.push({
-      pathname: router.pathname,
-      query: router.query,
-    });
-  };
+  useEffect(() => {
+    setRefs(selectsRef);
+  }, []);
 
   return (
-    <FilterCard title='Filter' onReset={handleReset} className={className}>
-      <FilterCard.Content className='flex flex-row space-x-2 items-center'>
-        {filterField.map((select, i) => {
-          return (
-            <SelectMenu
-              key={i}
-              label={select.selectLabel}
-              onChange={(op) => {
-                filterSelected(op);
-                handleSelect(op, select);
-              }}
-              selected={selected[i]}
-              options={select.options}
-              defaultValue={
-                router.query[select.field]
-                  ? select.options.filter(
-                      (s) => s.value == router.query[select.field]
-                    )[0]
-                  : ""
-              }
-            />
-          );
-        })}
-      </FilterCard.Content>
-    </FilterCard>
+    <>
+      {filterField.map((select, i) => {
+        const selectOptions = [
+          {
+            label: select.selectLabel + " ...",
+            value: "",
+          },
+          ...select.options,
+        ];
+        return (
+          <div className={`flex flex-row space-x-3 items-center`} key={i}>
+            <div className='text-xs font-medium text-gray-700 w-1/4'>
+              {select.selectLabel}
+            </div>
+            <div className='flex-grow'>
+              <Select
+                instanceId={`selectFilter${i}`}
+                ref={(element) => selectsRef.current.push(element)}
+                className='text-base md:text-sm border-gray-300 rounded-md shadow-sm'
+                defaultValue={
+                  router.query[select.field]
+                    ? select.options.filter(
+                        (s) => s.value == router.query[select.field]
+                      )[0]
+                    : selectOptions[0]
+                }
+                onChange={(e) => {
+                  handleSelect(e, select);
+                }}
+                options={selectOptions}
+              />
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 export default Filter;

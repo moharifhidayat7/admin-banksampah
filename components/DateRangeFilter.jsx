@@ -1,17 +1,15 @@
-import SelectMenu from "@components/Input/SelectMenu";
-import * as Icons from "heroicons-react";
 import { useState } from "react";
-import FilterCard from "@components/FilterCard";
 import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 
-const DateRangeFilter = ({ title }) => {
+const DateRangeFilter = ({
+  label,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}) => {
   const router = useRouter();
-
-  const [startDate, setStartDate] = useState(new Date().setDate(1));
-  const [endDate, setEndDate] = useState(
-    new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)
-  );
 
   const defaultStartDate =
     router.query.range && router.query.range.split("s")[0];
@@ -31,18 +29,9 @@ const DateRangeFilter = ({ title }) => {
   };
 
   return (
-    <FilterCard
-      title={title}
-      onReset={() => {
-        delete router.query.range;
-        delete router.query.page;
-        router.push({
-          pathname: router.pathname,
-          query: router.query,
-        });
-      }}
-    >
-      <FilterCard.Content className='flex flex-row space-x-1 items-center'>
+    <div className='flex space-x-3 items-center'>
+      <div className='w-1/3 text-xs font-medium text-gray-700'>{label}</div>
+      <div className='flex space-x-1 items-center'>
         <DatePicker
           selected={
             !isNaN(new Date(defaultStartDate))
@@ -82,8 +71,8 @@ const DateRangeFilter = ({ title }) => {
           nextMonthButtonLabel='>'
           previousMonthButtonLabel='<'
         />
-      </FilterCard.Content>
-    </FilterCard>
+      </div>
+    </div>
   );
 };
 export default DateRangeFilter;

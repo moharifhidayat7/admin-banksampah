@@ -26,11 +26,13 @@ export default function AdminLayout({ children }) {
               icon={<Icons.HomeOutline size='1rem' />}
               title='Dashboard'
             />
-            <Item
-              route='/Admin/Bendahara/Nasabah'
-              icon={<Icons.UserGroup size='1rem' />}
-              title='Data Nasabah'
-            ></Item>
+            <Item route='/Admin/Bendahara/Nasabah' icon={<Icons.UserGroup size='1rem' />} title='Nasabah'>
+              <SubItem route='/Admin/Bendahara/Nasabah' title='Data Nasabah' />
+              <SubItem
+                route='/Admin/Bendahara/Nasabah/Golongan'
+                title='Golongan'
+              />
+            </Item>
             <Item
               route='/Admin/Bendahara/Internal'
               icon={<Icons.Cash size='1rem' />}

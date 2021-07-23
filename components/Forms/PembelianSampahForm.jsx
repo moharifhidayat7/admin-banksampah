@@ -107,11 +107,11 @@ export default function PembelianSampahForm({
         setShow={setTambahItemModal}
         sampahType={sampahType}
       />
-      <div className='bg-white py-2 px-4 rounded-md shadow-md border-gray-300 m-auto w-3/4'>
-        <div>
+      <div className='bg-white rounded-md shadow-md border-gray-300 m-auto w-3/4'>
+        <div className='py-2 px-4 border-b'>
           <h3 className='text-lg font-medium'>{title}</h3>
         </div>
-        <div className='grid grid-cols-3 gap-5 mb-2'>
+        <div className='grid grid-cols-3 gap-5 mb-2 py-2 px-4'>
           <div>
             <div>
               <div>
@@ -142,23 +142,23 @@ export default function PembelianSampahForm({
                   Tipe Transaksi
                 </div>
                 <div>
-                  <label class='inline-flex items-center'>
+                  <label className='inline-flex items-center'>
                     <input
                       type='radio'
-                      class='form-radio'
+                      className='form-radio'
                       name='transactionType'
                       value='TABUNG'
                     />
-                    <span class='ml-2'>TABUNG</span>
+                    <span className='ml-2'>TABUNG</span>
                   </label>
-                  <label class='inline-flex items-center ml-6'>
+                  <label className='inline-flex items-center ml-6'>
                     <input
                       type='radio'
-                      class='form-radio'
+                      className='form-radio'
                       name='transactionType'
                       value='CASH'
                     />
-                    <span class='ml-2'>CASH</span>
+                    <span className='ml-2'>CASH</span>
                   </label>
                 </div>
               </div>
@@ -171,7 +171,7 @@ export default function PembelianSampahForm({
                   onChange={(date) => {
                     setSelectedDate(date);
                   }}
-                  selectsRang
+                  selectsRange
                   nextMonthButtonLabel='>'
                   previousMonthButtonLabel='<'
                 />
@@ -263,7 +263,7 @@ export default function PembelianSampahForm({
             </div>
           </div>
         </div>
-        <div className='flex justify-end w-full'>
+        <div className='flex justify-end py-2 px-4 border-t'>
           <div>
             <button
               onClick={(e) => {

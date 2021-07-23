@@ -3,7 +3,7 @@ import { useState } from "react";
 import SelectMenu from "@components/Input/SelectMenu";
 import Select from "react-select";
 
-const TambahItemModal = ({
+const TambahItemPenjualanModal = ({
   title,
   sampahType,
   items,
@@ -11,15 +11,17 @@ const TambahItemModal = ({
   show,
   setShow,
 }) => {
-  const [qty, setQty] = useState("");
+  const [qty, setQty] = useState(0);
+  const [buyerPrice, setBuyerPrice] = useState("");
   const [selected, setSelected] = useState("");
+  const [stock, setStock] = useState(0);
 
   const toggleShow = () => {
     setShow(!show);
   };
 
   const handleTambah = async () => {
-    if (qty == 0) {
+    if (qty == 0 || buyerPrice == 0 || qty > stock) {
       return;
     }
 
@@ -33,15 +35,17 @@ const TambahItemModal = ({
       const newItems = items.map((item) => {
         if (item._id == selected._id) {
           item.qty = qty;
+          item.buyerPrice = buyerPrice;
         }
         return item;
       });
 
       setItems(newItems);
     } else {
-      setItems([...items, { ...selected, qty: qty }]);
+      setItems([...items, { ...selected, qty: qty, buyerPrice: buyerPrice }]);
     }
     setQty("");
+    setBuyerPrice("");
     setSelected("");
     toggleShow();
   };
@@ -61,14 +65,37 @@ const TambahItemModal = ({
           <Select
             instanceId='tambahItem'
             options={sampahType}
-            onChange={(e) => setSelected(e)}
+            onChange={(e) => {
+              setSelected(e);
+              setStock(e.stock);
+              setBuyerPrice(e.price);
+            }}
           ></Select>
+        </div>
+        <div>
+          <div className='text-sm font-medium text-gray-700 py-2 '>Stok</div>
+          <input
+            value={stock}
+            type='number'
+            readOnly
+            disabled
+            className='w-full text-base md:text-sm bg-white disabled:bg-gray-300 border border-gray-300 rounded-md shadow-sm form-input'
+          />
         </div>
         <div>
           <div className='text-sm font-medium text-gray-700 py-2 '>Qty</div>
           <input
             value={qty}
-            onChange={(e) => setQty(e.target.value)}
+            onChange={(e) => setQty(parseInt(e.target.value))}
+            type='number'
+            className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
+          />
+        </div>
+        <div>
+          <div className='text-sm font-medium text-gray-700 py-2 '>Harga</div>
+          <input
+            value={buyerPrice}
+            onChange={(e) => setBuyerPrice(e.target.value)}
             type='number'
             className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
           />
@@ -93,4 +120,4 @@ const TambahItemModal = ({
     </Modal>
   );
 };
-export default TambahItemModal;
+export default TambahItemPenjualanModal;

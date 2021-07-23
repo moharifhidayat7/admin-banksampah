@@ -3,7 +3,7 @@ import Layout from "@components/Layouts/AdminLayout";
 import Pagination from "@components/Pagination";
 import SearchFilter from "@components/SearchFilter";
 import Sort from "@components/Sort";
-import Filter from "@components/Filter";
+import TableFilter from "@components/TableFilter";
 import Link from "next/link";
 import DateRangeFilter from "@components/DateRangeFilter";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
@@ -19,11 +19,15 @@ import {
 import * as Icons from "heroicons-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import TambahTipeAkunModal from "@components/Modals/TambahTipeAkunModal";
+import TambahTipeAkunModal from "@components/Modals/TambahGolonganModal";
 export default function PenjualanSampah({ data }) {
   const router = useRouter();
   const [deleteRowModal, setDeleteRowModal] = useState(false);
   const [tambahTipeAkunModal, setTambahTipeAkunModal] = useState(false);
+  const [startDate, setStartDate] = useState(new Date().setDate(1));
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)
+  );
   const [row, setRow] = useState({});
 
   const deleteHandler = async () => {
@@ -85,13 +89,24 @@ export default function PenjualanSampah({ data }) {
               { label: "Pembeli", value: "customer" },
             ]}
           />
-          <DateRangeFilter title='Tanggal Transaksi' />
+          <TableFilter
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            filterField={[]}
+          >
+            <DateRangeFilter
+              label='Tanggal Transaksi'
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />
+          </TableFilter>
           <SearchFilter />
         </div>
         <div className='overflow-x-auto rounded-md'>
           <Table>
             <TableHead>
-              <TableCol className='w-32'>Id</TableCol>
               <TableCol className='w-32'>Tanggal</TableCol>
               <TableCol>Pembeli</TableCol>
               <TableCol>Keterangan</TableCol>
@@ -109,7 +124,6 @@ export default function PenjualanSampah({ data }) {
                       }}
                       className='cursor-pointer'
                     >
-                      <TableCell>{item._id}</TableCell>
                       <TableCell>
                         {new Date(item.transactionDate).toLocaleString(
                           "id-ID",

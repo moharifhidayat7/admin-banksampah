@@ -4,6 +4,9 @@ const MODEL_NAME = "File";
 
 const schema = new Schema(
   {
+    contentType: {
+      type: String,
+    },
     file: {
       type: Buffer,
       required: true,

@@ -3,6 +3,7 @@ import mongoose, { Schema, SchemaTypes } from "mongoose";
 import { SampahTypeSchema } from "./SampahType";
 import "./NasabahProfile";
 import "./BankTransaction";
+import "./SampahStock";
 
 const MODEL_NAME = "SampahPurchase";
 
@@ -51,6 +52,16 @@ schema.post("save", async function (doc) {
       amount: doc.total,
       _sampahTransaction: doc._id,
       _nasabah: doc._nasabah,
+    });
+  }
+  for (let i = 0; i < doc.items.length; i++) {
+    const item = doc.items[i];
+
+    await mongoose.model("SampahStock").create({
+      _sampahType: item._sampahType._id,
+      qty: item.qty,
+      note: "Pembelian",
+      stockType: "IN",
     });
   }
 });

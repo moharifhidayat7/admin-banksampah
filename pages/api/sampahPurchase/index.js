@@ -80,10 +80,18 @@ handler.get(async (req, res) => {
 });
 handler.post(async (req, res) => {
   const data = req.body;
+  if (data._nasabah == "") {
+    delete data._nasabah;
+  }
+  if (data.customer == "") {
+    delete data.customer;
+  }
+
   try {
     const result = await SampahPurchase.create(data);
     res.status(200).json(result);
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 });

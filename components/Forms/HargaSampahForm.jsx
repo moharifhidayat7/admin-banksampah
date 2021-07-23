@@ -1,67 +1,43 @@
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import SelectMenu from "@components/Input/SelectMenu";
+import Select from "react-select";
+import { useEffect, useState } from "react";
 
-export default function HargaSampahForm({
-  onSubmit,
-  data = "",
-  title,
-  sampahCategory,
-}) {
-  const { register, handleSubmit, setValue, errors } = useForm();
-  const [selected, setSelected] = useState("");
+export default function HargaSampah({ onSubmit, data = "", sampahCategory }) {
+  const { register, handleSubmit, setValue, getValues, watch, reset, errors } =
+    useForm();
 
-  const options = sampahCategory.map((e) => {
-    return { label: e.name, value: e._id };
+  const categoryOptions = sampahCategory.map((cat) => {
+    return {
+      label: cat.name,
+      value: cat._id,
+    };
   });
 
-  const router = useRouter();
-  const handleCancel = (data) => {
-    if (data != "") {
-      router.back();
-    } else {
-      router.push(
-        router.pathname.split("/").slice(0, -1).join("/"),
-        undefined,
-        {
-          shallow: true,
-        }
-      );
-    }
-  };
-
   useEffect(() => {
-    if (data != "") {
-      setValue("name", data.name);
-      setSelected({ label: data._category.name, value: data._category._id });
-      setValue("_category", data._category._id);
-      setValue("price", data.price);
-      setValue("denom", data.denom);
-    }
+    setValue("name", data.name);
+    setValue("_category", data._category ? data._category._id : "");
+    setValue("unit", data.unit);
+    setValue("price", data.price);
   }, []);
 
   return (
-    <div className='bg-white py-2 px-4 rounded-md shadow-md border-gray-300 m-auto w-full sm:w-10/12 md:w-1/2'>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <h3 className='text-lg font-medium'>{title}</h3>
-        </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='w-full sm:w-3/4 md:w-1/4 m-auto'>
         <div>
           <div>
             <div className='text-sm font-medium text-gray-700 py-2 '>
-              Jenis Sampah
+              Jenis Sampah <span className='text-red-500'>*</span>
             </div>
             <input
+              type='text'
               name='name'
               ref={register({ required: true })}
-              type='text'
               className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
             />
           </div>
           <div>
             <div className='text-sm font-medium text-gray-700 py-2 '>
-              Kategori
+              Kategori <span className='text-red-500'>*</span>
             </div>
             <input
               type='text'
@@ -69,57 +45,67 @@ export default function HargaSampahForm({
               ref={register({ required: true })}
               hidden
             />
-            <SelectMenu
-              onChange={(op) => {
-                setSelected(op);
-                setValue("_category", op.value);
+            <Select
+              instanceId='sampahCategory'
+              defaultValue={
+                data
+                  ? categoryOptions.filter(
+                      (acc) => acc.value == data._category._id
+                    )[0]
+                  : ""
+              }
+              onChange={(e) => {
+                setValue("_category", e.value);
               }}
-              options={options}
-              label='Kategori ...'
-              selected={selected}
-              defaultValue={selected}
+              className='w-full text-base md:text-sm border-gray-300 rounded-md shadow-sm'
+              options={categoryOptions}
             />
           </div>
           <div>
             <div className='text-sm font-medium text-gray-700 py-2 '>
-              Satuan
+              Satuan <span className='text-red-500'>*</span>
             </div>
             <input
-              name='denom'
-              ref={register({ required: true })}
               type='text'
+              name='unit'
+              ref={register({ required: true })}
               className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
             />
           </div>
           <div>
-            <div className='text-sm font-medium text-gray-700 py-2 '>Harga</div>
+            <div className='text-sm font-medium text-gray-700 py-2 '>
+              Harga <span className='text-red-500'>*</span>
+            </div>
             <input
+              type='number'
               name='price'
               ref={register({ required: true })}
-              type='text'
               className='w-full text-base md:text-sm bg-white border border-gray-300 rounded-md shadow-sm form-input'
             />
           </div>
         </div>
-
-        <div className='flex justify-end w-full py-2'>
+        <div className='py-2 flex justify-end'>
           <div>
             <button
               type='submit'
               className='font-medium px-3 bg-blue-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
             >
-              Submit
+              Simpan
             </button>
-            <button
-              onClick={handleCancel}
-              type='button'
-              className='font-medium px-3 bg-gray-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-gray-500 hover:text-gray-500 focus:outline-none p-1 text-white'
-            >
-              Batal
-            </button>
+            {!data && (
+              <button
+                onClick={() => {
+                  reset();
+                }}
+                type='button'
+                className='font-medium px-3 bg-gray-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-gray-500 hover:text-gray-500 focus:outline-none p-1 text-white'
+              >
+                Reset
+              </button>
+            )}
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

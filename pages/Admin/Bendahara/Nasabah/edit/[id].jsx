@@ -1,103 +1,106 @@
-import BhrLayout from "../../../../../components/Layouts/BhrLayout";
-import NasabahForm from "../../../../../components/Forms/NasabahForm";
+import Layout from "@components/Layouts/BhrLayout";
+import ContentBox from "@components/ContentBox";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { storage } from "../../../../../src/firebase";
+import { useState, useEffect } from "react";
 import { getSession } from "next-auth/client";
-export default function editNasabah({ nasabahProfile }) {
-    const router = useRouter();
-    const [image, setImage] = useState(null);
-    const [url, setUrl] = useState("");
-    const [progress, setProgress] = useState(0);
 
-    const handleChange = (e) => {
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
-    };
+import Head from "next/head";
+import NasabahForm from "@components/Forms/NasabahForm";
 
-    const onSubmit = async (data) => {
-        if (image != null) {
-            const uploadTask = storage.ref(`images/${image.name}`).put(image);
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    setProgress(progress);
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    storage
-                        .ref("images")
-                        .child(image.name)
-                        .getDownloadURL()
-                        .then(async (url) => {
-                            setUrl(url);
-                            await fetch(
-                                `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${nasabahProfile._id}`,
-                                {
-                                    method: "PATCH",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({ ...data, ktp: url }),
-                                }
-                            ).then(async (res) => {
-                                router.push("/Admin/Bendahara/Nasabah");
-                            });
-                        });
-                }
-            );
-        } else {
-            await fetch(
-                `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${nasabahProfile._id}`,
-                {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                }
-            ).then(async (res) => {
-                router.push("/Admin/Bendahara/Nasabah");
-            });
-        }
-    };
-    return (
-        <BhrLayout>
-            <div className='pb-24'>
-                <NasabahForm
-                    onSubmit={onSubmit}
-                    data={nasabahProfile}
-                    title='Edit Nasabah'
-                    handleChange={handleChange}
-                    edit={true}
-                />
-            </div>
-        </BhrLayout>
+export default function editNasabah({ accountType, nasabahProfile }) {
+  const router = useRouter();
+
+  const [image, setImage] = useState({});
+
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`,
+      {
+        method: "POST",
+        body: formData,
+      }
     );
-}
+    return result.json();
+  };
 
-export async function getServerSideProps(context) {
-    const session = await getSession(context);
-    if (!session) {
-        return {
-            redirect: {
-                destination: "/login",
-            },
+  const onSubmit = async (data) => {
+    let postData = data;
+    if (image.raw) {
+      const result = await uploadFile(image.raw);
+      if (result._id) {
+        postData = {
+          ktp: result._id,
+          ...data,
         };
+      }
     }
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${context.params.id}`
-    );
-    const nasabahProfile = await res.json();
-    return {
-        props: {
-            nasabahProfile,
+
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${nasabahProfile._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(postData),
+      }
+    ).then((res) => {
+      if (res.status == 200) {
+        router.push(router.pathname.split("/").slice(0, -2).join("/"));
+      }
+      if (res.status == 500) {
+        alert("ewrror");
+      }
+    });
+  };
+
+  return (
+    <Layout>
+      <Head>
+        <title>Edit Nasabah - Bank Sampah Banyuwangi</title>
+      </Head>
+      <div className='pb-24'>
+        <ContentBox title='Edit Nasabah'>
+          <ContentBox.Body>
+            <NasabahForm
+              onSubmit={onSubmit}
+              data={nasabahProfile}
+              image={image}
+              setImage={setImage}
+              accountType={accountType}
+            />
+          </ContentBox.Body>
+        </ContentBox>
+      </div>
+    </Layout>
+  );
+}
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
     };
+  }
+
+  const fetch1 = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${context.params.id}`
+  );
+  const nasabahProfile = await fetch1.json();
+
+  const fetch2 = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType`
+  );
+  const accountType = await fetch2.json();
+
+  return {
+    props: {
+      nasabahProfile,
+      accountType,
+    },
+  };
 }

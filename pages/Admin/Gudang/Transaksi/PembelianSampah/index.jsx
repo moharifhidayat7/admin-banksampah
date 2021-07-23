@@ -3,10 +3,11 @@ import Layout from "@components/Layouts/AdminLayout";
 import Pagination from "@components/Pagination";
 import SearchFilter from "@components/SearchFilter";
 import Sort from "@components/Sort";
-import Filter from "@components/Filter";
+import TableFilter from "@components/TableFilter";
 import Link from "next/link";
 import DateRangeFilter from "@components/DateRangeFilter";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
+import DetailPembelianModal from "@components/Modals/DetailPembelianModal";
 import { getSession } from "next-auth/client";
 import {
   Table,
@@ -19,16 +20,21 @@ import {
 import * as Icons from "heroicons-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import TambahTipeAkunModal from "@components/Modals/TambahTipeAkunModal";
+
 export default function PembelianSampah({ data, accountType }) {
   const router = useRouter();
   const [deleteRowModal, setDeleteRowModal] = useState(false);
-  const [tambahTipeAkunModal, setTambahTipeAkunModal] = useState(false);
+  const [detailPembelianModal, setDetailPembelianModal] = useState(false);
   const [row, setRow] = useState({});
+
+  const [startDate, setStartDate] = useState(new Date().setDate(1));
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)
+  );
 
   const deleteHandler = async () => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile/${row._id}`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase/${row._id}`,
       {
         method: "DELETE",
       }
@@ -49,16 +55,18 @@ export default function PembelianSampah({ data, accountType }) {
     <Layout>
       <DeleteRowModal
         data={row}
-        title='Hapus Nasabah'
+        title='Hapus Transaksi'
+        message='Transaksi tabungan ke Bank juga akan terhapus'
         show={deleteRowModal}
         setShow={setDeleteRowModal}
         onDelete={deleteHandler}
       />
-      <TambahTipeAkunModal
+      <DetailPembelianModal
+        title='Detail Tansaksi'
         data={row}
-        title='Tambah Tipe Akun'
-        show={tambahTipeAkunModal}
-        setShow={setTambahTipeAkunModal}
+        show={detailPembelianModal}
+        setShow={setDetailPembelianModal}
+        onDelete={() => setDetailPembelianModal(!detailPembelianModal)}
       />
       <Head>
         <title>Pembelian Sampah - Bank Sampah Banyuwangi</title>
@@ -79,11 +87,19 @@ export default function PembelianSampah({ data, accountType }) {
       </div>
       <div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2'>
-          <Sort options={[{ label: "Tanggal", value: "transactionDate" }]} />
-          <Filter
+          <Sort
+            options={[
+              { label: "No. Transaksi", value: "transactionNo" },
+              { label: "Tanggal", value: "transactionDate" },
+              { label: "Nasabah", value: "_nasabah" },
+            ]}
+          />
+          <TableFilter
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
             filterField={[
               {
-                selectLabel: "Tipe Transaksi ...",
+                selectLabel: "Jenis Transaksi",
                 field: "transactionType",
                 options: [
                   {
@@ -97,17 +113,26 @@ export default function PembelianSampah({ data, accountType }) {
                 ],
               },
             ]}
-          />
-          <DateRangeFilter title='Tanggal Transaksi' />
+          >
+            <DateRangeFilter
+              label='Tanggal Transaksi'
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />
+          </TableFilter>
+          <SearchFilter />
         </div>
         <div className='overflow-x-auto rounded-md'>
           <Table>
             <TableHead>
-              <TableCol className='w-32'>Id</TableCol>
+              <TableCol className='w-32'>No. Transaksi</TableCol>
               <TableCol className='w-32'>Tanggal</TableCol>
-              <TableCol>Nasabah</TableCol>
+              <TableCol>Penjual/Nasabah</TableCol>
+              <TableCol>Keterangan</TableCol>
               <TableCol className='w-32'>Tipe Transaksi</TableCol>
-              <TableCol className='w-32'>Jumlah</TableCol>
+              <TableCol className='w-32'>Total</TableCol>
               <TableCol className='w-40'></TableCol>
             </TableHead>
             <TableBody>
@@ -117,17 +142,21 @@ export default function PembelianSampah({ data, accountType }) {
                     <TableRow
                       key={item._id}
                       onClick={() => {
-                        router.push(`${router.pathname}/${item._id}`);
+                        setRow(item);
+                        setDetailPembelianModal(!detailPembelianModal);
                       }}
                       className='cursor-pointer'
                     >
-                      <TableCell>{item._id}</TableCell>
+                      <TableCell>{item.invoice_id}</TableCell>
                       <TableCell>
-                        {new Date(item.createdAt).toLocaleString("id-ID", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
+                        {new Date(item.transactionDate).toLocaleString(
+                          "id-ID",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
                       </TableCell>
                       <TableCell>
                         {item._nasabah ? (
@@ -147,6 +176,7 @@ export default function PembelianSampah({ data, accountType }) {
                           </>
                         )}
                       </TableCell>
+                      <TableCell>{item.note}</TableCell>
                       <TableCell
                         className={
                           item.transactionType == "TABUNG"
@@ -163,37 +193,19 @@ export default function PembelianSampah({ data, accountType }) {
                             : "text-red-500"
                         }
                       >
-                        {formatRp(
-                          item.items.reduce((accumulator, currentValue) => {
-                            return (
-                              accumulator +
-                              currentValue.price * currentValue.qty
-                            );
-                          }, 0)
-                        )}
+                        {formatRp(item.total)}
                       </TableCell>
                       <TableCell className='text-right'>
-                        <Link href={`${router.pathname}/${item._id}`}>
-                          <a
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            role='button'
-                            className={`inline-block align-middle bg-green-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white`}
-                          >
-                            <Icons.Eye />
-                          </a>
-                        </Link>
-                        <Link href={`${router.pathname}/edit/${item._id}`}>
-                          <a
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            className={`inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}
-                          >
-                            <Icons.Pencil />
-                          </a>
-                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRow(item);
+                            setDetailPembelianModal(!detailPembelianModal);
+                          }}
+                          className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                        >
+                          <Icons.Eye />
+                        </button>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();

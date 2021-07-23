@@ -6,7 +6,7 @@ const FilterCard = ({ children, title, onReset, className = "" }) => {
       className={`flex flex-col space-y-2 bg-white rounded-md shadow p-2 ${className}`}
     >
       <div className='flex flex-row justify-between items-center'>
-        <span className='text-sm font-medium text-gray-700'>{title}</span>
+        <span className='font-medium text-gray-700'>{title}</span>
         <button
           onClick={onReset}
           type='button'
@@ -21,7 +21,7 @@ const FilterCard = ({ children, title, onReset, className = "" }) => {
   );
 };
 
-FilterCard.Content = ({ children, className }) => {
+FilterCard.Content = ({ children, className = "" }) => {
   return <div className={className}>{children}</div>;
 };
 

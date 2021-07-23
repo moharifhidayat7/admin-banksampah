@@ -5,7 +5,7 @@ import SampahPurchase from "@models/SampahPurchase";
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-  const result = await NasabahProfile.findById(req.query.id);
+  const result = await NasabahProfile.findById(req.query.id).populate("ktp");
   res.status(200).json(result);
 });
 handler.patch(async (req, res) => {
@@ -16,9 +16,15 @@ handler.patch(async (req, res) => {
   };
 
   try {
-    await NasabahProfile.findByIdAndUpdate(req.query.id, data, options);
+    const result = await NasabahProfile.findByIdAndUpdate(
+      req.query.id,
+      data,
+      options
+    );
+    res.status(200).json(result);
   } catch (error) {
     console.log(error);
+    res.status(400).json(error);
   }
 });
 

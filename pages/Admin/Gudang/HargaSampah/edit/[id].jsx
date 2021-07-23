@@ -1,11 +1,11 @@
-import AdminLayout from "../../../../../components/Layouts/AdminLayout";
-import HargaSampahForm from "../../../../../components/Forms/HargaSampahForm";
+import Layout from "@components/Layouts/AdminLayout";
+import HargaSampahForm from "@components/Forms/HargaSampahForm";
 import { useRouter } from "next/router";
-
-import { useForm } from "react-hook-form";
 import { getSession } from "next-auth/client";
-import { useEffect } from "react";
-export default function tambahJenisSampah({ sampahType, sampahCategory }) {
+import Head from "next/head";
+import ContentBox from "@components/ContentBox";
+
+export default function tambahJenisSampah({ sampahCategory, sampahType }) {
   const router = useRouter();
   const onSubmit = async (data) => {
     await fetch(
@@ -20,23 +20,30 @@ export default function tambahJenisSampah({ sampahType, sampahCategory }) {
     ).then((res) => {
       if (res.status == 200) {
         router.push(router.pathname.split("/").slice(0, -2).join("/"));
+      } else {
+        alert("Terjadi Kesalahan");
       }
     });
   };
   return (
-    <AdminLayout>
-      <div>
-        <HargaSampahForm
-          onSubmit={onSubmit}
-          data={sampahType}
-          sampahCategory={sampahCategory}
-          title='Edit Jenis Sampah'
-        />
+    <Layout>
+      <Head>
+        <title>Edit Jenis Sampah - Bank Sampah Banyuwangi</title>
+      </Head>
+      <div className='pb-24'>
+        <ContentBox title='Edit Jenis Sampah'>
+          <ContentBox.Body>
+            <HargaSampahForm
+              onSubmit={onSubmit}
+              data={sampahType}
+              sampahCategory={sampahCategory}
+            />
+          </ContentBox.Body>
+        </ContentBox>
       </div>
-    </AdminLayout>
+    </Layout>
   );
 }
-
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   if (!session) {
@@ -46,18 +53,22 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const res = await fetch(
+
+  const fetch1 = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${context.params.id}`
   );
-  const sampahType = await res.json();
+  const sampahType = await fetch1.json();
+
   const fetch2 = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory`
   );
   const sampahCategory = await fetch2.json();
+
   return {
     props: {
-      sampahType,
+      session,
       sampahCategory,
+      sampahType,
     },
   };
 }
