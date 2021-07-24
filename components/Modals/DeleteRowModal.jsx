@@ -1,13 +1,13 @@
 import Modal from "@components/Modal";
 
-const DeleteRowModal = ({
+export default function DeleteRowModal({
   title,
   data,
   message,
   show,
   toggleShow,
   onDelete,
-}) => {
+}) {
   return (
     <Modal
       title={title}
@@ -41,5 +41,4 @@ const DeleteRowModal = ({
       </Modal.Footer>
     </Modal>
   );
-};
-export default DeleteRowModal;
+}
