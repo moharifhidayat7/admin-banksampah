@@ -40,7 +40,6 @@ export default function JenisModal({
   };
 
   const handleEdit = async (formData) => {
-    console.log(formData);
     await fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${data._id}`,
       {
