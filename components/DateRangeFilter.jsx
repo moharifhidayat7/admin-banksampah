@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 
 const DateRangeFilter = ({
   label,
+  field = "createdAt",
   startDate,
   setStartDate,
   endDate,
@@ -21,7 +22,7 @@ const DateRangeFilter = ({
       "s" +
       new Date(end).toISOString().split("T")[0];
     delete router.query.page;
-    router.query.range = dateRange;
+    router.query.range = field + "|" + dateRange;
     router.push({
       pathname: router.pathname,
       query: router.query,

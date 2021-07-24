@@ -6,6 +6,20 @@ const MODEL_NAME = "NasabahProfile";
 
 const schema = new Schema(
   {
+    _ktp: {
+      type: Schema.Types.ObjectId,
+      ref: "File",
+    },
+    _picture: {
+      type: Schema.Types.ObjectId,
+      ref: "File",
+    },
+    _accountType: {
+      type: Schema.Types.ObjectId,
+      ref: "AccountType",
+      required: true,
+      autopopulate: true,
+    },
     nik: {
       type: String,
       required: true,
@@ -15,12 +29,17 @@ const schema = new Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-    },
     address: {
       type: String,
       required: true,
+    },
+    gender: {
+      type: String,
+      enum: ["L", "P"],
+      required: true,
+    },
+    email: {
+      type: String,
     },
     mobile: {
       type: String,
@@ -28,23 +47,8 @@ const schema = new Schema(
     birthdate: {
       type: String,
     },
-    gender: {
-      type: String,
-      enum: ["L", "P"],
-      required: true,
-    },
-    _accountType: {
-      type: Schema.Types.ObjectId,
-      ref: "AccountType",
-      required: true,
-      autopopulate: true,
-    },
     rekening: {
       type: String,
-    },
-    ktp: {
-      type: Schema.Types.ObjectId,
-      ref: "File",
     },
   },
   { timestamps: true }

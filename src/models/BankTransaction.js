@@ -6,28 +6,32 @@ const MODEL_NAME = "BankTransaction";
 
 const schema = new Schema(
   {
-    note: {
-      type: String,
+    _nasabah: {
+      type: Schema.Types.ObjectId,
+      ref: "NasabahProfile",
+      autopopulate: true,
+      required: true,
+    },
+    _sampahTransaction: {
+      type: Schema.Types.ObjectId,
+      ref: "SampahPurchase",
     },
     transactionType: {
       type: String,
       enum: ["DEBIT", "KREDIT"],
       required: true,
     },
-    _sampahTransaction: {
-      type: Schema.Types.ObjectId,
-      ref: "SampahPurchase",
-      autopopulate: true,
-    },
     amount: {
       type: Number,
       required: true,
     },
-    _nasabah: {
-      type: Schema.Types.ObjectId,
-      ref: "NasabahProfile",
-      autopopulate: true,
-      required: true,
+    status: {
+      type: String,
+      enum: ["PENDING", "SUCCESS"],
+      default: "PENDING",
+    },
+    note: {
+      type: String,
     },
   },
   { timestamps: true }

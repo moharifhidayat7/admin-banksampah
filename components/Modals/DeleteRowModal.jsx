@@ -1,10 +1,13 @@
 import Modal from "@components/Modal";
 
-const DeleteRowModal = ({ title, data, message, show, setShow, onDelete }) => {
-  const toggleShow = () => {
-    setShow(!show);
-  };
-
+const DeleteRowModal = ({
+  title,
+  data,
+  message,
+  show,
+  toggleShow,
+  onDelete,
+}) => {
   return (
     <Modal
       title={title}

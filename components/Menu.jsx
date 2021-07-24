@@ -31,13 +31,13 @@ export default function Menu() {
         <SubItem route='/Admin/Gudang/Transaksi/Opname' title='Opname' />
       </Item>
       <Item
-        route='/Admin/Gudang/HargaSampah'
+        route='/Admin/Gudang/Sampah/Jenis'
         icon={<Icons.CurrencyDollar size='1rem' />}
-        title='Harga Sampah'
+        title='Sampah'
       >
-        <SubItem route='/Admin/Gudang/HargaSampah' title='Data Harga Sampah' />
+        <SubItem route='/Admin/Gudang/Sampah/Jenis' title='Jenis Sampah' />
         <SubItem
-          route='/Admin/Gudang/HargaSampah/Kategori'
+          route='/Admin/Gudang/Sampah/Kategori'
           title='Kategori Sampah'
         />
       </Item>

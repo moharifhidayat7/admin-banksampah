@@ -136,109 +136,95 @@ export default function PembelianSampah({ data, accountType }) {
               <TableCol className='w-40'></TableCol>
             </TableHead>
             <TableBody>
-              {data.total > 0 &&
-                data.rows.map((item) => {
-                  return (
-                    <TableRow
-                      key={item._id}
-                      onClick={() => {
-                        setRow(item);
-                        setDetailPembelianModal(!detailPembelianModal);
-                      }}
-                      className='cursor-pointer'
+              {data.results.map((item) => {
+                return (
+                  <TableRow
+                    key={item._id}
+                    onClick={() => {
+                      setRow(item);
+                      setDetailPembelianModal(!detailPembelianModal);
+                    }}
+                    className='cursor-pointer'
+                  >
+                    <TableCell>{item.transactionId}</TableCell>
+                    <TableCell>
+                      {new Date(item.transactionDate).toLocaleString("id-ID", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {item._nasabah ? (
+                        <>
+                          <div className='text-sm font-medium text-gray-700'>
+                            {item._nasabah.name}
+                          </div>
+                          <div className='text-sm'>{item._nasabah.address}</div>
+                        </>
+                      ) : (
+                        <>
+                          <div className='text-sm'>{item.customer}</div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>{item.note}</TableCell>
+                    <TableCell
+                      className={
+                        item.transactionType == "TABUNG"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }
                     >
-                      <TableCell>{item.invoice_id}</TableCell>
-                      <TableCell>
-                        {new Date(item.transactionDate).toLocaleString(
-                          "id-ID",
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {item._nasabah ? (
-                          <>
-                            <div className='text-sm font-medium text-gray-700'>
-                              {item._nasabah.name}
-                            </div>
-                            <div className='text-sm'>
-                              {item._nasabah.address}
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className='text-sm'>
-                              {item.customer && item.customer.name}
-                            </div>
-                          </>
-                        )}
-                      </TableCell>
-                      <TableCell>{item.note}</TableCell>
-                      <TableCell
-                        className={
-                          item.transactionType == "TABUNG"
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
+                      {item.transactionType}
+                    </TableCell>
+                    <TableCell
+                      className={
+                        item.transactionType == "TABUNG"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }
+                    >
+                      {formatRp(item.total)}
+                    </TableCell>
+                    <TableCell className='text-right'>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRow(item);
+                          setDetailPembelianModal(!detailPembelianModal);
+                        }}
+                        className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
                       >
-                        {item.transactionType}
-                      </TableCell>
-                      <TableCell
-                        className={
-                          item.transactionType == "TABUNG"
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
+                        <Icons.Eye />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRow(item);
+                          setDeleteRowModal(!deleteRowModal);
+                        }}
+                        className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
                       >
-                        {formatRp(item.total)}
-                      </TableCell>
-                      <TableCell className='text-right'>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRow(item);
-                            setDetailPembelianModal(!detailPembelianModal);
-                          }}
-                          className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
-                        >
-                          <Icons.Eye />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRow(item);
-                            setDeleteRowModal(!deleteRowModal);
-                          }}
-                          className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                        >
-                          <Icons.Trash />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                        <Icons.Trash />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
         <div className='flex flex-col sm:flex-row justify-between py-2 items-center'>
           <div className='flex flex-col sm:flex-row px-2 py-1 sm:flex-grow justify-between items-center'>
-            <span>
+            {/* <span>
               Menampilkan: {data.start} - {data.end} dari {data.total} item
             </span>
             <span>
-              Halaman: {data.page} dari {data.maxPage}
-            </span>
+              Halaman: {data.page} dari {data.meta.pageCou}
+            </span> */}
           </div>
-          <Pagination
-            page={data.page}
-            pageRange={5}
-            maxPage={data.maxPage}
-            start={data.start}
-            end={data.end}
-          />
+          <Pagination meta={data.meta} />
         </div>
       </div>
     </Layout>
@@ -255,23 +241,20 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const limit = context.query.limit || 10;
+  const transactionType = context.query.transactionType || "!PENJUALAN";
 
   const queryString = Object.keys(context.query)
     .map((key) => {
-      if (key == "limit") {
-        return;
-      }
       return `${encodeURIComponent(key)}=${encodeURIComponent(
         context.query[key]
       )}`;
     })
     .join("&");
 
-  const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase?limit=${limit}&${queryString}`
+  const result = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahTransaction?limit=2&transactionType=${transactionType}&${queryString}`
   );
-  const data = await fetch1.json();
+  const data = await result.json();
 
   return {
     props: {

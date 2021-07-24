@@ -6,6 +6,7 @@ const schema = new Schema({
   code: {
     type: String,
     required: true,
+    maxLength: 2,
     unique: true,
   },
   name: {

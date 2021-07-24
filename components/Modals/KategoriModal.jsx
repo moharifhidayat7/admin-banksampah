@@ -2,12 +2,9 @@ import Modal from "@components/Modal";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-const TambahKategoriModal = ({ title, data, show, setShow }) => {
+const TambahKategoriModal = ({ title, data, show, toggleShow }) => {
   const router = useRouter();
   const [name, setName] = useState("");
-  const toggleShow = () => {
-    setShow(!show);
-  };
 
   const handleTambah = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory`, {

@@ -10,11 +10,34 @@ content-type: application/json
 "email":"",
 "mobile":""}
 ###
-POST http://localhost:3000/api/sampahCategory 
+GET http://localhost:3000/api/sampahType 
+###
+POST http://localhost:3000/api/sampahTransaction 
 content-type: application/json
 
 {
-    "name": "coba coba"
+    "transactionType": "PENJUALAN",
+    "items":[
+       {
+            "_sampahType":{
+                "stock": 0,
+                "_id": "60fa8bee8f5ef13884ef2ef9",
+                "name": "est",
+                "unit": "velit",
+                "price": 17789,
+                "_category": {
+                "_id": "60fa8bec8f5ef13884ef2edf",
+                "name": "et",
+                "__v": 0
+                },
+                "createdAt": "2021-07-23T09:29:18.826Z",
+                "updatedAt": "2021-07-23T09:29:18.826Z",
+                "__v": 0,
+                "id": "60fa8bee8f5ef13884ef2ef9"
+            },
+            "qty":9
+        }
+    ]
 }
 ###
 POST http://localhost:3000/api/sampahType
@@ -33,9 +56,9 @@ GET http://localhost:3000/api/generate/sampahType?rows=30
 ### Fix
 GET http://localhost:3000/api/generate/accountType?rows=10
 ### Fix
-GET http://localhost:3000/api/generate/nasabahProfile?rows=20
+GET http://localhost:3000/api/generate/nasabahProfile?rows=100
 ### Fix
-GET http://localhost:3000/api/generate/sampahPurchase?rows=100
+GET http://localhost:3000/api/generate/sampahTransaction?rows=100
 ### Fix
 GET http://localhost:3000/api/generate/sampahSale?rows=50
 ###

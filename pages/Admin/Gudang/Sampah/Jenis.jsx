@@ -7,6 +7,8 @@ import Link from "next/link";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
 import TableFilter from "@components/TableFilter";
 import { getSession } from "next-auth/client";
+import { formatRp, toQueryString } from "@helpers/functions";
+
 import {
   Table,
   TableHead,
@@ -18,14 +20,10 @@ import {
 import * as Icons from "heroicons-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-export default function HargaSampah({ data, sampahCategory }) {
+export default function Jenis({ data, sampahCategory }) {
   const router = useRouter();
   const [deleteRowModal, setDeleteRowModal] = useState(false);
   const [row, setRow] = useState({});
-
-  const sampahCategoryOption = sampahCategory.map((type) => {
-    return { label: type.name, value: type._id };
-  });
 
   const deleteHandler = async () => {
     await fetch(
@@ -39,13 +37,6 @@ export default function HargaSampah({ data, sampahCategory }) {
     });
   };
 
-  const formatRp = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(number);
-  };
-
   return (
     <Layout>
       <DeleteRowModal
@@ -57,10 +48,10 @@ export default function HargaSampah({ data, sampahCategory }) {
       />
 
       <Head>
-        <title>Harga Sampah - Bank Sampah Banyuwangi</title>
+        <title>Jenis Sampah - Bank Sampah Banyuwangi</title>
       </Head>
       <div className='border-b border-gray-400 pb-2 flex justify-between'>
-        <h1 className='text-4xl'>Harga Sampah</h1>
+        <h1 className='text-4xl'>Jenis Sampah</h1>
         <div className='float-right flex space-x-2'>
           <Link href={router.pathname + "/tambah"}>
             <a
@@ -87,7 +78,7 @@ export default function HargaSampah({ data, sampahCategory }) {
               {
                 selectLabel: "Kategori",
                 field: "_category",
-                options: sampahCategory.map((category) => {
+                options: sampahCategory.results.map((category) => {
                   return {
                     label: category.name,
                     value: category._id,
@@ -109,73 +100,55 @@ export default function HargaSampah({ data, sampahCategory }) {
               <TableCol></TableCol>
             </TableHead>
             <TableBody>
-              {data.total > 0 &&
-                data.rows.map((item) => {
-                  return (
-                    <TableRow
-                      key={item._id}
-                      onClick={() => {
-                        router.push(`${router.pathname}/edit/${item._id}`);
-                      }}
-                      className='hover:bg-blue-100 cursor-pointer'
-                    >
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item._category.name}</TableCell>
-                      <TableCell>{item.unit}</TableCell>
-                      <TableCell>{formatRp(item.price)}</TableCell>
-                      <TableCell>{item.stock}</TableCell>
-                      <TableCell className='text-right'>
-                        <Link href={`${router.pathname}/edit/${item._id}`}>
-                          <a
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            className={`inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}
-                          >
-                            <Icons.Pencil />
-                          </a>
-                        </Link>
-                        <button
+              {data.results.map((item) => {
+                return (
+                  <TableRow
+                    key={item._id}
+                    onClick={() => {
+                      router.push(`${router.pathname}/edit/${item._id}`);
+                    }}
+                    className='hover:bg-blue-100 cursor-pointer'
+                  >
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item._category.name}</TableCell>
+                    <TableCell>{item.unit}</TableCell>
+                    <TableCell>{formatRp(item.price)}</TableCell>
+                    <TableCell>{item.stock}</TableCell>
+                    <TableCell className='text-right'>
+                      <Link href={`${router.pathname}/edit/${item._id}`}>
+                        <a
                           onClick={(e) => {
                             e.stopPropagation();
-                            setRow(item);
-                            setDeleteRowModal(!deleteRowModal);
                           }}
-                          className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                          className={`inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white`}
                         >
-                          <Icons.Trash />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                          <Icons.Pencil />
+                        </a>
+                      </Link>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRow(item);
+                          setDeleteRowModal(!deleteRowModal);
+                        }}
+                        className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                      >
+                        <Icons.Trash />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
         <div className='flex flex-col sm:flex-row justify-between py-2 items-center'>
-          <div className='flex flex-col sm:flex-row px-2 py-1 sm:flex-grow justify-between items-center'>
-            <span>
-              Menampilkan: {data.start} - {data.end} dari {data.total} item
-            </span>
-            <span>
-              Halaman: {data.page} dari {data.maxPage}
-            </span>
-          </div>
-          <Pagination
-            page={data.page}
-            pageRange={5}
-            maxPage={data.maxPage}
-            start={data.start}
-            end={data.end}
-          />
+          <div className='flex flex-col sm:flex-row px-2 py-1 sm:flex-grow justify-between items-center'></div>
+          <Pagination meta={data.meta} />
         </div>
       </div>
     </Layout>
   );
-}
-
-export async function getInitialProps(ctx) {
-  return flash.get(ctx) || {};
 }
 
 export async function getServerSideProps(context) {
@@ -189,20 +162,12 @@ export async function getServerSideProps(context) {
   }
 
   const limit = context.query.limit || 10;
+  const page = context.query.page || 1;
 
-  const queryString = Object.keys(context.query)
-    .map((key) => {
-      if (key == "limit") {
-        return;
-      }
-      return `${encodeURIComponent(key)}=${encodeURIComponent(
-        context.query[key]
-      )}`;
-    })
-    .join("&");
-
+  const queryString = toQueryString(context.query, ["page", "limit"]);
+  console.log(queryString, context.query);
   const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType?limit=${limit}&${queryString}`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType?limit=${limit}&page=${page}&${queryString}`
   );
   const data = await fetch1.json();
 

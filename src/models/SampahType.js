@@ -5,23 +5,15 @@ const MODEL_NAME = "SampahType";
 
 const schema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     _category: {
       type: Schema.Types.ObjectId,
       ref: "SampahCategory",
       required: true,
       autopopulate: true,
-      get: function (v) {
-        if (this.name) {
-          return this._category.name;
-        }
-        if (this.unit) {
-          return "ada unit";
-        }
-      },
+    },
+    name: {
+      type: String,
+      required: true,
     },
     price: {
       type: Number,
