@@ -31,7 +31,7 @@ export default function tambahNasabah({ accountType }) {
       const result = await uploadFile(image.raw);
       if (result._id) {
         postData = {
-          ktp: result._id,
+          _ktp: result._id,
           ...data,
         };
       }
@@ -84,7 +84,7 @@ export async function getServerSideProps(context) {
   }
 
   const fetch2 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType?sort=code`
   );
   const accountType = await fetch2.json();
 

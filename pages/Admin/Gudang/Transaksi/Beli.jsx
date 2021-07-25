@@ -9,7 +9,10 @@ import ContentBox from "@components/ContentBox";
 export default function PembelianSampah({ sampahType, sampahCategory }) {
   const router = useRouter();
   const onSubmit = async (data, items) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sampahPurchase`, {
+    if (data._nasabah == "") {
+      delete data._nasabah;
+    }
+    await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sampahTransaction`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +28,9 @@ export default function PembelianSampah({ sampahType, sampahCategory }) {
       }),
     }).then((res) => {
       if (res.status == 200) {
-        router.push(router.pathname.split("/").slice(0, -1).join("/"));
+        router.push(
+          router.pathname.split("/").slice(0, -2).join("/") + "/Pembelian"
+        );
       } else {
         alert("Terjadi Kesalahan");
       }
@@ -34,10 +39,10 @@ export default function PembelianSampah({ sampahType, sampahCategory }) {
   return (
     <Layout>
       <Head>
-        <title>Tambah Pembelian Sampah - Bank Sampah Banyuwangi</title>
+        <title>Beli Sampah - Bank Sampah Banyuwangi</title>
       </Head>
       <div className='pb-24'>
-        <ContentBox title='Tambah Pembelian Sampah'>
+        <ContentBox title='Beli Sampah'>
           <ContentBox.Body>
             <PembelianForm
               onSubmit={onSubmit}
@@ -61,12 +66,12 @@ export async function getServerSideProps(context) {
   }
 
   const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory?sort=name`
   );
   const sampahCategory = await fetch1.json();
 
   const fetch2 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType?sort=name`
   );
   const sampahType = await fetch2.json();
 

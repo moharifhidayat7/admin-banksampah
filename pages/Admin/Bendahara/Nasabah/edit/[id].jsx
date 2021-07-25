@@ -31,7 +31,7 @@ export default function editNasabah({ accountType, nasabahProfile }) {
       const result = await uploadFile(image.raw);
       if (result._id) {
         postData = {
-          ktp: result._id,
+          _ktp: result._id,
           ...data,
         };
       }

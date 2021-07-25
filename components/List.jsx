@@ -74,4 +74,15 @@ const SubItem = ({ title, route = "#" }) => {
   );
 };
 
-export { List, Item, SubItem };
+const ItemGroup = ({ children, title = "Group Tilte" }) => {
+  return (
+    <>
+      <li className='text-gray-100 px-5 py-2 bg-gray-600 font-bold border-b-2 border-t-2 border-gray-900'>
+        {title}
+      </li>
+      {children}
+    </>
+  );
+};
+
+export { List, Item, SubItem, ItemGroup };

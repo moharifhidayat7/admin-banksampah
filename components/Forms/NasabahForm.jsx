@@ -16,7 +16,7 @@ export default function Nasabah({
 
   const [birthdate, setBirthdate] = useState("");
 
-  const accountTypeOptions = accountType.rows.map((acc) => {
+  const accountTypeOptions = accountType.results.map((acc) => {
     return {
       label: acc.code + " . " + acc.name,
       value: acc._id,
@@ -24,6 +24,11 @@ export default function Nasabah({
   });
 
   useEffect(() => {
+    if (data._ktp) {
+      setImage({
+        preview: `${process.env.NEXT_PUBLIC_API_HOST}/api/uploads/${data._ktp}`,
+      });
+    }
     setValue("name", data.name);
     setValue("nik", data.nik);
     setValue("address", data.address);
@@ -43,7 +48,7 @@ export default function Nasabah({
             <div className='text-sm font-medium text-gray-700 py-2 '>
               Scan KTP
             </div>
-            <ImageUpload name='ktp' image={image} setImage={setImage} />
+            <ImageUpload name='_ktp' image={image} setImage={setImage} />
           </div>
           <div>
             <div className='text-sm font-medium text-gray-700 py-2 '>

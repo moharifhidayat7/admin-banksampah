@@ -6,10 +6,10 @@ import Sort from "@components/Sort";
 import Link from "next/link";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
 import TableFilter from "@components/TableFilter";
-import JenisModal from "@components/Modals/JenisModal";
 import { getSession } from "next-auth/client";
-import { formatRp, toQueryString } from "@helpers/functions";
+import { toQueryString } from "@helpers/functions";
 import StokModal from "@components/Modals/StokModal";
+import DateRangeFilter from "@components/DateRangeFilter";
 
 import {
   Table,
@@ -22,16 +22,20 @@ import {
 import * as Icons from "heroicons-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-export default function Jenis({ data, sampahType, sampahCategory }) {
+export default function Stok({ data, sampahType, sampahCategory }) {
   const router = useRouter();
   const [deleteRowModal, setDeleteRowModal] = useState(false);
-  const [jenisModal, setJenisModal] = useState(false);
   const [stokModal, setStokModal] = useState(false);
   const [row, setRow] = useState({});
   const [action, setAction] = useState("");
 
-  const toggleJenisModal = () => {
-    setJenisModal(!jenisModal);
+  const [startDate, setStartDate] = useState(new Date().setDate(1));
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)
+  );
+
+  const toggleDeleteRowModal = () => {
+    setDeleteRowModal(!deleteRowModal);
   };
 
   const toggleStokModal = () => {
@@ -55,13 +59,15 @@ export default function Jenis({ data, sampahType, sampahCategory }) {
 
   const deleteHandler = async () => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType/${row._id}`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahStock/${row._id}`,
       {
         method: "DELETE",
       }
-    ).then(async (res) => {
-      setDeleteRowModal(!deleteRowModal);
-      router.replace(router.asPath);
+    ).then((res) => {
+      if (res.status == 200) {
+        setDeleteRowModal(!deleteRowModal);
+        router.replace(router.asPath);
+      }
     });
   };
 
@@ -69,78 +75,95 @@ export default function Jenis({ data, sampahType, sampahCategory }) {
     <Layout>
       <DeleteRowModal
         data={row}
-        title='Hapus Jenis Sampah'
+        title='Hapus Stok'
         show={deleteRowModal}
-        toggleShow={() => setDeleteRowModal(!deleteRowModal)}
+        toggleShow={toggleDeleteRowModal}
         onDelete={deleteHandler}
-      />
-      <JenisModal
-        data={row}
-        title='Tambah Jenis'
-        sampahCategory={sampahCategory}
-        show={jenisModal}
-        toggleShow={toggleJenisModal}
       />
       <StokModal
         action={action}
-        data={row}
-        title='Tambah Jenis'
+        title='Stok'
         sampahType={typeOptions}
         show={stokModal}
         toggleShow={toggleStokModal}
       />
       <Head>
-        <title>Jenis Sampah - Bank Sampah Banyuwangi</title>
+        <title>Stok Sampah - Bank Sampah Banyuwangi</title>
       </Head>
       <div className='border-b border-gray-400 pb-2 flex justify-between'>
-        <h1 className='text-4xl'>Jenis Sampah</h1>
+        <h1 className='text-4xl'>Stok In/Out Sampah</h1>
         <div className='float-right flex space-x-2'>
           <button
             onClick={() => {
-              setRow({});
-              toggleJenisModal();
+              setAction("IN");
+              toggleStokModal();
             }}
             type='button'
             className='px-4 inline-block align-top focus:outline-none shadow-md bg-green-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-green-500 hover:bg-white hover:text-green-500 focus:ring-green-500 focus:bg-white focus:text-green-500 '
           >
             <Icons.Plus className='inline-block align-middle mr-2' />
-            <span className='align-middle'>Tambah Jenis Sampah</span>
+            <span className='align-middle'>Stok In</span>
+          </button>
+          <button
+            onClick={() => {
+              setAction("OUT");
+              toggleStokModal();
+            }}
+            type='button'
+            className='px-4 inline-block align-top focus:outline-none shadow-md bg-red-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-red-500 hover:bg-white hover:text-red-500 focus:ring-red-500 focus:bg-white focus:text-red-500 '
+          >
+            <Icons.Minus className='inline-block align-middle mr-2' />
+            <span className='align-middle'>Stok Out</span>
           </button>
         </div>
       </div>
       <div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2'>
-          <Sort
-            options={[
-              { label: "Jenis Sampah", value: "name" },
-              { label: "Harga", value: "price" },
-              { label: "Stok", value: "stock" },
-            ]}
-          />
+          <Sort options={[{ label: "Tanggal", value: "createdAt" }]} />
           <TableFilter
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
             filterField={[
               {
-                selectLabel: "Kategori",
-                field: "_category",
-                options: sampahCategory.results.map((category) => {
+                selectLabel: "Jenis Sampah",
+                field: "_sampahType",
+                options: sampahType.results.map((type) => {
                   return {
-                    label: category.name,
-                    value: category._id,
+                    label: type.name,
+                    value: type._id,
                   };
                 }),
               },
+              {
+                selectLabel: "Tipe Stok",
+                field: "stockType",
+                options: [
+                  { label: "Stok In", value: "IN" },
+                  { label: "Stock Out", value: "OUT" },
+                ],
+              },
             ]}
-          ></TableFilter>
+          >
+            <DateRangeFilter
+              label='Tanggal Stok'
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              field='createdAt'
+            />
+          </TableFilter>
           <SearchFilter />
         </div>
         <div className='overflow-x-auto rounded-md'>
           <Table>
             <TableHead>
+              <TableCol>Tanggal</TableCol>
               <TableCol>Jenis Sampah</TableCol>
-              <TableCol>Kategory</TableCol>
               <TableCol>Satuan</TableCol>
-              <TableCol>Harga</TableCol>
-              <TableCol>Stok</TableCol>
+              <TableCol>Tipe Stok</TableCol>
+              <TableCol>Qty</TableCol>
+              <TableCol>Keterangan</TableCol>
               <TableCol></TableCol>
             </TableHead>
             <TableBody>
@@ -148,61 +171,42 @@ export default function Jenis({ data, sampahType, sampahCategory }) {
                 return (
                   <TableRow
                     key={item._id}
-                    onClick={() => {
-                      setRow(item);
-                      toggleJenisModal();
-                    }}
                     className='hover:bg-blue-100 cursor-pointer'
                   >
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item._category.name}</TableCell>
-                    <TableCell>{item.unit}</TableCell>
-                    <TableCell>{formatRp(item.price)}</TableCell>
-                    <TableCell>{item.stock}</TableCell>
+                    <TableCell>
+                      {new Date(item.createdAt).toLocaleString("id-ID", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell>{item._sampahType.name}</TableCell>
+                    <TableCell>{item._sampahType.unit}</TableCell>
+                    <TableCell
+                      className={
+                        item.stockType == "OUT"
+                          ? "text-red-500"
+                          : "text-green-500"
+                      }
+                    >
+                      {item.stockType}
+                    </TableCell>
+                    <TableCell
+                      className={
+                        item.stockType == "OUT"
+                          ? "text-red-500"
+                          : "text-green-500"
+                      }
+                    >
+                      {item.stockType == "OUT" && "-"}
+                      {item.qty}
+                    </TableCell>
+                    <TableCell>{item.note}</TableCell>
                     <TableCell className='text-right'>
                       <button
                         onClick={(e) => {
-                          e.stopPropagation();
-                          setAction("IN");
                           setRow(item);
-                          toggleStokModal();
-                        }}
-                        className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
-                      >
-                        <div className='flex items-center px-2'>
-                          <Icons.Plus />
-                          <span className='font-bold'>STOK IN</span>
-                        </div>
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAction("OUT");
-                          setRow(item);
-                          toggleStokModal();
-                        }}
-                        className='bg-yellow-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-yellow-500 hover:text-yellow-500 focus:outline-none p-1 text-white'
-                      >
-                        <div className='flex items-center px-2'>
-                          <Icons.Minus />
-                          <span className='font-bold'>STOK OUT</span>
-                        </div>
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setRow(item);
-                          toggleJenisModal();
-                        }}
-                        className='bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
-                      >
-                        <Icons.Pencil />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setRow(item);
-                          setDeleteRowModal(!deleteRowModal);
+                          toggleDeleteRowModal();
                         }}
                         className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
                       >
@@ -240,25 +244,25 @@ export async function getServerSideProps(context) {
   const queryString = toQueryString(context.query, ["page", "limit"]);
 
   const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType?limit=${limit}&page=${page}&${queryString}`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahStock?limit=${limit}&page=${page}&${queryString}`
   );
   const data = await fetch1.json();
 
   const fetch2 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory?sort=name`
-  );
-  const sampahCategory = await fetch2.json();
-
-  const fetch3 = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahType?sort=name`
   );
-  const sampahType = await fetch3.json();
+  const sampahType = await fetch2.json();
+
+  const fetch3 = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory?sort=name`
+  );
+  const sampahCategory = await fetch3.json();
 
   return {
     props: {
       data,
-      sampahCategory,
       sampahType,
+      sampahCategory,
     },
   };
 }

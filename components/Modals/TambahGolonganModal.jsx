@@ -69,6 +69,7 @@ const TambahGolonganModal = ({ title, data, show, setShow }) => {
           </div>
           <input
             value={code}
+            maxLength={2}
             onChange={(e) => {
               setCode(e.target.value);
             }}

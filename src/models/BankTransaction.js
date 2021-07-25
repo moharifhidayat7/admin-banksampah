@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import "./SampahPurchase";
+import "./SampahTransaction";
 import "./NasabahProfile";
 
 const MODEL_NAME = "BankTransaction";
@@ -14,7 +14,7 @@ const schema = new Schema(
     },
     _sampahTransaction: {
       type: Schema.Types.ObjectId,
-      ref: "SampahPurchase",
+      ref: "SampahTransaction",
     },
     transactionType: {
       type: String,

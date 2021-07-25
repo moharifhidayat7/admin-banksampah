@@ -10,8 +10,10 @@ const schema = new Schema({
   },
 });
 
-schema.pre("findOneAndDelete", async function () {
-  await SampahType.deleteMany({ _category: this._id });
+schema.pre("findOneAndDelete", async function (next) {
+  const doc = await this.model.findOne(this.getFilter());
+  await SampahType.deleteMany({ _category: doc._id });
+  next();
 });
 
 export default mongoose.models[MODEL_NAME] ||

@@ -13,6 +13,9 @@ const DetailNasabahModal = ({
   onDelete,
 }) => {
   const router = useRouter();
+
+  const [image, setImage] = useState("");
+
   const toggleShow = () => {
     setShow(!show);
   };
@@ -29,9 +32,9 @@ const DetailNasabahModal = ({
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
           <div>
             <div className='relative'>
-              {data.ktp && (
+              {data._ktp && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads/${data.ktp}`}
+                  src={`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads/${data._ktp}`}
                   alt='Picture of the author'
                   className='rounded-md'
                   width={16}

@@ -1,6 +1,5 @@
 import createHandler from "@middleware/index";
 import NasabahProfile from "@models/NasabahProfile";
-import SampahPurchase from "@models/SampahPurchase";
 
 const handler = createHandler();
 
@@ -23,7 +22,6 @@ handler.patch(async (req, res) => {
     );
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
     res.status(400).json(error);
   }
 });
@@ -31,7 +29,6 @@ handler.patch(async (req, res) => {
 handler.delete(async (req, res) => {
   try {
     const result = await NasabahProfile.findByIdAndDelete(req.query.id);
-    await SampahPurchase.deleteMany({ _nasabah: result._id });
 
     res.status(200).json(result);
   } catch (error) {

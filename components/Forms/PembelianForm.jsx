@@ -3,7 +3,7 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import TambahItemModal from "@components/Modals/TambahItemModal";
 import * as Icons from "heroicons-react";
-import SearchSelect from "@components/Input/SearchSelect";
+import { formatRp } from "@helpers/functions";
 import DatePicker from "react-datepicker";
 import AsyncCreatableSelect from "react-select/async-creatable";
 import {
@@ -23,10 +23,10 @@ export default function Pembelian({ onSubmit, sampahType, sampahCategory }) {
   const [items, setItems] = useState([]);
   const [tabung, setTabung] = useState(false);
 
-  const typeOptions = sampahCategory.map((cat) => {
+  const typeOptions = sampahCategory.results.map((cat) => {
     return {
       label: cat.name,
-      options: sampahType.rows
+      options: sampahType.results
         .filter((type) => type._category._id == cat._id)
         .map((el) => {
           return {
@@ -42,13 +42,6 @@ export default function Pembelian({ onSubmit, sampahType, sampahCategory }) {
     const find = items.filter((item) => item._id != id);
 
     setItems(find);
-  };
-
-  const formatRp = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(number);
   };
 
   const searchNasabah = async (keyword) => {

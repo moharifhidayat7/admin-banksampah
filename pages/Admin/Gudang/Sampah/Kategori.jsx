@@ -4,6 +4,7 @@ import Head from "next/head";
 import * as Icons from "heroicons-react";
 
 import { getSession } from "next-auth/client";
+import { toQueryString } from "@helpers/functions";
 
 import Layout from "@components/Layouts/AdminLayout";
 import Pagination from "@components/Pagination";
@@ -150,16 +151,7 @@ export async function getServerSideProps(context) {
   const limit = context.query.limit || 10;
   const page = context.query.page || 1;
 
-  const queryString = Object.keys(context.query)
-    .map((key) => {
-      if (key == "sort" || key == "limit" || key == "page") {
-        return;
-      }
-      return `${encodeURIComponent(key)}=${encodeURIComponent(
-        context.query[key]
-      )}`;
-    })
-    .join("&");
+  const queryString = toQueryString(context.query, ["page", "limit"]);
 
   const fetch1 = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory?sort=name&limit=${limit}&page=${page}&${queryString}`

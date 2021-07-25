@@ -6,7 +6,7 @@ const handler = createHandler();
 
 const searchQuery = (keyword = "") => {
   return {
-    // $or: [{ "_nasabah.name": { $regex: keyword, $options: "i" } }],
+    $or: [{ customer: { $regex: keyword, $options: "i" } }],
   };
 };
 
@@ -19,6 +19,7 @@ handler.post(async (req, res) => {
     const result = await SampahTransaction.create(data);
     res.status(200).json(result);
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 });

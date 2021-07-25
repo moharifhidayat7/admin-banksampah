@@ -49,10 +49,30 @@ content-type: application/json
     "_category": "60f7dcef0bdb7636b0c9a31f",
     "price": 616568
 }
+###
+GET http://localhost:3000/api/sampahStock
+###
+GET http://localhost:3000/api/sampahStock/60fbdb10ec55300aac9851c9
+###
+POST http://localhost:3000/api/sampahStock
+content-type: application/json
+
+{
+    "_sampahTransaction":"60fbc06a2551241fa0582be2",
+    "_sampahType": "60fbbac12551241fa0582a45",
+    "note": "coba OUT",
+    "qty": 10,
+    "stockType": "OUT"
+}
+###
+DELETE http://localhost:3000/api/sampahStock/id
+
+
+
 ### Fix
 GET http://localhost:3000/api/generate/sampahCategory?rows=10
 ### Fix
-GET http://localhost:3000/api/generate/sampahType?rows=30
+GET http://localhost:3000/api/generate/sampahType?rows=10
 ### Fix
 GET http://localhost:3000/api/generate/accountType?rows=10
 ### Fix

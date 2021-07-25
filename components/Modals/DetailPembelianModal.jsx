@@ -1,9 +1,7 @@
 import Modal from "@components/Modal";
-import Image from "next/image";
+import { formatRp } from "@helpers/functions";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-
 import {
   Table,
   TableHead,
@@ -13,25 +11,8 @@ import {
   TableCol,
 } from "@components/Table";
 
-const DetailPembelianModal = ({
-  title,
-  data,
-  message,
-  show,
-  setShow,
-  onDelete,
-}) => {
+const DetailPembelianModal = ({ title, data, show, toggleShow, onDelete }) => {
   const router = useRouter();
-  const toggleShow = () => {
-    setShow(!show);
-  };
-  const formatRp = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(number);
-  };
-
   return (
     <Modal
       title={title}
@@ -122,15 +103,18 @@ const DetailPembelianModal = ({
             Total : {formatRp(data.total)}
           </div>
           <div>
-            <button
-              //   onClick={onDelete}
-              type='button'
+            <a
+              href={router.pathname + "/print/" + data._id}
+              target='_blank'
               className='font-medium px-3 bg-yellow-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-yellow-500 hover:text-yellow-500 focus:outline-none p-1 text-white'
             >
               Print
-            </button>
+            </a>
             <button
-              onClick={onDelete}
+              onClick={() => {
+                onDelete();
+                toggleShow();
+              }}
               type='button'
               className='font-medium px-3 bg-red-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
             >

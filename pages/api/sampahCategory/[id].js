@@ -1,6 +1,5 @@
 import createHandler from "@middleware/index";
 import SampahCategory from "@models/SampahCategory";
-import SampahType from "@models/SampahType";
 
 const handler = createHandler();
 
@@ -14,16 +13,8 @@ handler.get(async (req, res) => {
 });
 handler.patch(async (req, res) => {
   const data = req.body;
-  const options = {
-    new: true,
-    runValidators: true,
-  };
   try {
-    const result = await SampahCategory.findByIdAndUpdate(
-      req.query.id,
-      data,
-      options
-    );
+    const result = await SampahCategory.findByIdAndUpdate(req.query.id, data);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -33,7 +24,6 @@ handler.patch(async (req, res) => {
 handler.delete(async (req, res) => {
   try {
     const result = await SampahCategory.findByIdAndDelete(req.query.id);
-    await SampahType.deleteMany({ _category: result._id });
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);

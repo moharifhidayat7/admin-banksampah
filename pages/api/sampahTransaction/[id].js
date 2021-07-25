@@ -1,11 +1,11 @@
 import createHandler from "@middleware/index";
-import SampahPurchase from "@models/SampahPurchase";
+import SampahTransaction from "@models/SampahTransaction";
 import BankTransaction from "@models/BankTransaction";
 
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-  const result = await SampahPurchase.findById(req.query.id);
+  const result = await SampahTransaction.findById(req.query.id);
   res.status(200).json(result);
 });
 handler.patch(async (req, res) => {
@@ -15,7 +15,7 @@ handler.patch(async (req, res) => {
     runValidators: true,
   };
 
-  const result = await SampahPurchase.findByIdAndUpdate(
+  const result = await SampahTransaction.findByIdAndUpdate(
     req.query.id,
     data,
     options
@@ -25,7 +25,7 @@ handler.patch(async (req, res) => {
 
 handler.delete(async (req, res) => {
   try {
-    const result = await SampahPurchase.findByIdAndDelete(req.query.id);
+    const result = await SampahTransaction.findByIdAndDelete(req.query.id);
     if (result.transactionType == "TABUNG") {
       await BankTransaction.deleteOne({ _sampahTransaction: result._id });
     }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-
+import { toQueryString } from "@helpers/functions";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -36,7 +36,7 @@ export default function Nasabah({ data, accountType }) {
     new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)
   );
 
-  const accountTypeOption = accountType.rows.map((type) => {
+  const accountTypeOption = accountType.results.map((type) => {
     return { label: type.code + " - " + type.name, value: type._id };
   });
 
@@ -115,6 +115,7 @@ export default function Nasabah({ data, accountType }) {
               setStartDate={setStartDate}
               endDate={endDate}
               setEndDate={setEndDate}
+              field='createdAt'
             />
           </TableFilter>
           <SearchFilter />
@@ -133,65 +134,58 @@ export default function Nasabah({ data, accountType }) {
               <TableCol></TableCol>
             </TableHead>
             <TableBody>
-              {data.total > 0 &&
-                data.rows.map((item) => {
-                  return (
-                    <TableRow
-                      key={item._id}
-                      onClick={() => {
-                        setRow(item);
-                        setDetailNasabahModal(!detailNasabahModal);
-                      }}
-                      className='cursor-pointer'
-                    >
-                      <TableCell>{item.rekening}</TableCell>
-                      <TableCell>{item.nik}</TableCell>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.address}</TableCell>
-                      <TableCell>{item.gender}</TableCell>
-                      <TableCell>{item.mobile}</TableCell>
-                      <TableCell>{item._accountType.name}</TableCell>
-                      <TableCell>
-                        {new Date(item.createdAt).toLocaleString("id-ID", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </TableCell>
-                      <TableCell className='text-right'>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRow(item);
-                            setDetailNasabahModal(!detailNasabahModal);
-                          }}
-                          className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
-                        >
-                          <Icons.Eye />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+              {data.results.map((item) => {
+                return (
+                  <TableRow
+                    key={item._id}
+                    onClick={() => {
+                      setRow(item);
+                      setDetailNasabahModal(!detailNasabahModal);
+                    }}
+                    className='cursor-pointer'
+                  >
+                    <TableCell>{item.rekening}</TableCell>
+                    <TableCell>{item.nik}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.address}</TableCell>
+                    <TableCell>{item.gender}</TableCell>
+                    <TableCell>{item.mobile}</TableCell>
+                    <TableCell>{item._accountType.name}</TableCell>
+                    <TableCell>
+                      {new Date(item.createdAt).toLocaleString("id-ID", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell className='text-right'>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRow(item);
+                          setDetailNasabahModal(!detailNasabahModal);
+                        }}
+                        className='bg-green-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-green-500 hover:text-green-500 focus:outline-none p-1 text-white'
+                      >
+                        <Icons.Eye />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
         <div className='flex flex-col sm:flex-row justify-between py-2 items-center'>
           <div className='flex flex-col sm:flex-row px-2 py-1 sm:flex-grow justify-between items-center'>
-            <span>
+            {/* <span>
               Menampilkan: {data.start} - {data.end} dari {data.total} item
             </span>
             <span>
               Halaman: {data.page} dari {data.maxPage}
-            </span>
+            </span> */}
           </div>
-          <Pagination
-            page={data.page}
-            pageRange={5}
-            maxPage={data.maxPage}
-            start={data.start}
-            end={data.end}
-          />
+          <Pagination meta={data.meta} />
         </div>
       </div>
     </Layout>
@@ -208,20 +202,12 @@ export async function getServerSideProps(context) {
   }
 
   const limit = context.query.limit || 10;
+  const page = context.query.page || 1;
 
-  const queryString = Object.keys(context.query)
-    .map((key) => {
-      if (key == "limit") {
-        return;
-      }
-      return `${encodeURIComponent(key)}=${encodeURIComponent(
-        context.query[key]
-      )}`;
-    })
-    .join("&");
+  const queryString = toQueryString(context.query, ["page", "limit"]);
 
   const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile?limit=${limit}&${queryString}`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile?limit=${limit}&page=${page}&${queryString}`
   );
   const data = await fetch1.json();
 

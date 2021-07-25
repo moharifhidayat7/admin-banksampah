@@ -19,7 +19,9 @@ export default function AdminLayout({ children }) {
       </Head>
       <div className='flex flex-no-wrap'>
         <Sidebar>
-          <Menu></Menu>
+          <div className='h-full overflow-y-auto'>
+            <Menu></Menu>
+          </div>
         </Sidebar>
         <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
         <div className='w-full'>

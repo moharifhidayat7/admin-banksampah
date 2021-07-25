@@ -1,13 +1,9 @@
 import { useState } from "react";
+import { toQueryString } from "@helpers/functions";
 import Layout from "@components/Layouts/BhrLayout";
 import Pagination from "@components/Pagination";
-import SearchFilter from "@components/SearchFilter";
-import Sort from "@components/Sort";
-import Link from "next/link";
-import DateRangeFilter from "@components/DateRangeFilter";
 import DeleteRowModal from "@components/Modals/DeleteRowModal";
 import { getSession } from "next-auth/client";
-import TableFilter from "@components/TableFilter";
 import {
   Table,
   TableHead,
@@ -48,7 +44,7 @@ export default function Golongan({ data, accountType }) {
         title='Hapus Golongan'
         message='Data Nasabah juga akan ikut terhapus!'
         show={deleteRowModal}
-        setShow={setDeleteRowModal}
+        toggleShow={() => setDeleteRowModal(!deleteRowModal)}
         onDelete={deleteHandler}
       />
       <TambahGolonganModal
@@ -85,63 +81,56 @@ export default function Golongan({ data, accountType }) {
               <TableCol></TableCol>
             </TableHead>
             <TableBody>
-              {data.total > 0 &&
-                data.rows.map((item) => {
-                  return (
-                    <TableRow
-                      key={item._id}
-                      onClick={() => {
-                        setRow(item);
-                        setTambahGolonganModal(!tambahGolonganModal);
-                      }}
-                      className='hover:bg-blue-100 cursor-pointer'
-                    >
-                      <TableCell>{item.code}</TableCell>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell className='text-right'>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRow(item);
-                            setTambahGolonganModal(!tambahGolonganModal);
-                          }}
-                          className='inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
-                        >
-                          <Icons.Pencil />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRow(item);
-                            setDeleteRowModal(!deleteRowModal);
-                          }}
-                          className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
-                        >
-                          <Icons.Trash />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+              {data.results.map((item) => {
+                return (
+                  <TableRow
+                    key={item._id}
+                    onClick={() => {
+                      setRow(item);
+                      setTambahGolonganModal(!tambahGolonganModal);
+                    }}
+                    className='hover:bg-blue-100 cursor-pointer'
+                  >
+                    <TableCell>{item.code}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell className='text-right'>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRow(item);
+                          setTambahGolonganModal(!tambahGolonganModal);
+                        }}
+                        className='inline-block bg-blue-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
+                      >
+                        <Icons.Pencil />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRow(item);
+                          setDeleteRowModal(!deleteRowModal);
+                        }}
+                        className='bg-red-500 align-middle hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+                      >
+                        <Icons.Trash />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
         <div className='flex flex-col sm:flex-row justify-between py-2 items-center'>
           <div className='flex flex-col sm:flex-row px-2 py-1 sm:flex-grow justify-between items-center'>
-            <span>
+            {/* <span>
               Menampilkan: {data.start} - {data.end} dari {data.total} item
             </span>
             <span>
               Halaman: {data.page} dari {data.maxPage}
-            </span>
+            </span> */}
           </div>
-          <Pagination
-            page={data.page}
-            pageRange={5}
-            maxPage={data.maxPage}
-            start={data.start}
-            end={data.end}
-          />
+          <Pagination meta={data.meta} />
         </div>
       </div>
     </Layout>
@@ -158,20 +147,12 @@ export async function getServerSideProps(context) {
   }
 
   const limit = context.query.limit || 10;
+  const page = context.query.page || 1;
 
-  const queryString = Object.keys(context.query)
-    .map((key) => {
-      if (key == "limit" || key == "sort") {
-        return;
-      }
-      return `${encodeURIComponent(key)}=${encodeURIComponent(
-        context.query[key]
-      )}`;
-    })
-    .join("&");
+  const queryString = toQueryString(context.query, ["page", "limit", "sort"]);
 
   const fetch1 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType?limit=${limit}&sort=code&${queryString}`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/accountType?limit=${limit}&sort=code&page=${page}&${queryString}`
   );
   const data = await fetch1.json();
 
