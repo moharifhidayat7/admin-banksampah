@@ -103,14 +103,12 @@ schema.post("save", async function (doc) {
 
   for (let i = 0; i < doc.items.length; i++) {
     const item = doc.items[i];
-    console.log(item);
     await mongoose.model("SampahStock").create({
       _sampahType: item._sampahType._id,
       qty: item.qty,
       _sampahTransaction: doc._id,
       stockType: stockType,
     });
-    console.log(stockType);
   }
 });
 

@@ -4,13 +4,7 @@ import SampahTransaction from "@models/SampahTransaction";
 
 const handler = createHandler();
 
-const searchQuery = (keyword = "") => {
-  return {
-    $or: [{ customer: { $regex: keyword, $options: "i" } }],
-  };
-};
-
-handler.use(paginate(SampahTransaction, searchQuery)).get(async (req, res) => {
+handler.use(paginate(SampahTransaction)).get(async (req, res) => {
   res.status(200).json(res.paginatedResult);
 });
 handler.post(async (req, res) => {

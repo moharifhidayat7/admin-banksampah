@@ -30,7 +30,9 @@ export default function paginate(
     const startIndex = (currentPage - 1) * currentLimit;
     const endIndex = currentPage * currentLimit;
 
-    const documentCount = await model.countDocuments().exec();
+    const documentCount = await model
+      .countDocuments({ ...query, ...searchQuery(keyword) })
+      .exec();
 
     const result = {};
 

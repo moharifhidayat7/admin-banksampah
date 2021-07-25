@@ -78,7 +78,7 @@ GET http://localhost:3000/api/generate/accountType?rows=10
 ### Fix
 GET http://localhost:3000/api/generate/nasabahProfile?rows=100
 ### Fix
-GET http://localhost:3000/api/generate/sampahTransaction?rows=100
+GET http://localhost:3000/api/generate/sampahTransaction?rows=50
 ### Fix
 GET http://localhost:3000/api/generate/sampahSale?rows=50
 ###

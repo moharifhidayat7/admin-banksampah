@@ -47,10 +47,9 @@ export default function Pembelian({ onSubmit, sampahType, sampahCategory }) {
   const searchNasabah = async (keyword) => {
     const result = await fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile?keyword=${keyword}`
-    ).then(async (res) => {
-      return await res.json();
-    });
-    return result.rows.map((el) => {
+    );
+    const data = await result.json();
+    return data.results.map((el) => {
       return {
         label: `${el.rekening} . ${el.name}`,
         value: el._id,
