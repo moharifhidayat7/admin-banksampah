@@ -35,12 +35,12 @@ const DetailPembelianModal = ({ title, data, show, toggleShow, onDelete }) => {
               </thead>
               <tbody>
                 <tr>
-                  <td className='border px-5 py-2'>Nama Penjual</td>
+                  <td className='border px-5 py-2'>Nama</td>
                   <td className='border px-5 py-2'>
                     {data._nasabah ? data._nasabah.name : data.customer}
                   </td>
                   <td className='border px-5 py-2'>No. Transaksi</td>
-                  <td className='border px-5 py-2'>{data.invoice_id}</td>
+                  <td className='border px-5 py-2'>{data.transactionNo}</td>
                 </tr>
                 <tr>
                   <td className='border px-5 py-2'>Alamat</td>

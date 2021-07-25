@@ -1,14 +1,12 @@
 import Modal from "@components/Modal";
 
-export default function DeleteRowModal({
+export default function Prompt({
   title,
-  data,
-  confirm,
   buttonText,
   message,
   show,
   toggleShow,
-  onDelete,
+  onConfirm,
 }) {
   return (
     <Modal
@@ -20,18 +18,14 @@ export default function DeleteRowModal({
     >
       <Modal.Content>
         <div>{message}</div>
-        <div>
-          {confirm ? confirm : "Anda yakin ingin menghapus"}{" "}
-          <span className='font-bold'>{data.name}</span>?
-        </div>
       </Modal.Content>
       <Modal.Footer>
         <button
-          onClick={onDelete}
+          onClick={onConfirm}
           type='button'
-          className='font-medium px-3 bg-red-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-red-500 hover:text-red-500 focus:outline-none p-1 text-white'
+          className='font-medium px-3 bg-blue-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'
         >
-          {buttonText ? buttonText : "Hapus"}
+          {buttonText ? buttonText : "Ya"}
         </button>
         <button
           onClick={toggleShow}

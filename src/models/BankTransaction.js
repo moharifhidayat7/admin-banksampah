@@ -27,7 +27,7 @@ const schema = new Schema(
     },
     status: {
       type: String,
-      enum: ["PENDING", "SUCCESS"],
+      enum: ["PENDING", "SUCCESS", "CANCELED"],
       default: "PENDING",
     },
     note: {
@@ -40,4 +40,9 @@ const schema = new Schema(
 schema.plugin(require("mongoose-autopopulate"));
 
 export default mongoose.models[MODEL_NAME] ||
-  mongoose.model(MODEL_NAME, schema);
+  mongoose.model(
+    MODEL_NAME,
+    schema.plugin(require("mongoose-sequence")(mongoose), {
+      inc_field: "no",
+    })
+  );

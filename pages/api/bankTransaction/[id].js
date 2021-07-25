@@ -14,11 +14,8 @@ handler.patch(async (req, res) => {
     runValidators: true,
   };
 
-  const result = await BankTransaction.findByIdAndUpdate(
-    req.query.id,
-    data,
-    options
-  );
+  const result = await BankTransaction.findByIdAndUpdate(req.query.id, data);
+
   res.status(200).json(result);
 });
 

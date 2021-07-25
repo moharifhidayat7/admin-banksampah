@@ -1,11 +1,8 @@
 import { useState } from "react";
-import Head from "next/head";
 import Sidebar from "../Sidebar";
 import MobileNav from "../Navbar/MobileNav";
 import Navbar from "../Navbar/Navbar";
-import { List, Item, SubItem } from "../List";
-import * as Icons from "heroicons-react";
-
+import MenuBhr from "@components/MenuBhr";
 export default function AdminLayout({ children }) {
   const [sidebar, setSidebar] = useState(false);
 
@@ -15,46 +12,11 @@ export default function AdminLayout({ children }) {
 
   return (
     <div className='w-full h-full'>
-      <Head>
-        <title>Bank Sampah</title>
-      </Head>
       <div className='flex flex-no-wrap'>
         <Sidebar>
-          <List>
-            <Item
-              route='/Admin/Bendahara'
-              icon={<Icons.HomeOutline size='1rem' />}
-              title='Dashboard'
-            />
-            <Item route='/Admin/Bendahara/Nasabah' icon={<Icons.UserGroup size='1rem' />} title='Nasabah'>
-              <SubItem route='/Admin/Bendahara/Nasabah' title='Data Nasabah' />
-              <SubItem
-                route='/Admin/Bendahara/Nasabah/Golongan'
-                title='Golongan'
-              />
-            </Item>
-            <Item
-              route='/Admin/Bendahara/Internal'
-              icon={<Icons.Cash size='1rem' />}
-              title='Transaksi Internal'
-            ></Item>
-
-            <Item
-              route='/Admin/Bendahara/Transaksi'
-              icon={<Icons.Cash size='1rem' />}
-              title='Transaksi Tabungan Nasabah'
-            ></Item>
-            {/* <Item
-                            route='/Admin/Bendahara/PembelianSampah'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Pembelian Sampah'
-                        ></Item>
-                        <Item
-                            route='/Admin/Bendahara/PenjualanSampah'
-                            icon={<Icons.Cash size='1rem' />}
-                            title='Transaksi Penjualan Sampah'
-                        ></Item> */}
-          </List>
+          <div className='h-full overflow-y-auto'>
+            <MenuBhr></MenuBhr>
+          </div>
         </Sidebar>
         <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
         <div className='w-full'>

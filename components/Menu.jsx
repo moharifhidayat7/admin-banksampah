@@ -9,11 +9,11 @@ export default function Menu() {
         icon={<Icons.HomeOutline size='1rem' />}
         title='Dashboard'
       />
-      <Item
+      {/* <Item
         route='/Admin/Gudang/Kas'
         icon={<Icons.Cash size='1rem' />}
         title='Kas Gudang'
-      />
+      /> */}
       <ItemGroup title='DATA'>
         <Item
           route='/Admin/Gudang/Nasabah'

@@ -29,7 +29,7 @@ export default function Index({ sampahTransaction }) {
     );
     const total = filter.reduce((p, c) => {
       const sum = c.items.reduce((tot, item) => {
-        return tot + item._sampahType.price * item.qty;
+        return tot + item.price * item.qty;
       }, 0);
       return p + sum;
     }, 0);
@@ -42,7 +42,7 @@ export default function Index({ sampahTransaction }) {
     );
     const total = filter.reduce((p, c) => {
       const sum = c.items.reduce((tot, item) => {
-        return tot + item._sampahType.price * item.qty;
+        return tot + item.price * item.qty;
       }, 0);
       return p + sum;
     }, 0);
@@ -54,7 +54,7 @@ export default function Index({ sampahTransaction }) {
     );
     const total = filter.reduce((p, c) => {
       const sum = c.items.reduce((tot, item) => {
-        return tot + item._sampahType.price * item.qty;
+        return tot + item.price * item.qty;
       }, 0);
       return p + sum;
     }, 0);

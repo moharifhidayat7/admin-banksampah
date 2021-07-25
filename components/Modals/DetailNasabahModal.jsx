@@ -43,6 +43,11 @@ const DetailNasabahModal = ({
                 />
               )}
             </div>
+
+            <div className='flex flex-col items-center text-white bg-blue-500 rounded-md p-2'>
+              <div className='font-medium'>Saldo</div>
+              <div className='text-xl'>Rp. 200.000</div>
+            </div>
           </div>
           <div className='col-span-2'>
             <div>
@@ -104,13 +109,6 @@ const DetailNasabahModal = ({
       </Modal.Content>
       <Modal.Footer>
         <div className='flex justify-end'>
-          <button
-            //   onClick={onDelete}
-            type='button'
-            className='font-medium px-3 bg-yellow-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-yellow-500 hover:text-yellow-500 focus:outline-none p-1 text-white'
-          >
-            Print
-          </button>
           <Link href={`${router.pathname}/edit/${data._id}`}>
             <a className='font-medium px-3 bg-blue-500 hover:bg-white shadow-sm border-white rounded-md border-2 hover:border-blue-500 hover:text-blue-500 focus:outline-none p-1 text-white'>
               Edit

@@ -81,6 +81,10 @@ schema.pre("findOneAndDelete", async function (next) {
     .model("SampahStock")
     .deleteMany({ _sampahTransaction: doc._id });
 
+  await mongoose
+    .model("BankTransaction")
+    .findOneAndDelete({ _sampahTransaction: doc._id, status: "PENDING" });
+
   next();
 });
 

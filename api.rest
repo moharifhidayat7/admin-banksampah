@@ -82,4 +82,4 @@ GET http://localhost:3000/api/generate/sampahTransaction?rows=50
 ### Fix
 GET http://localhost:3000/api/generate/sampahSale?rows=50
 ###
-DELETE http://localhost:3000/api/accountType/60f7dcf90bdb7636b0c9a34b
+DELETE http://localhost:3000/api/bankTransaction/60fd11137c1de21718

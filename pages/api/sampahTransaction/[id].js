@@ -26,9 +26,7 @@ handler.patch(async (req, res) => {
 handler.delete(async (req, res) => {
   try {
     const result = await SampahTransaction.findByIdAndDelete(req.query.id);
-    if (result.transactionType == "TABUNG") {
-      await BankTransaction.deleteOne({ _sampahTransaction: result._id });
-    }
+
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);

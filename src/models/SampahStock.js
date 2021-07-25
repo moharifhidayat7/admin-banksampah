@@ -29,7 +29,6 @@ const schema = new Schema(
 
 schema.pre("deleteMany", async function (next) {
   const items = await this.model.find(this.getFilter());
-  console.log("pre stok delete many");
   for (let i = 0; i < items.length; i++) {
     const doc = items[i];
 
