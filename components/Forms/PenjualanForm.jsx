@@ -55,6 +55,8 @@ export default function Penjualan({ onSubmit, sampahType, sampahCategory }) {
       <form
         onSubmit={handleSubmit((e) => {
           onSubmit(e, items);
+          reset();
+          setItems([]);
         })}
       >
         <div className='w-full sm:w-full md:w-3/4 m-auto'>

@@ -17,6 +17,7 @@ const itemSchema = new Schema(
         return this._product.price;
       },
     },
+
     qty: {
       type: Number,
       min: 1,
@@ -36,6 +37,10 @@ const schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "NasabahProfile",
       autopopulate: true,
+    },
+    payment: {
+      type: Number,
+      min: 1,
     },
     items: [itemSchema],
     status: {

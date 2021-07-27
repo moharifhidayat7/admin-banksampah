@@ -55,6 +55,7 @@ export default function StokModal({
             <input
               type='text'
               name='_product'
+              hidden
               ref={register({ required: true })}
             />
             <input
