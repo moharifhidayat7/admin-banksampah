@@ -17,6 +17,7 @@ export default function Index({
   sampahTransaction,
   bankTransaction,
   nasabahProfile,
+  order,
 }) {
   const getTunai = () => {
     const filter = sampahTransaction.results.filter(
@@ -154,7 +155,7 @@ export default function Index({
           />
         </div>
       </div>
-      <div className='pt-5'>
+      {/* <div className='pt-5'>
         <h1 className='text-2xl mb-4'>Transaksi Penjualan</h1>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 w-full'>
           <DashboardCard
@@ -177,7 +178,7 @@ export default function Index({
             value={formatRp(getTabungan())}
           />
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 }
@@ -197,7 +198,7 @@ export async function getServerSideProps(context) {
   const sampahTransaction = await res.json();
 
   const res2 = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction`
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction?status=SUCCESS`
   );
   const bankTransaction = await res2.json();
 
@@ -205,6 +206,11 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_API_HOST}/api/nasabahProfile`
   );
   const nasabahProfile = await res3.json();
+
+  // const res4 = await fetch(
+  //   `${process.env.NEXT_PUBLIC_API_HOST}/api/order?status=SUCCESS`
+  // );
+  // const order = await res4.json();
 
   return {
     props: {

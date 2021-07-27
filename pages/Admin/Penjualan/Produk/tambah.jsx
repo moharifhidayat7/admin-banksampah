@@ -1,65 +1,76 @@
-import AdminLayout from "../../../../components/Layouts/PenjualanLayout";
+import Layout from "@components/Layouts/PenjualanLayout";
+import ContentBox from "@components/ContentBox";
 import { useRouter } from "next/router";
-import ProductForm from "../../../../components/Forms/ProductForm";
-import { useState } from "react";
-import { storage } from "../../../../src/firebase";
+import { useState, useEffect } from "react";
 import { getSession } from "next-auth/client";
-import { useEffect } from "react";
-export default function TambahProduk() {
+
+import Head from "next/head";
+import ProductForm from "@components/Forms/ProductForm";
+
+export default function tambahNasabah({ productCategory }) {
   const router = useRouter();
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState("");
-  const [progress, setProgress] = useState(0);
-  const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
+
+  const [image, setImage] = useState({});
+
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    return result.json();
   };
 
   const onSubmit = async (data) => {
-    const uploadTask = storage.ref(`products/${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("products")
-          .child(image.name)
-          .getDownloadURL()
-          .then(async (url) => {
-            setUrl(url);
-            await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ ...data, picture: url }),
-            }).then(async (res) => {
-              router.push("/Admin/Penjualan/Produk");
-            });
-          });
+    let postData = data;
+    if (image.raw) {
+      const result = await uploadFile(image.raw);
+      if (result._id) {
+        postData = {
+          _picture: result._id,
+          ...data,
+        };
       }
-    );
+    }
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/product`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    }).then((res) => {
+      if (res.status == 200) {
+        router.push(router.pathname.split("/").slice(0, -1).join("/"));
+      }
+      if (res.status == 500) {
+        alert("ewrror");
+      }
+    });
   };
 
   return (
-    <AdminLayout>
-      <div>
-        <ProductForm
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          title='Tambah Produk'
-        />
+    <Layout>
+      <Head>
+        <title>Tambah Produk - Bank Sampah Banyuwangi</title>
+      </Head>
+      <div className='pb-24'>
+        <ContentBox title='Tambah Produk'>
+          <ContentBox.Body>
+            <ProductForm
+              onSubmit={onSubmit}
+              image={image}
+              setImage={setImage}
+              productCategory={productCategory}
+            />
+          </ContentBox.Body>
+        </ContentBox>
       </div>
-    </AdminLayout>
+    </Layout>
   );
 }
 export async function getServerSideProps(context) {
@@ -71,7 +82,15 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const fetch2 = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/productCategory?sort=name`
+  );
+  const productCategory = await fetch2.json();
+
   return {
-    props: {},
+    props: {
+      productCategory,
+    },
   };
 }

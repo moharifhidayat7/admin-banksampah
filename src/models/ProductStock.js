@@ -1,17 +1,13 @@
 import mongoose, { Schema } from "mongoose";
-import "./SampahType";
+import "./Product";
 
-const MODEL_NAME = "SampahStock";
+const MODEL_NAME = "ProductStock";
 
 const schema = new Schema(
   {
-    _sampahTransaction: {
+    _product: {
       type: Schema.Types.ObjectId,
-      ref: "SampahTransaction",
-    },
-    _sampahType: {
-      type: Schema.Types.ObjectId,
-      ref: "SampahType",
+      ref: "Product",
       required: true,
       autopopulate: true,
     },
@@ -27,36 +23,40 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-schema.pre("deleteMany", async function (next) {
-  const items = await this.model.find(this.getFilter());
-  for (let i = 0; i < items.length; i++) {
-    const doc = items[i];
+// schema.pre("deleteMany", async function (next) {
+//   const items = await this.model.find(this.getFilter());
+//   for (let i = 0; i < items.length; i++) {
+//     const doc = items[i];
 
-    const increment =
-      doc.stockType == "OUT"
-        ? doc.qty
-        : doc.stockType == "IN"
-        ? doc.qty * -1
-        : 0;
+//     const increment =
+//       doc.stockType == "OUT"
+//         ? doc.qty
+//         : doc.stockType == "IN"
+//         ? doc.qty * -1
+//         : 0;
 
-    await mongoose.model("SampahType").findByIdAndUpdate(doc._sampahType._id, {
-      $inc: {
-        stock: increment,
-      },
-    });
-  }
+//     await mongoose.model("Product").findByIdAndUpdate(doc._product._id, {
+//       $inc: {
+//         stock: increment,
+//       },
+//     });
+//   }
 
-  next();
-});
+//   next();
+// });
 
 schema.pre("findOneAndDelete", async function (next) {
   const doc = await this.model.findOne(this.getFilter());
 
   const increment =
     doc.stockType == "OUT" ? doc.qty : doc.stockType == "IN" ? doc.qty * -1 : 0;
-  await mongoose.model("SampahType").findByIdAndUpdate(doc._sampahType, {
+
+  const newStock =
+    doc._product.stock + increment < 0 ? doc._product.stock * -1 : increment;
+
+  await mongoose.model("Product").findByIdAndUpdate(doc._product._id, {
     $inc: {
-      stock: increment,
+      stock: newStock,
     },
   });
   next();
@@ -66,7 +66,7 @@ schema.post("save", async function (doc) {
   const increment =
     doc.stockType == "IN" ? doc.qty : doc.stockType == "OUT" ? doc.qty * -1 : 0;
 
-  await mongoose.model("SampahType").findByIdAndUpdate(doc._sampahType, {
+  await mongoose.model("Product").findByIdAndUpdate(doc._product, {
     $inc: {
       stock: increment,
     },
@@ -74,8 +74,6 @@ schema.post("save", async function (doc) {
 });
 
 schema.plugin(require("mongoose-autopopulate"));
-
-export { schema as SampahTypeSchema };
 
 export default mongoose.models[MODEL_NAME] ||
   mongoose.model(MODEL_NAME, schema);
