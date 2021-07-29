@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signOut, useSession, getSession } from "next-auth/client";
 
 import { BellOutline, XOutline } from "heroicons-react";
 
@@ -7,6 +8,7 @@ import Brand from "../Brand";
 import SearchBox from "./SearchBox";
 
 export default function MobileNav({ sidebar, toggleSidebar }) {
+  const [session, loading] = useSession();
   return (
     <div
       className={`fixed w-full h-full z-40 lg:hidden ${
@@ -44,9 +46,13 @@ export default function MobileNav({ sidebar, toggleSidebar }) {
                                         src='https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png'
                                         className='w-8 h-8 rounded-md'
                                     /> */}
+                                    <button onClick={() => {
+                            signOut({ callbackUrl: "/login" });
+                        }}
                   <p className='md:text-xl text-white text-base leading-4 ml-2'>
-                    Jane Doe
+                    Logout
                   </p>
+                  </button>
                 </div>
                 <ul className='flex'>
                   <li className='cursor-pointer text-white pt-5 pb-3 pl-3'>
