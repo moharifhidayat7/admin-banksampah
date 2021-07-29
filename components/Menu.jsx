@@ -67,11 +67,11 @@ export default function Menu() {
         />
       </ItemGroup>
 
-      <Item
+      {/* <Item
         route='/Admin/Gudang/Rekap/SampahMasuk'
         icon={<Icons.DocumentReport size='1rem' />}
         title='Rekap Pembelian Sampah'
-      ></Item>
+      ></Item> */}
     </List>
   );
 }

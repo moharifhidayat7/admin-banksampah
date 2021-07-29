@@ -17,7 +17,6 @@ const itemSchema = new Schema(
         return this._product.price;
       },
     },
-
     qty: {
       type: Number,
       min: 1,
@@ -53,6 +52,18 @@ const schema = new Schema(
 
 schema.virtual("total").get(function () {
   return this.items.reduce((total, item) => total + item.subTotal, 0);
+});
+
+schema.post("save", async function (doc) {
+  for (let i = 0; i < doc.items.length; i++) {
+    const item = doc.items[i];
+    await mongoose.model("ProductStock").create({
+      _product: item._product._id,
+      qty: item.qty,
+      _order: doc._id,
+      stockType: "OUT",
+    });
+  }
 });
 
 schema.plugin(require("mongoose-autopopulate"));

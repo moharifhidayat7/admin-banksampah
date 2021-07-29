@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import "./Product";
+import "./Order";
 
 const MODEL_NAME = "ProductStock";
 
@@ -10,6 +11,10 @@ const schema = new Schema(
       ref: "Product",
       required: true,
       autopopulate: true,
+    },
+    _order: {
+      type: Schema.Types.ObjectId,
+      ref: "Order",
     },
     qty: {
       type: Number,

@@ -1,8 +1,10 @@
 import Modal from "@components/Modal";
+import { CurrencyYenOutline } from "heroicons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { formatRp } from "@helpers/functions";
 
 const DetailNasabahModal = ({
   title,
@@ -15,10 +17,45 @@ const DetailNasabahModal = ({
   const router = useRouter();
 
   const [image, setImage] = useState("");
-
+  const [saldo, setSaldo] = useState(0);
   const toggleShow = () => {
     setShow(!show);
   };
+
+  const getSaldo = async (id) => {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/bankTransaction?_nasabah=${id}&status=SUCCESS`,
+      {
+        method: "GET",
+      }
+    ).then(async (res) => {
+      const result = await res.json();
+      if (res.status == 200) {
+        const debit = result.results.filter(
+          (d) => d.transactionType == "DEBIT"
+        );
+        const kredit = result.results.filter(
+          (d) => d.transactionType == "KREDIT"
+        );
+
+        const totalDebit = debit.reduce((tot, cur) => {
+          return tot + cur.amount;
+        }, 0);
+
+        const totalKredit = kredit.reduce((tot, cur) => {
+          return tot + cur.amount;
+        }, 0);
+
+        setSaldo(totalDebit - totalKredit);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      getSaldo(data._id);
+    }
+  }, [data]);
 
   return (
     <Modal
@@ -46,7 +83,7 @@ const DetailNasabahModal = ({
 
             <div className='flex flex-col items-center text-white bg-blue-500 rounded-md p-2'>
               <div className='font-medium'>Saldo</div>
-              <div className='text-xl'>Rp. 200.000</div>
+              <div className='text-xl'>{formatRp(saldo)}</div>
             </div>
           </div>
           <div className='col-span-2'>
