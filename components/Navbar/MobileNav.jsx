@@ -48,7 +48,7 @@ export default function MobileNav({ sidebar, toggleSidebar }) {
                                     /> */}
                                     <button onClick={() => {
                             signOut({ callbackUrl: "/login" });
-                        }}
+                        }}>
                   <p className='md:text-xl text-white text-base leading-4 ml-2'>
                     Logout
                   </p>
