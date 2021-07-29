@@ -53,11 +53,11 @@ export default function AdminLayout({ children }) {
                   icon={<Icons.ShoppingCart size='1rem' />}
                   title='Transaksi Penjualan'
                 />
-                <Item
-                  route='/Admin/Penjualan/RekapPenjualan'
-                  icon={<Icons.DocumentReport size='1rem' />}
-                  title='Rekap Penjualan Produk'
-                />
+//                 <Item
+//                   route='/Admin/Penjualan/RekapPenjualan'
+//                   icon={<Icons.DocumentReport size='1rem' />}
+//                   title='Rekap Penjualan Produk'
+//                 />
               </ItemGroup>
             </List>
           </div>
