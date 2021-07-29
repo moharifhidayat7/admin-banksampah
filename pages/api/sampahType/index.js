@@ -1,29 +1,26 @@
-import createHandler from "../../../src/middleware/index";
-import SampahType from "../../../src/models/SampahType";
+import createHandler from "@middleware/index";
+import paginate from "@middleware/paginate";
+import SampahType from "@models/SampahType";
 
 const handler = createHandler();
 
-handler.get(async (req, res) => {
-    const limit = parseInt(req.query.limit) || 0;
-    let result;
-    if (req.query.group) {
-        result = await SampahType.aggregate([
-            {
-                $group: {
-                    _id: "$category",
-                    items: { $push: "$$ROOT" },
-                },
-            },
-        ]);
-    } else {
-        result = await SampahType.find().limit(limit);
-    }
+const searchQuery = (keyword = "") => {
+  return {
+    $or: [{ name: { $regex: keyword, $options: "i" } }],
+  };
+};
 
-    res.status(200).json(result);
+handler.use(paginate(SampahType, searchQuery)).get(async (req, res) => {
+  res.status(200).json(res.paginatedResult);
 });
 handler.post(async (req, res) => {
-    const result = await SampahType.create(req.body);
-    return res.status(200).json(result);
+  const data = req.body;
+  try {
+    const result = await SampahType.create(data);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 export default handler;

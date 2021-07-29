@@ -1,39 +1,25 @@
-import createHandler from "../../../src/middleware/index";
-import Product from "../../../src/models/Product";
+import createHandler from "@middleware/index";
+import paginate from "@middleware/paginate";
+import Product from "@models/Product";
 
 const handler = createHandler();
 
-handler.get(async (req, res) => {
-    const limit = parseInt(req.query.limit) || 0;
-    let result;
-    if(req.query.keyword != "" && req.query.category == ""){
-        result = await Product.find({
-            $or: [
-                { name: { $regex: `.*${req.query.keyword}.*`, $options: "i" } },
-            ],
-        });
-    } else if (req.query.category != "") {
-        result = await Product.find({
-            $or: [
-                { name: { $regex: `.*${req.query.keyword}.*`, $options: "i" } },
-            ],
-            $and: [
-                { _category: req.query.category },
-            ]
-        });
-    } else {
-     result = await Product.find().limit(limit);
-    }
+const searchQuery = (keyword = "") => {
+  return {
+    $or: [{ name: { $regex: `.*${keyword}.*`, $options: "i" } }],
+  };
+};
 
-    res.status(200).json(result);
+handler.use(paginate(Product, searchQuery)).get(async (req, res) => {
+  res.status(200).json(res.paginatedResult);
 });
 handler.post(async (req, res) => {
-    try {
-        const result = await Product.create(req.body);
-        res.status(200).json(result);
-    } catch (e) {
-        console.log(e);
-    }
+  try {
+    const result = await Product.create(req.body);
+    res.status(200).json(result);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 export default handler;

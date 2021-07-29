@@ -1,0 +1,85 @@
+PATCH http://localhost:3000/api/nasabahProfile/60f93fefe838061f246c9a3d
+content-type: application/json
+
+{"nik":"1232",
+"name":"bima",
+"_accountType":"60f92527e838061f246c981e",
+"gender":"L",
+"birthdate":"",
+"address":"licin",
+"email":"",
+"mobile":""}
+###
+GET http://localhost:3000/api/sampahType 
+###
+POST http://localhost:3000/api/sampahTransaction 
+content-type: application/json
+
+{
+    "transactionType": "PENJUALAN",
+    "items":[
+       {
+            "_sampahType":{
+                "stock": 0,
+                "_id": "60fa8bee8f5ef13884ef2ef9",
+                "name": "est",
+                "unit": "velit",
+                "price": 17789,
+                "_category": {
+                "_id": "60fa8bec8f5ef13884ef2edf",
+                "name": "et",
+                "__v": 0
+                },
+                "createdAt": "2021-07-23T09:29:18.826Z",
+                "updatedAt": "2021-07-23T09:29:18.826Z",
+                "__v": 0,
+                "id": "60fa8bee8f5ef13884ef2ef9"
+            },
+            "qty":9
+        }
+    ]
+}
+###
+POST http://localhost:3000/api/sampahType
+content-type: application/json
+
+{
+    "name":"tesss",
+    "unit": "Kj",
+    "_category": "60f7dcef0bdb7636b0c9a31f",
+    "price": 616568
+}
+###
+GET http://localhost:3000/api/sampahStock
+###
+GET http://localhost:3000/api/sampahStock/60fbdb10ec55300aac9851c9
+###
+POST http://localhost:3000/api/sampahStock
+content-type: application/json
+
+{
+    "_sampahTransaction":"60fbc06a2551241fa0582be2",
+    "_sampahType": "60fbbac12551241fa0582a45",
+    "note": "coba OUT",
+    "qty": 10,
+    "stockType": "OUT"
+}
+###
+DELETE http://localhost:3000/api/sampahStock/id
+
+
+
+### Fix
+GET http://localhost:3000/api/generate/sampahCategory?rows=10
+### Fix
+GET http://localhost:3000/api/generate/sampahType?rows=10
+### Fix
+GET http://localhost:3000/api/generate/accountType?rows=10
+### Fix
+GET http://localhost:3000/api/generate/nasabahProfile?rows=100
+### Fix
+GET http://localhost:3000/api/generate/sampahTransaction?rows=50
+### Fix
+GET http://localhost:3000/api/generate/sampahSale?rows=50
+###
+DELETE http://localhost:3000/api/bankTransaction/60fd11137c1de21718

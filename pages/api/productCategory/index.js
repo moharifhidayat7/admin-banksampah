@@ -1,21 +1,25 @@
-import createHandler from "../../../src/middleware/index";
-import ProductCategory from "../../../src/models/ProductCategory";
+import createHandler from "@middleware/index";
+import paginate from "@middleware/paginate";
+import ProductCategory from "@models/ProductCategory";
 
 const handler = createHandler();
 
-handler.get(async (req, res) => {
-    const limit = parseInt(req.query.limit) || 0;
-    const result = await ProductCategory.find().limit(limit);
+const searchQuery = (keyword = "") => {
+  return {
+    $or: [{ name: { $regex: `.*${keyword}.*`, $options: "i" } }],
+  };
+};
 
-    res.status(200).json(result);
+handler.use(paginate(ProductCategory, searchQuery)).get(async (req, res) => {
+  res.status(200).json(res.paginatedResult);
 });
 handler.post(async (req, res) => {
-    try {
-        const result = await ProductCategory.create(req.body);
-        res.status(200).json(result);
-    } catch (e) {
-        console.log(e);
-    }
+  try {
+    const result = await ProductCategory.create(req.body);
+    res.status(200).json(result);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 export default handler;

@@ -6,20 +6,5 @@
 // Select the database to use.
 use('banksampah');
 
-
+db.sampahpurchases.deleteOne({_id:ObjectId("60f7f8119ecc2533e4142cbd")})
 // Insert a few documents into the sales collection.
-db.orders.insertMany([
-  { 'items': [
-      {"_product": {
-            "_id": "60b5dd816c38dd2c84822222",
-            "name": "Kompos 10Kg",
-            "price": 10000,
-            },"qty": 7
-        },
-{_product: {
-"_id": "60b5dd816c38dd2c84822222",
-"name": "Kompos 5Kg",
-"price": 20000,
-},"qty": 10}
-  ]},
-]);
