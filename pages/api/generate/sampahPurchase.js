@@ -1,6 +1,5 @@
 import faker from "faker/locale/id_ID";
 import createHandler from "@middleware/index";
-import SampahPurchase from "@models/SampahPurchase";
 import NasabahProfile from "@models/NasabahProfile";
 import SampahType from "@models/SampahType";
 

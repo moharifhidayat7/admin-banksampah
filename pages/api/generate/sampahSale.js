@@ -1,7 +1,6 @@
 import faker from "faker/locale/id_ID";
 import createHandler from "@middleware/index";
 import SampahType from "@models/SampahType";
-import SampahSale from "@models/SampahSale";
 
 const handler = createHandler();
 
