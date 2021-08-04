@@ -46,12 +46,14 @@ export default function MobileNav({ sidebar, toggleSidebar }) {
                                         src='https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png'
                                         className='w-8 h-8 rounded-md'
                                     /> */}
-                                    <button onClick={() => {
-                            signOut({ callbackUrl: "/login" });
-                        }}>
-                  <p className='md:text-xl text-white text-base leading-4 ml-2'>
-                    Logout
-                  </p>
+                  <button
+                    onClick={() => {
+                      signOut({ callbackUrl: "/login" });
+                    }}
+                  >
+                    <p className='md:text-xl text-white text-base leading-4 ml-2'>
+                      Logout
+                    </p>
                   </button>
                 </div>
                 <ul className='flex'>
