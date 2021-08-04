@@ -1,6 +1,7 @@
-const TableCol = ({ children, className }) => {
+const TableCol = ({ children, className, colspan = 1 }) => {
   return (
     <th
+      colSpan={colspan}
       className={`dark:text-gray-400 font-normal pr-6 text-left text-sm tracking-normal leading-4 ${className}`}
     >
       {children}
@@ -19,9 +20,10 @@ const TableHead = ({ children }) => {
   );
 };
 
-const TableCell = ({ children, className }) => {
+const TableCell = ({ children, className, colspan = 1 }) => {
   return (
     <td
+      colSpan={colspan}
       className={`text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 ${className}`}
     >
       {children}
