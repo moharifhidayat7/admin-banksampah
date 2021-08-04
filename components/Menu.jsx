@@ -65,6 +65,11 @@ export default function Menu() {
           icon={<Icons.TrendingUp size='1rem' />}
           title='Penjualan Sampah'
         />
+        <Item
+          route='/Admin/Gudang/Rekap/Pembelian'
+          icon={<Icons.DocumentReport size='1rem' />}
+          title='Rekap Pembelian Sampah'
+        />
       </ItemGroup>
 
       {/* <Item
