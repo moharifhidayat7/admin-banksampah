@@ -78,7 +78,7 @@ export default function PembelianSampah({ rekapSampah, sampahCategory }) {
       </div>
       <div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2'></div>
-        <div className='rounded-md'>
+        <div className='overflow-auto rounded-md'>
           <Table>
             <TableHead>
               <TableCol>Jenis Sampah</TableCol>
@@ -128,7 +128,7 @@ export default function PembelianSampah({ rekapSampah, sampahCategory }) {
                             {formatRp(type.CASH.total)}
                           </TableCell>
                           <TableCell className='text-center'>
-                            {type.TABUNG.qty + type.CASH.qty}
+                            {type.TABUNG.qty + type.CASH.qty} {type.unit}
                           </TableCell>
                           <TableCell className='text-center'>
                             {formatRp(type.TABUNG.total + type.CASH.total)}
