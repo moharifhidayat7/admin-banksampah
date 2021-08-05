@@ -5,9 +5,6 @@ import SearchFilter from "@components/SearchFilter";
 import Sort from "@components/Sort";
 import TableFilter from "@components/TableFilter";
 import Link from "next/link";
-import DateRangeFilter from "@components/DateRangeFilter";
-import DeleteRowModal from "@components/Modals/DeleteRowModal";
-import DetailPembelianModal from "@components/Modals/DetailPembelianModal";
 import { getSession } from "next-auth/client";
 import { formatRp, toQueryString } from "@helpers/functions";
 import {
@@ -20,8 +17,6 @@ import {
 } from "@components/Table";
 import * as Icons from "heroicons-react";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import DatePicker from "react-datepicker";
 
 export default function PenjualanSampah({ rekapSampah, sampahCategory }) {
   const [categories, setCategories] = useState(sampahCategory.results);
