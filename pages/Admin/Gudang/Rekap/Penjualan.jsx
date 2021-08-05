@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import Layout from "@components/Layouts/AdminLayout";
-import Pagination from "@components/Pagination";
-import SearchFilter from "@components/SearchFilter";
-import Sort from "@components/Sort";
-import TableFilter from "@components/TableFilter";
-import Link from "next/link";
 import { getSession } from "next-auth/client";
 import { formatRp, toQueryString } from "@helpers/functions";
 import {
