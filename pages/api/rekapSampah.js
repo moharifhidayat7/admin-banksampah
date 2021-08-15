@@ -16,7 +16,6 @@ handler.get(async (req, res) => {
     .toISOString()
     .slice(0, 10);
 
-  console.log(month, nd);
   const result = [];
 
   const sampahTransactions = await SampahTransaction.aggregate([

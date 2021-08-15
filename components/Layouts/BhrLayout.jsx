@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Sidebar from "../Sidebar";
-import MobileNav from "../Navbar/MobileNav";
+import MobileNav from "../Navbar/MobileNavBhr";
 import Navbar from "../Navbar/Navbar";
 import MenuBhr from "@components/MenuBhr";
 export default function AdminLayout({ children }) {

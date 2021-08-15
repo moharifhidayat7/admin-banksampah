@@ -29,7 +29,8 @@ export default function login() {
         <form
           id='login'
           onSubmit={handleSubmit(login)}
-          className='w-96 bg-white shadow text-black py-8 px-2 sm:px-0'
+          className='w-96 bg-white shadow text-black py-8 px-2 sm:px-0 m-auto'
+
         >
           <div className='px-2 flex flex-col items-center justify-center'>
             <h3 className='text-2xl sm:text-3xl xl:text-2xl font-bold leading-tight'>
@@ -139,6 +140,24 @@ export async function getServerSideProps(context) {
       return {
         redirect: {
           destination: "/Admin/Manager",
+        },
+      };
+    } else if (session.user.role == "client_gudang") {
+      return {
+        redirect: {
+          destination: "/Client/Gudang",
+        },
+      };
+    } else if (session.user.role == "client_bendahara") {
+      return {
+        redirect: {
+          destination: "/Client/Bendahara",
+        },
+      };
+    } else if (session.user.role == "client_penjualan") {
+      return {
+        redirect: {
+          destination: "/Client/Penjualan",
         },
       };
     }

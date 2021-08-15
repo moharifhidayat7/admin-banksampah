@@ -4,6 +4,7 @@ import NavbarProduk from "../../../components/Navbar/NavbarProduk";
 import * as Smooth from "react-scroll";
 import * as Icon from "heroicons-react";
 import BayarModal from "../../../components/Modals/BayarModal";
+import { getSession } from "next-auth/client";
 
 const ItemKeranjang = ({ item, formatRp, keranjang, setKeranjang }) => {
   const [qty, setQty] = useState(1);
@@ -255,6 +256,14 @@ export default function index({ productCategory }) {
 }
 
 export async function getServerSideProps() {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
   const res2 = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/productCategory`
   );

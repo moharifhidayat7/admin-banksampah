@@ -13,7 +13,10 @@ export default function Navbar({ toggleSidebar, clientLink }) {
           <div className='w-full flex items-center pl-8 justify-end'>
             <div className='mx-2'>
               <Link href={clientLink}>
-                <a className='text-sm px-2 border-gray rounded-md border-2 hover:border-gray-500 hover:text-gray-800 focus:outline-none p-1 text-gray-500'>
+                <a
+                  target='_blank'
+                  className='text-sm px-2 border-gray rounded-md border-2 hover:border-gray-500 hover:text-gray-800 focus:outline-none p-1 text-gray-500'
+                >
                   <Icons.ExternalLink size='1rem' className='inline-block' />
                   <div className='align-middle inline-block'>
                     Halaman Client

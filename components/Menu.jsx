@@ -20,11 +20,7 @@ export default function Menu() {
           icon={<Icons.UserGroup size='1rem' />}
           title='Nasabah'
         />
-        <Item
-          route='/Admin/Gudang/Sampah/Jenis'
-          icon={<Icons.CurrencyDollar size='1rem' />}
-          title='Sampah'
-        >
+        <Item icon={<Icons.CurrencyDollar size='1rem' />} title='Sampah'>
           <SubItem route='/Admin/Gudang/Sampah/Jenis' title='Jenis Sampah' />
           <SubItem
             route='/Admin/Gudang/Sampah/Kategori'
@@ -69,6 +65,11 @@ export default function Menu() {
           route='/Admin/Gudang/Rekap/Pembelian'
           icon={<Icons.DocumentReport size='1rem' />}
           title='Rekap Pembelian Sampah'
+        />
+        <Item
+          route='/Admin/Gudang/Rekap/Penjualan'
+          icon={<Icons.DocumentReport size='1rem' />}
+          title='Rekap Penjualan Sampah'
         />
       </ItemGroup>
 
