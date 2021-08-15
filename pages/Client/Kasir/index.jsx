@@ -255,7 +255,7 @@ export default function index({ productCategory }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const session = await getSession(context);
   if (!session) {
     return {
