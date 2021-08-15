@@ -152,7 +152,6 @@ export default function BayarModal({
                 onClick={(e) => {
                   e.preventDefault();
                   if (
-                    bayar != 0 &&
                     parseInt(bayar) >=
                       keranjang.reduce((tot, item) => {
                         return tot + item._product.price * item.qty;
