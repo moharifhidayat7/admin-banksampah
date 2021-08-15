@@ -30,11 +30,17 @@ export default function login() {
           id='login'
           onSubmit={handleSubmit(login)}
           className='w-96 bg-white shadow text-black py-8 px-2 sm:px-0 m-auto'
+
         >
           <div className='px-2 flex flex-col items-center justify-center'>
             <h3 className='text-2xl sm:text-3xl xl:text-2xl font-bold leading-tight'>
               Login
             </h3>
+            <img
+              src='/Logo/banksampah.jfif'
+              alt='banksampah'
+              className='w-24 h-20 mt-8'
+            />
           </div>
           <div className='mt-12 w-full px-2 sm:px-6 flex flex-col space-y-2'>
             {error && <div>{error}</div>}
