@@ -180,7 +180,7 @@ export default function index({ productCategory }) {
           </div>
           <div className='grid lg:grid-cols-4 gap-2'>
             {products
-              .filter((p) => p.stock != 0)
+              .filter((p) => p.stock > 0)
               .map((product) => {
                 return (
                   <Card
