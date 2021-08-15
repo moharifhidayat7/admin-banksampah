@@ -4,6 +4,7 @@ import * as Icon from "heroicons-react";
 import { useForm } from "react-hook-form";
 import AsyncSelect from "react-select/async";
 import { useState, useEffect } from "react";
+import { getSession } from "next-auth/client";
 
 export default function Transaksi() {
   const { register, handleSubmit, reset } = useForm();
@@ -182,4 +183,20 @@ export default function Transaksi() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
 }

@@ -68,7 +68,6 @@ content-type: application/json
 DELETE http://localhost:3000/api/sampahStock/id
 
 
-
 ### Fix
 GET http://localhost:3000/api/generate/sampahCategory?rows=10
 ### Fix

@@ -9,19 +9,18 @@ export default function MenuBhr() {
         icon={<Icons.HomeOutline size='1rem' />}
         title='Dashboard'
       />
-      <Item
-        route='/Admin/Bendahara/Nasabah'
-        icon={<Icons.UserGroup size='1rem' />}
-        title='Nasabah'
-      >
+      <Item icon={<Icons.UserGroup size='1rem' />} title='Nasabah'>
         <SubItem route='/Admin/Bendahara/Nasabah' title='Data Nasabah' />
         <SubItem route='/Admin/Bendahara/Nasabah/Golongan' title='Golongan' />
+        <SubItem route='/Admin/Bendahara/Nasabah/Import' title='Import' />
       </Item>
-      {/* <Item
-        route='/Admin/Bendahara/Internal'
-        icon={<Icons.Cash size='1rem' />}
-        title='Transaksi Internal'
-      ></Item> */}
+      <ItemGroup title='TRANSAKSI'>
+        <Item
+          route='/Admin/Bendahara/Penarikan'
+          icon={<Icons.ArrowCircleRight size='1rem' />}
+          title='Penarikan'
+        />
+      </ItemGroup>
       <ItemGroup title='LAPORAN'>
         <Item
           route='/Admin/Bendahara/Transaksi'
@@ -32,6 +31,11 @@ export default function MenuBhr() {
           route='/Admin/Bendahara/Gudang'
           icon={<Icons.ArrowCircleRight size='1rem' />}
           title='Transaksi Gudang'
+        />
+        <Item
+          route='/Admin/Bendahara/Rekap'
+          icon={<Icons.ArrowCircleRight size='1rem' />}
+          title='Rekap Tabungan'
         />
       </ItemGroup>
       {/* <Item

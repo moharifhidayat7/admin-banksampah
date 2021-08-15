@@ -56,12 +56,9 @@ schema.pre("findOneAndDelete", async function (next) {
   const increment =
     doc.stockType == "OUT" ? doc.qty : doc.stockType == "IN" ? doc.qty * -1 : 0;
 
-  const newStock =
-    doc._product.stock + increment < 0 ? doc._product.stock * -1 : increment;
-
   await mongoose.model("Product").findByIdAndUpdate(doc._product._id, {
     $inc: {
-      stock: newStock,
+      stock: increment,
     },
   });
   next();

@@ -143,7 +143,7 @@ handler.get(async (req, res) => {
   const workbook = new ExcelJS.Workbook();
   const resp = await fetch(
     new Request(
-      "https://github.com/moharifhidayat7/excel-template/raw/main/export-rekap-sampah-masuk.xlsx"
+      "https://github.com/moharifhidayat7/excel-template/raw/main/export-penjualan.xlsx"
     )
   );
   const buff = await resp.arrayBuffer();
@@ -166,8 +166,17 @@ handler.get(async (req, res) => {
     right: { style: "thin" },
   };
 
+  const trxs = [];
   for (let i = 0; i < sampahTransactions.length; i++) {
-    const data = sampahTransactions[i];
+    const rek = sampahTransactions[i];
+    const type = rek.type.filter((ty) => ty.PENJUALAN.total > 0);
+    if (type.length > 0) {
+      trxs.push({ ...rek, type });
+    }
+  }
+
+  for (let i = 0; i < trxs.length; i++) {
+    const data = trxs[i];
     const category = sampahCategory.filter(
       (cat) => cat._id == data._id.toString()
     )[0] || { name: "-" };
@@ -181,12 +190,8 @@ handler.get(async (req, res) => {
 
       const itemRowStart = sheet.getRow(rowStart + 1);
       itemRowStart.getCell(2).value = item.name.toUpperCase();
-      itemRowStart.getCell(3).value = item.TABUNG.qty;
-      itemRowStart.getCell(4).value = item.TABUNG.total;
-      itemRowStart.getCell(5).value = item.CASH.qty;
-      itemRowStart.getCell(6).value = item.CASH.total;
-      itemRowStart.getCell(7).value = item.TABUNG.qty + item.CASH.qty;
-      itemRowStart.getCell(8).value = item.TABUNG.total + item.CASH.total;
+      itemRowStart.getCell(5).value = item.PENJUALAN.qty;
+      itemRowStart.getCell(7).value = item.PENJUALAN.total;
 
       rowStart += 1;
     }
@@ -204,7 +209,7 @@ handler.get(async (req, res) => {
   );
   res.setHeader(
     "Content-Disposition",
-    "attachment; filename=" + `export-rekap-sampah-masuk-${filedate}.xlsx`
+    "attachment; filename=" + `export-penjualan-${filedate}.xlsx`
   );
 
   return workbook.xlsx.write(res).then(function () {

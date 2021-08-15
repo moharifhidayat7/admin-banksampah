@@ -95,6 +95,18 @@ export default function Jenis({ data, sampahType, sampahCategory }) {
       <div className='border-b border-gray-400 pb-2 flex justify-between'>
         <h1 className='text-4xl'>Jenis Sampah</h1>
         <div className='float-right flex space-x-2'>
+          <Link
+            href={`${process.env.NEXT_PUBLIC_API_HOST}/api/export/hargaSampah`}
+          >
+            <a
+              role='button'
+              target='_blank'
+              className='px-4 inline-block align-top focus:outline-none shadow-md bg-yellow-500 rounded-md font-bold py-2 ring-2 ring-white text-white hover:ring-yellow-500 hover:bg-white hover:text-yellow-500 focus:ring-yellow-500 focus:bg-white focus:text-yellow-500 '
+            >
+              <Icons.Printer className='inline-block align-middle mr-2' />
+              <span className='align-middle'>Print</span>
+            </a>
+          </Link>
           <button
             onClick={() => {
               setRow({});

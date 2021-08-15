@@ -17,7 +17,7 @@ const schema = new Schema({
   counter: {
     type: Number,
     immutable: true,
-    default: 0,
+    default: 1,
   },
 });
 

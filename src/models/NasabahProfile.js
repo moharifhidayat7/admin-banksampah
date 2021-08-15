@@ -22,8 +22,6 @@ const schema = new Schema(
     },
     nik: {
       type: String,
-      required: true,
-      unique: true,
     },
     name: {
       type: String,
@@ -35,8 +33,8 @@ const schema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["L", "P"],
-      required: true,
+      enum: ["L", "P", "-"],
+      default: "-",
     },
     email: {
       type: String,

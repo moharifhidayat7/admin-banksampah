@@ -1,6 +1,8 @@
 import * as Icon from "heroicons-react";
 import Link from "next/link";
+import { signOut, useSession, getSession } from "next-auth/client";
 export default function NavbarBendahara() {
+  const [session, loading] = useSession();
   return (
     <div>
       <div className='top-0 w-full bg-blue-800 lg:bg-white'>
@@ -21,10 +23,19 @@ export default function NavbarBendahara() {
             </div>
           </div>
           <div className='lg:flex hidden lg:text-black space-x-10'>
-            <Link href='/Admin/Bendahara'>
-              <a role='button'>Admin</a>
+            <p className='text-gray-800 text-sm mx-3'>
+              {session ? session.user.name : ""}
+            </p>
+            <Link href='#'>
+              <a
+                role='button'
+                onClick={() => {
+                  signOut({ callbackUrl: "/login" });
+                }}
+              >
+                Logout
+              </a>
             </Link>
-            <p>Logout</p>
           </div>
         </div>
 

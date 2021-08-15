@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 import Layout from "@components/Layouts/AdminLayout";
+import Pagination from "@components/Pagination";
+import SearchFilter from "@components/SearchFilter";
+import Sort from "@components/Sort";
+import TableFilter from "@components/TableFilter";
+import Link from "next/link";
+import DateRangeFilter from "@components/DateRangeFilter";
+import DeleteRowModal from "@components/Modals/DeleteRowModal";
+import DetailPembelianModal from "@components/Modals/DetailPembelianModal";
 import { getSession } from "next-auth/client";
 import { formatRp, toQueryString } from "@helpers/functions";
 import {
@@ -12,6 +20,8 @@ import {
 } from "@components/Table";
 import * as Icons from "heroicons-react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import DatePicker from "react-datepicker";
 
 export default function PenjualanSampah({ rekapSampah, sampahCategory }) {
   const [categories, setCategories] = useState(sampahCategory.results);
@@ -71,38 +81,38 @@ export default function PenjualanSampah({ rekapSampah, sampahCategory }) {
         <div className='overflow-auto rounded-md'>
           <Table>
             <TableHead>
-              <TableCol colspan={4}>Jenis Sampah</TableCol>
-              <TableCol className='text-center border'>Qty</TableCol>
-              <TableCol className='text-center border'>Nominal</TableCol>
+              <TableCol>Jenis Sampah</TableCol>
+              <TableCol className='text-right border w-32'>Qty</TableCol>
+              <TableCol className='text-right border w-52'>Total</TableCol>
             </TableHead>
             <TableBody>
-              {rekap.map((item) => {
-                return (
-                  <React.Fragment key={item._id}>
-                    <TableRow className='bg-gray-100 font-bold'>
-                      <TableCell colspan={7}>
-                        {categories.filter((cat) => cat._id == item._id)[0]
-                          .name || "-"}
-                      </TableCell>
-                    </TableRow>
-                    {item.type.map((type) => {
-                      return (
-                        <TableRow key={type._id}>
-                          <TableCell colspan={6} className='pl-10'>
-                            {type.name}
-                          </TableCell>
-                          <TableCell className='text-center'>
-                            {type.PENJUALAN.qty} {type.unit}
-                          </TableCell>
-                          <TableCell className='text-center'>
-                            {formatRp(type.PENJUALAN.total)}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </React.Fragment>
-                );
-              })}
+              {rekap
+                .filter((rek) => rek != undefined)
+                .map((item) => {
+                  return (
+                    <React.Fragment key={item._id}>
+                      <TableRow className='bg-gray-100 font-bold'>
+                        <TableCell colspan={7}>
+                          {categories.filter((cat) => cat._id == item._id)[0]
+                            .name || "-"}
+                        </TableCell>
+                      </TableRow>
+                      {item.type.map((type) => {
+                        return (
+                          <TableRow key={type._id}>
+                            <TableCell className='pl-10'>{type.name}</TableCell>
+                            <TableCell className='text-right'>
+                              {type.PENJUALAN.qty} {type.unit}
+                            </TableCell>
+                            <TableCell className='text-right'>
+                              {formatRp(type.PENJUALAN.total)}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </React.Fragment>
+                  );
+                })}
             </TableBody>
           </Table>
         </div>
@@ -123,7 +133,17 @@ export async function getServerSideProps(context) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/rekapSampah`
   );
-  const rekapSampah = await res.json();
+  const ress = await res.json();
+
+  const rekapSampah = [];
+  for (let i = 0; i < ress.length; i++) {
+    const rek = ress[i];
+    const type = rek.type.filter((ty) => ty.PENJUALAN.total > 0);
+    if (type.length > 0) {
+      rekapSampah.push({ ...rek, type });
+    }
+  }
+
   const res2 = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/api/sampahCategory`
   );

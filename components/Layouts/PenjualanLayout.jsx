@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Head from "next/head";
 import Sidebar from "../Sidebar";
-import MobileNav from "../Navbar/MobileNav";
+import MobileNav from "../Navbar/MobileNavPenjualan";
 import Navbar from "../Navbar/Navbar";
 import { List, Item, SubItem, ItemGroup } from "../List";
 import * as Icons from "heroicons-react";
-
+import Menu from "../MenuPenjualan";
 export default function AdminLayout({ children }) {
   const [sidebar, setSidebar] = useState(false);
 
@@ -18,48 +18,7 @@ export default function AdminLayout({ children }) {
       <div className='flex flex-no-wrap'>
         <Sidebar>
           <div className='h-full overflow-y-auto'>
-            <List>
-              <Item
-                route='/Admin/Penjualan'
-                icon={<Icons.HomeOutline size='1rem' />}
-                title='Dashboard'
-              />
-              <ItemGroup title='DATA'>
-                <Item
-                  route='/Admin/Penjualan/Produk'
-                  icon={<Icons.ClipboardList size='1rem' />}
-                  title='Produk'
-                >
-                  <SubItem
-                    route='/Admin/Penjualan/Produk'
-                    title='Data Produk'
-                  />
-                  <SubItem
-                    route='/Admin/Penjualan/Produk/Kategori'
-                    title='Kategori'
-                  />
-                </Item>
-              </ItemGroup>
-              <ItemGroup title='TRANSAKSI'>
-                <Item
-                  route='/Admin/Penjualan/Stok'
-                  icon={<Icons.ClipboardList size='1rem' />}
-                  title='Stok In/Out'
-                ></Item>
-              </ItemGroup>
-              <ItemGroup title='LAPORAN'>
-                <Item
-                  route='/Admin/Penjualan/Pesanan'
-                  icon={<Icons.ShoppingCart size='1rem' />}
-                  title='Transaksi Penjualan'
-                />
-                {/* <Item
-                  route='/Admin/Penjualan/RekapPenjualan'
-                  icon={<Icons.DocumentReport size='1rem' />}
-                  title='Rekap Penjualan Produk'
-                /> */}
-              </ItemGroup>
-            </List>
+            <Menu></Menu>
           </div>
         </Sidebar>
         <MobileNav sidebar={sidebar} toggleSidebar={toggleSidebar} />
