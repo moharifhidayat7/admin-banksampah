@@ -11,7 +11,7 @@ export default function login() {
 
   const login = async (data) => {
     const signin = await signIn("credentials", { redirect: false, ...data });
-    console.log(signin);
+
     if (signin.ok) {
       router.replace(router.asPath);
     }
@@ -30,7 +30,6 @@ export default function login() {
           id='login'
           onSubmit={handleSubmit(login)}
           className='w-96 bg-white shadow text-black py-8 px-2 sm:px-0 m-auto'
-
         >
           <div className='px-2 flex flex-col items-center justify-center'>
             <h3 className='text-2xl sm:text-3xl xl:text-2xl font-bold leading-tight'>

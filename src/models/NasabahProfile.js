@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 import "./AccountType";
+import "./BankTransaction";
 
 const MODEL_NAME = "NasabahProfile";
 
@@ -51,6 +52,14 @@ const schema = new Schema(
   },
   { timestamps: true }
 );
+
+schema.pre("findOneAndDelete", async function (next) {
+  const doc = await this.model.findOne(this.getFilter());
+
+  await mongoose.model("BankTransaction").deleteMany({ _nasabah: doc._id });
+
+  next();
+});
 
 schema.pre("save", async function (next) {
   const accountType = await mongoose
